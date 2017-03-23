@@ -18,6 +18,11 @@ import photoview.yibao.com.photoview.R;
 import photoview.yibao.com.photoview.adapter.MyPagerAdapter;
 import photoview.yibao.com.photoview.util.DownPic;
 
+/**
+ * 作者：Stran on 2017/3/23 15:12
+ * 描述：${}
+ * 邮箱：strangermy@outlook.com
+ */
 public class MainActivity
         extends AppCompatActivity
         implements ViewPager.OnPageChangeListener

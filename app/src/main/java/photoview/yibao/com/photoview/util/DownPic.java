@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Environment;
+import android.os.Handler;
+import android.os.Message;
 import android.widget.ImageView;
 
 import java.io.File;
@@ -12,6 +14,7 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.util.UUID;
 
+import photoview.yibao.com.photoview.activity.MainActivity;
 import photoview.yibao.com.photoview.adapter.MyPagerAdapter;
 
 
@@ -25,6 +28,25 @@ public class DownPic {
     private static String  TAG       = "DownPic";
     private static boolean isSuccess = false;
 
+    private Context mContext;
+    static Handler mHandler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            switch (msg.what) {
+                case 2:
+                    //弹出保存成功提示
+                    MainActivity.showSavePicSuccess();
+                    break;
+                default:
+                    break;
+            }
+
+
+        }
+    };
+
+
     public static void getPic(final Context mContext,
                               int itemPosition,
                               final MyPagerAdapter mAdapter)
@@ -35,8 +57,8 @@ public class DownPic {
         LogUtil.d("当前的Url是      " + url);
         File file = FileUtil.getFile(name);
         final String picName = UUID.randomUUID()
-                                                                                 .toString()
-                                                                                 .replace("-", "");
+                                   .toString()
+                                   .replace("-", "");
         ImageUitl.get()
                  .downloadPic(url, file.toString(),
 
@@ -56,6 +78,13 @@ public class DownPic {
                                           //将图片保存到SD卡上
                                           bitmap.compress(Bitmap.CompressFormat.JPEG, 100, fos);
                                           LogUtil.d(TAG, "下载成功  文件大小==" + bitmap.getByteCount());
+                                          //用Handler通知图片保存成功
+                                          Message message = new Message();
+                                          message.obj = bitmap;
+                                          message.what = 2;
+                                          mHandler.sendMessage(message);
+
+
                                           //发个意图让Mediascanner去扫描SD卡，将下载的图片更新到图库
                                           Intent intent = new Intent();
                                           intent.setAction(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);

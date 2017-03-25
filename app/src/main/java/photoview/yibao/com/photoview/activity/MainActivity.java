@@ -1,8 +1,8 @@
 package photoview.yibao.com.photoview.activity;
 
+import android.content.Context;
 import android.content.res.Configuration;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -28,16 +28,13 @@ public class MainActivity
         implements ViewPager.OnPageChangeListener
 
 {
-    private String TAG      = "MainActivity";
+    private static Context mContext;
+    private String TAG = "MainActivity";
     private long   exitTime = 0;
     private ConstraintLayout mLayout;
     private ViewPager        mVp;
     private MyPagerAdapter   mAdapter;
     private int itemPosition = 0;
-    private Handler mHandler;
-    int DOWNLOAD_FAILED   = 0;
-    int DOWNLOAD_SUCCESS  = 1;
-    int DOWNLOAD_PROGRASS = 2;
     private static FloatingActionButton mFab;
 
     @Override
@@ -148,6 +145,7 @@ public class MainActivity
         Snackbar.make(mFab, "图片保存成功~", Snackbar.LENGTH_LONG)
                 .show();
     }
+
 
 
 }

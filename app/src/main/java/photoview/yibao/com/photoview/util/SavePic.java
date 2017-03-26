@@ -12,7 +12,6 @@ import android.widget.ImageView;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.util.UUID;
 
 import photoview.yibao.com.photoview.activity.MainActivity;
 import photoview.yibao.com.photoview.adapter.MyPagerAdapter;
@@ -23,9 +22,9 @@ import photoview.yibao.com.photoview.adapter.MyPagerAdapter;
  * 描述：保存图片到本地
  * 邮箱：strangermy@outlook.com
  */
-public class DownPic {
+public class SavePic {
 
-    private static String  TAG       = "DownPic";
+    private static String  TAG       = "SavePic";
     private static boolean isSuccess = false;
 
     private Context mContext;
@@ -47,18 +46,16 @@ public class DownPic {
     };
 
 
-    public static void getPic(final Context mContext,
-                              int itemPosition,
-                              final MyPagerAdapter mAdapter)
+    public static void savePic(final Context mContext,
+                               int itemPosition,
+                               final MyPagerAdapter mAdapter)
     {
 
         String url  = ImageUitl.picUrlArr[itemPosition];
         String name = url.substring(url.lastIndexOf("/") + 1);
         LogUtil.d("当前的Url是      " + url);
         File file = FileUtil.getFile(name);
-        final String picName = UUID.randomUUID()
-                                   .toString()
-                                   .replace("-", "");
+
         ImageUitl.get()
                  .downloadPic(url, file.toString(),
 
@@ -67,7 +64,7 @@ public class DownPic {
                                   public void onDownloadSuccess() {
                                       LogUtil.d(TAG, "下载成功  ");
                                       File file1 = new File(Environment.getExternalStorageDirectory(),
-                                                            picName + ".jpg");
+                                                            Constans.PIC_NAME + ".jpg");
                                       isSuccess = true;
 
                                       try {

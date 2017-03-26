@@ -31,15 +31,14 @@ public class ImageUitl {
 
 
     private ImageUitl() {
-        mClient = new OkHttpClient.Builder()
-                .connectTimeout(3, TimeUnit.SECONDS)
-                .writeTimeout(3, TimeUnit.SECONDS)
-                .readTimeout(3, TimeUnit.SECONDS)
-                .build();
+        mClient = new OkHttpClient.Builder().connectTimeout(3, TimeUnit.SECONDS)
+                                            .writeTimeout(3, TimeUnit.SECONDS)
+                                            .readTimeout(3, TimeUnit.SECONDS)
+                                            .build();
     }
 
 
-    static String TAG = "ImageUitl";
+    static        String   TAG       = "ImageUitl";
     public static String[] picUrlArr = {"https://images.unsplash.com/uploads/141327328038701afeede/eda0fb7c?ixlib=rb-0.3.5&q=100&fm=jpg&crop=entropy&cs=tinysrgb&s=b1418e0650f85155b76164dc6655c8a0",
                                         "http://7xi8d6.com1.z0.glb.clouddn.com/2017-03-23-17265820_645330569008169_4543676027339014144_n.jpg",
                                         "http://pic8.nipic.com/20100623/2568996_083300720588_2.jpg",
@@ -103,15 +102,16 @@ public class ImageUitl {
         return downloadUtil;
     }
 
-    public static ImageView getGlidLoadPic(Context context, int position, ImageView imageView) {
+    public static ImageView glideLoadPic(Context context, int position, ImageView imageView) {
 
 
-        String url = picUrlArr[position];
+                String url = picUrlArr[position];
+//        String url = MainActivity.initGirlData().get(position)
+//                                 .getUrl();
         System.out.println("this is ImageUrl    " + url);
 
         Glide.with(context)
-             .load(url)
-             .asBitmap()
+             .load(url).asBitmap()
              .placeholder(R.drawable.girl)
              .error(R.drawable.gg)
              .into(imageView);
@@ -131,7 +131,7 @@ public class ImageUitl {
         Request request = new Request.Builder().url(url)
                                                .build();
         mClient.newCall(request)
-                     .enqueue(new Callback() {
+               .enqueue(new Callback() {
                    @Override
                    public void onFailure(Call call, IOException e) {
                        //下载失败

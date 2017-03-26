@@ -6,6 +6,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
+import java.util.List;
+
+import photoview.yibao.com.photoview.bean.ResultsBean;
 import photoview.yibao.com.photoview.util.ImageUitl;
 import photoview.yibao.com.photoview.view.ZoomImageView;
 
@@ -19,9 +22,11 @@ public class MyPagerAdapter
 {
     private Context mContext;
     private View    mCurrentView;
+    List<ResultsBean> mResults;
 
     public MyPagerAdapter(Context context) {
         this.mContext = context;
+//        this.mResults = results;
     }
 
 
@@ -51,9 +56,8 @@ public class MyPagerAdapter
 
         view.reSetState();
         //加载图片
-        ImageUitl.getGlidLoadPic(mContext, position, view);
+        ImageUitl.glideLoadPic(mContext, position, view);
 
-        //            ImageUitl.getOkHttpLoadpic(ImageActivity.this, position, view);
         container.addView(view, params);
 
         return view;

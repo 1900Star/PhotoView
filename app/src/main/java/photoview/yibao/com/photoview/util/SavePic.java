@@ -25,17 +25,17 @@ import photoview.yibao.com.photoview.adapter.MyPagerAdapter;
 public class SavePic {
 
     private static String  TAG       = "SavePic";
-    private static boolean isSuccess = false;
-
-    private Context mContext;
-    static Handler mHandler = new Handler() {
+    private static boolean          isSuccess = false;
+    private static         Handler          mHandler  = new Handler() {
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
             switch (msg.what) {
                 case 2:
+
                     //弹出保存成功提示
                     MainActivity.showSavePicSuccess();
+
                     break;
                 default:
                     break;
@@ -44,6 +44,7 @@ public class SavePic {
 
         }
     };
+    private Bitmap bitmap;
 
 
     public static void savePic(final Context mContext,
@@ -55,6 +56,7 @@ public class SavePic {
         String name = url.substring(url.lastIndexOf("/") + 1);
         LogUtil.d("当前的Url是      " + url);
         File file = FileUtil.getFile(name);
+
 
         ImageUitl.get()
                  .downloadPic(url, file.toString(),

@@ -1,7 +1,9 @@
 package photoview.yibao.com.photoview.activity;
 
+import android.app.WallpaperManager;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.FloatingActionButton;
@@ -14,6 +16,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.ImageView;
 
 import com.google.gson.Gson;
 
@@ -30,8 +33,8 @@ import photoview.yibao.com.photoview.adapter.MyPagerAdapter;
 import photoview.yibao.com.photoview.bean.GirlBean;
 import photoview.yibao.com.photoview.bean.ResultsBean;
 import photoview.yibao.com.photoview.bean.Woman;
+import photoview.yibao.com.photoview.util.BitmapUtil;
 import photoview.yibao.com.photoview.util.Constans;
-import photoview.yibao.com.photoview.util.GirlUitl;
 import photoview.yibao.com.photoview.util.LogUtil;
 import photoview.yibao.com.photoview.util.SavePic;
 
@@ -57,7 +60,8 @@ public class MainActivity
     static String url = Constans.BASE_URL + "/1000/1";
     private Toolbar mToolbar;
     private boolean isLoadiing = false;
-    private Woman mGirlBean;
+    private       Woman            mGirlBean;
+    public static WallpaperManager mWpManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -91,6 +95,7 @@ public class MainActivity
     }
 
     private void initView() {
+        mWpManager = WallpaperManager.getInstance(this);
         mLayout = (ConstraintLayout) findViewById(R.id.content);
         mVp = (ViewPager) mLayout.findViewById(R.id.vp);
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -116,18 +121,28 @@ public class MainActivity
         return true;
     }
 
+    //设置Settings
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-
         int id = item.getItemId();
+        switch (id) {
+            case R.id.action_gallery:
+                Intent chooseIntent = new Intent(Intent.ACTION_SET_WALLPAPER);
+                startActivity(Intent.createChooser(chooseIntent, "选择壁纸"));
+                break;
+            case R.id.action_setwallpaper:
 
-
-        if (id == R.id.action_settings) {
-            GirlUitl.get()
-                    .initGirlData();
-            return true;
+                ImageView view = (ImageView) mAdapter.getPrimaryItem();
+                Bitmap bitmap = BitmapUtil.drawableToBitmap(view.getDrawable());
+                try {
+                    mWpManager.setBitmap(bitmap);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                break;
+            default:
+                break;
         }
-
         return super.onOptionsItemSelected(item);
     }
 

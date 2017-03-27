@@ -1,8 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
       xmlns:app="http://schemas.android.com/apk/res-auto">
-    <item android:id="@+id/action_settings"
+    <item android:id="@+id/action_setwallpaper"
           android:orderInCategory="100"
+          android:title="@string/action_setwallpaer"
+          app:showAsAction="never"/>
+    <item android:id="@+id/action_gallery"
+          android:orderInCategory="100"
+
           android:title="@string/action_settings"
           app:showAsAction="never"/>
+
 </menu>

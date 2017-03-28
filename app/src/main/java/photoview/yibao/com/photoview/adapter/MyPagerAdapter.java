@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import java.util.List;
 
 import photoview.yibao.com.photoview.bean.ResultsBean;
+import photoview.yibao.com.photoview.http.Api;
 import photoview.yibao.com.photoview.util.ImageUitl;
 import photoview.yibao.com.photoview.view.ZoomImageView;
 
@@ -26,13 +27,13 @@ public class MyPagerAdapter
 
     public MyPagerAdapter(Context context) {
         this.mContext = context;
-//        this.mResults = results;
+        //        this.mResults = results;
     }
 
 
     @Override
     public int getCount() {
-        return ImageUitl.picUrlArr.length;
+        return Api.picUrlArr.length;
     }
 
     @Override
@@ -74,4 +75,5 @@ public class MyPagerAdapter
 
         return mCurrentView;
     }
+
 }

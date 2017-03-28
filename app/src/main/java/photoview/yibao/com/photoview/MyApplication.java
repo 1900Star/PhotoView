@@ -2,6 +2,8 @@ package photoview.yibao.com.photoview;
 
 import android.app.Application;
 
+import com.facebook.drawee.backends.pipeline.Fresco;
+
 import java.util.concurrent.TimeUnit;
 
 import okhttp3.OkHttpClient;
@@ -21,6 +23,7 @@ public class MyApplication
     public void onCreate() {
         super.onCreate();
 
+        Fresco.initialize(this);
         mApplication = this;
 
 

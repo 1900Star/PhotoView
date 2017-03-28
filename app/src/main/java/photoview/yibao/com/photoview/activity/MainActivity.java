@@ -2,11 +2,9 @@ package photoview.yibao.com.photoview.activity;
 
 import android.app.WallpaperManager;
 import android.content.Context;
-import android.content.Intent;
-import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.constraint.ConstraintLayout;
-import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
@@ -17,26 +15,15 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 
-import com.google.gson.Gson;
-
-import java.io.IOException;
-import java.util.List;
-
-import okhttp3.Call;
-import okhttp3.Callback;
-import okhttp3.Request;
-import okhttp3.Response;
-import photoview.yibao.com.photoview.MyApplication;
 import photoview.yibao.com.photoview.R;
 import photoview.yibao.com.photoview.adapter.MyPagerAdapter;
-import photoview.yibao.com.photoview.bean.GirlBean;
-import photoview.yibao.com.photoview.bean.ResultsBean;
 import photoview.yibao.com.photoview.bean.Woman;
-import photoview.yibao.com.photoview.util.BitmapUtil;
-import photoview.yibao.com.photoview.util.Constans;
-import photoview.yibao.com.photoview.util.LogUtil;
 import photoview.yibao.com.photoview.util.SavePic;
+import photoview.yibao.com.photoview.util.SnakbarUtil;
+import photoview.yibao.com.photoview.util.WallPaperUtil;
+import photoview.yibao.com.photoview.view.ProgressView;
 
 /**
  * 作者：Stran on 2017/3/23 15:12
@@ -45,7 +32,7 @@ import photoview.yibao.com.photoview.util.SavePic;
  */
 public class MainActivity
         extends AppCompatActivity
-        implements ViewPager.OnPageChangeListener
+        implements ViewPager.OnPageChangeListener, View.OnClickListener
 
 {
     private static Context mContext;
@@ -55,90 +42,65 @@ public class MainActivity
     private ViewPager        mVp;
     private MyPagerAdapter   mAdapter;
     private int itemPosition = 0;
-    private static FloatingActionButton mFab;
-    static         List<ResultsBean>    mResults;
-    static String url = Constans.BASE_URL + "/1000/1";
+    private static ImageView mFab;
     private Toolbar mToolbar;
     private boolean isLoadiing = false;
     private       Woman            mGirlBean;
-    public static WallpaperManager mWpManager;
+    private       WallpaperManager mWpManager;
+    public static ProgressView     mPbDownView;
+    /**
+     * 闲置状态
+     */
+    public static final int SCROLL_STATE_IDLE = 0;
+
+
+    /**
+     * 默认下载进度
+     */
+    public static final int DEFULT_DOWN_PREGRESS = 0;
+    private RelativeLayout mRv;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.activity_main);
-        Intent intent = getIntent();
-        mGirlBean = (Woman) intent.getSerializableExtra("GirlBean");
-
-
         initView();
-
-
         initData();
-
-        mFab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "可以将图片保存起来-_-", 5000)
-                        .setAction("保存图片", new View.OnClickListener() {
-                            @Override
-                            public void onClick(View view) {
-                                SavePic.savePic(getApplicationContext(), itemPosition, mAdapter);
-                            }
-                        })
-                        .show();
-            }
-        });
-
-
+        initListener();
     }
-
+    private void initListener() {
+        mFab.setOnClickListener(this);
+    }
     private void initView() {
-        mWpManager = WallpaperManager.getInstance(this);
+        mRv = (RelativeLayout) findViewById(R.id.rv);
         mLayout = (ConstraintLayout) findViewById(R.id.content);
         mVp = (ViewPager) mLayout.findViewById(R.id.vp);
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
-        mFab = (FloatingActionButton) findViewById(R.id.fab);
-
-
+        mPbDownView = (ProgressView) findViewById(R.id.pb_down_view);
+        mFab = (ImageView) findViewById(R.id.fab);
     }
-
     private void initData() {
 
         setSupportActionBar(mToolbar);
         mAdapter = new MyPagerAdapter(getApplicationContext());
         mVp.setAdapter(mAdapter);
         mVp.addOnPageChangeListener(this);
-
-
     }
-
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main, menu);
         return true;
     }
-
-    //设置Settings
+    //Settings
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         switch (id) {
-            case R.id.action_gallery:
-                Intent chooseIntent = new Intent(Intent.ACTION_SET_WALLPAPER);
-                startActivity(Intent.createChooser(chooseIntent, "选择壁纸"));
+            case R.id.action_setwallpaper: //设置壁纸
+                WallPaperUtil.setWallPaper(this, mAdapter);
                 break;
-            case R.id.action_setwallpaper:
-
-                ImageView view = (ImageView) mAdapter.getPrimaryItem();
-                Bitmap bitmap = BitmapUtil.drawableToBitmap(view.getDrawable());
-                try {
-                    mWpManager.setBitmap(bitmap);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+            case R.id.action_gallery:  //从相册选择壁纸
+                WallPaperUtil.choiceWallPaper(this);
                 break;
             default:
                 break;
@@ -146,27 +108,29 @@ public class MainActivity
         return super.onOptionsItemSelected(item);
     }
 
-
+    /**
+     *   ViewPager滑动监听
+     */
     @Override
     public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
-
+        SnakbarUtil.dismissSnakbar(mPbDownView);
     }
-
     @Override
     public void onPageSelected(int position) {
         itemPosition = position;
+        SnakbarUtil.dismissSnakbar(mPbDownView);
     }
-
     @Override
     public void onPageScrollStateChanged(int state) {
-
+        if (SCROLL_STATE_IDLE == state) { //当ViewPager处于闲置状态时，将下载进度重置为0。
+            mPbDownView.setProgress(0);
+        }
+        SnakbarUtil.dismissSnakbar(mPbDownView);
     }
-
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK && event.getAction() == KeyEvent.ACTION_DOWN) {
-            //两秒之内按返回键多次就会退出
+
             if ((System.currentTimeMillis() - exitTime) > 2000) {
                 Snackbar.make(mFab, "再按一次我就离开了~", Snackbar.LENGTH_LONG)
                         .show();
@@ -180,58 +144,36 @@ public class MainActivity
         return super.onKeyDown(keyCode, event);
     }
 
+    /**
+     * 图片保存成功提示
+     */
     public static void showSavePicSuccess() {
-        Snackbar.make(mFab, "图片保存成功~", Snackbar.LENGTH_LONG)
-                .show();
+        int color = Color.rgb(90, 181, 63);
+        SnakbarUtil.showSetSnakBarBagrand(mFab, "图片保存成功~", color)
+                   .show();
     }
 
     @Override
     public void onWindowAttributesChanged(WindowManager.LayoutParams params) {
+
     }
 
-    /**
-     * 保存图片
-     */
-    public static List<ResultsBean> initGirlData()
-    {
 
-        LogUtil.d("进入下载方法", "////////////////////////////////////////////");
-        Request request = new Request.Builder().url(url)
-                                               .build();
-        MyApplication.defaultOkHttpClient()
-                     .newCall(request)
-                     .enqueue(new Callback() {
-                         @Override
-                         public void onFailure(Call call, IOException e) {
-                             //下载失败
-                             //                       listener.onDownloadFailed();
-                         }
+    public static ProgressView getProgressView() {
 
-                         @Override
-                         public void onResponse(Call call, Response response)
-                                 throws IOException
-                         {
-                             String json = response.body()
-                                                   .string();
-
-                             //                       LogUtil.d(
-                             //                               "================Girl 哈哈 =="+json);
-
-                             Gson     gson     = new Gson();
-                             GirlBean girlData = gson.fromJson(json, GirlBean.class);
-                             mResults = girlData.getResults();
-
-                             ResultsBean resultsBean = mResults.get(460);
-
-                             String ganhuo_id = resultsBean.getUrl();
-                             LogUtil.d("__-----++=++++++++++这是图片的 长度=====Url ==" + mResults.size());
-                             LogUtil.d("__-----++=++++++++++这是图片的 =====Url ==" + ganhuo_id);
-
-
-                         }
-                     });
-
-        return mResults;
+        return mPbDownView;
     }
 
+
+    @Override
+    public void onClick(View view) {
+        //        AnimationUtil.getUpTranslateY(mPbDownView);
+        SnakbarUtil.showSnakbarLong(mFab, "可以将图片保存起来-_-", "保存图片", new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                SavePic.savePic(getApplicationContext(), itemPosition, mAdapter, mPbDownView);
+            }
+        })
+                   .show();
+    }
 }

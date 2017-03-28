@@ -4,6 +4,6 @@
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
-    <string name="action_settings">Gallery</string>
-    <string name="action_setwallpaer">SetWallpaper</string>
+    <string name="action_settings">相册</string>
+    <string name="action_setwallpaer">设置壁纸</string>
 </resources>

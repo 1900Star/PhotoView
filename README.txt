@@ -3,6 +3,6 @@
 
 
 ![image](https://github.com/1900Star/PhotoView/blob/master/Screenshot_png/c.gif)
-![image](https://github.com/1900Star/PhotoView/blob/master/Screenshot_png/Screenshot_2017-03-24-00-23-41-732_PhotoView.png)
 ![image](https://github.com/1900Star/PhotoView/blob/master/Screenshot_png/a.png)
 ![image](https://github.com/1900Star/PhotoView/blob/master/Screenshot_png/b.png)
+![image](https://github.com/1900Star/PhotoView/blob/master/Screenshot_png/d.png)

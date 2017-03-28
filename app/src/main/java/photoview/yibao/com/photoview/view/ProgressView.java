@@ -16,7 +16,7 @@ import photoview.yibao.com.photoview.util.LogUtil;
 
 /**
  * 作者：Stran on 2017/3/27 16:55
- * 描述：${TODO}
+ * 描述：${自定义ProgressBar}
  * 邮箱：strangermy@outlook.com
  */
 public class ProgressView
@@ -113,7 +113,7 @@ public class ProgressView
                 mPaint.setStyle(Paint.Style.STROKE);
                 mPaint.setStrokeWidth(10);
                 mPaint.setAntiAlias(true);
-                mPaint.setColor(Color.rgb(167,210,110));
+                mPaint.setColor(Color.rgb(250,60,127));
             }
             canvas.drawArc(mOval, startAngle, sweepAngle, useCenter, mPaint);
         }

@@ -32,17 +32,15 @@ import photoview.yibao.com.photoview.bean.ResultsBean;
 import photoview.yibao.com.photoview.http.Api;
 import photoview.yibao.com.photoview.view.ProgressView;
 
-import static photoview.yibao.com.photoview.util.GirlUitl.mResults;
-
 
 /**
  * 作者：Stran on 2017/3/23 19:52
  * 描述：保存图片到本地
  * 邮箱：strangermy@outlook.com
  */
-public class SavePic {
+public class SaveImageUtil {
 
-    private static String  TAG              = "SavePic";
+    private static String  TAG              = "SaveImageUtil";
     static         String  url              = Constans.BASE_URL + "/1000/1";
     /**
      * 图片下载的实时进度
@@ -53,7 +51,7 @@ public class SavePic {
      */
     private static int     DOWN_PIC_SUCCESS = 0;
     private static boolean isSuccess        = false;
-
+    static List<ResultsBean> mResults;
     static Handler mHandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {

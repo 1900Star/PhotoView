@@ -4,11 +4,9 @@ import android.content.Context;
 import android.support.v4.view.PagerAdapter;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AlphaAnimation;
 import android.widget.ImageView;
 
-import java.util.List;
-
-import photoview.yibao.com.photoview.bean.ResultsBean;
 import photoview.yibao.com.photoview.http.Api;
 import photoview.yibao.com.photoview.util.ImageUitl;
 import photoview.yibao.com.photoview.view.ZoomImageView;
@@ -23,11 +21,9 @@ public class MyPagerAdapter
 {
     private Context mContext;
     private View    mCurrentView;
-    List<ResultsBean> mResults;
 
     public MyPagerAdapter(Context context) {
         this.mContext = context;
-        //        this.mResults = results;
     }
 
 
@@ -50,10 +46,16 @@ public class MyPagerAdapter
 
     @Override
     public Object instantiateItem(ViewGroup container, int position) {
+        AlphaAnimation animation = new AlphaAnimation(1.0f, 1.0f);
+        animation.setDuration(3000);
+        animation.setFillAfter(true);
+
         ZoomImageView view = new ZoomImageView(mContext);
         ViewGroup.LayoutParams params = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
                                                                    ViewGroup.LayoutParams.MATCH_PARENT);
-        view.setScaleType(ImageView.ScaleType.MATRIX);
+
+        view.setScaleType(ImageView.ScaleType.CENTER_CROP);
+        view.setAnimation(animation);
 
         view.reSetState();
         //加载图片

@@ -2,15 +2,14 @@ package photoview.yibao.com.photoview.bean;
 
 import com.google.gson.Gson;
 
-import java.io.Serializable;
 import java.util.List;
 
 /**
- * Created by Stran on 2017/3/2.
+ * 作者：Stran on 2017/3/29 07:25
+ * 描述：${TODO}
+ * 邮箱：strangermy@outlook.com
  */
-
-public class GirlBean implements Serializable{
-
+public class GirlBean {
 
     /**
      * error : false
@@ -32,4 +31,6 @@ public class GirlBean implements Serializable{
     public List<ResultsBean> getResults() { return results;}
 
     public void setResults(List<ResultsBean> results) { this.results = results;}
+
+
 }

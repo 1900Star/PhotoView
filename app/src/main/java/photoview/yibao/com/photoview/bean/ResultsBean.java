@@ -2,14 +2,12 @@ package photoview.yibao.com.photoview.bean;
 
 import com.google.gson.Gson;
 
-import java.io.Serializable;
-
 /**
- * 作者：Stran on 2017/3/26 10:35
+ * 作者：Stran on 2017/3/29 07:25
  * 描述：${TODO}
  * 邮箱：strangermy@outlook.com
  */
-public class ResultsBean implements Serializable{
+public class ResultsBean {
     /**
      * _id : 58d49bad421aa93abf5d3b76
      * createdAt : 2017-03-24T12:08:13.590Z

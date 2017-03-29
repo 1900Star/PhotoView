@@ -1,7 +1,7 @@
 package photoview.yibao.com.photoview.activity;
 
-import android.app.WallpaperManager;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.constraint.ConstraintLayout;
@@ -19,8 +19,7 @@ import android.widget.RelativeLayout;
 
 import photoview.yibao.com.photoview.R;
 import photoview.yibao.com.photoview.adapter.MyPagerAdapter;
-import photoview.yibao.com.photoview.bean.Woman;
-import photoview.yibao.com.photoview.util.SavePic;
+import photoview.yibao.com.photoview.util.SaveImageUtil;
 import photoview.yibao.com.photoview.util.SnakbarUtil;
 import photoview.yibao.com.photoview.util.WallPaperUtil;
 import photoview.yibao.com.photoview.view.ProgressView;
@@ -44,9 +43,6 @@ public class MainActivity
     private int itemPosition = 0;
     private static ImageView mFab;
     private Toolbar mToolbar;
-    private boolean isLoadiing = false;
-    private       Woman            mGirlBean;
-    private       WallpaperManager mWpManager;
     public static ProgressView     mPbDownView;
     /**
      * 闲置状态
@@ -97,7 +93,8 @@ public class MainActivity
         int id = item.getItemId();
         switch (id) {
             case R.id.action_setwallpaper: //设置壁纸
-                WallPaperUtil.setWallPaper(this, mAdapter);
+//                WallPaperUtil.setWallPaper(this, mAdapter);
+                startActivity(new Intent(this, ViewActivty.class));
                 break;
             case R.id.action_gallery:  //从相册选择壁纸
                 WallPaperUtil.choiceWallPaper(this);
@@ -171,7 +168,7 @@ public class MainActivity
         SnakbarUtil.showSnakbarLong(mFab, "可以将图片保存起来-_-", "保存图片", new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                SavePic.savePic(getApplicationContext(), itemPosition, mAdapter, mPbDownView);
+                SaveImageUtil.savePic(getApplicationContext(), itemPosition, mAdapter, mPbDownView);
             }
         })
                    .show();

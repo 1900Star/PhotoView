@@ -22,7 +22,6 @@ public class MyApplication
     @Override
     public void onCreate() {
         super.onCreate();
-
         Fresco.initialize(this);
         mApplication = this;
 
@@ -30,11 +29,10 @@ public class MyApplication
     }
 
     public static OkHttpClient defaultOkHttpClient() {
-        OkHttpClient client = new OkHttpClient.Builder()
-                .connectTimeout(3, TimeUnit.SECONDS)
-                .writeTimeout(3, TimeUnit.SECONDS)
-                .readTimeout(3, TimeUnit.SECONDS)
-                .build();
+        OkHttpClient client = new OkHttpClient.Builder().connectTimeout(3, TimeUnit.SECONDS)
+                                                        .writeTimeout(3, TimeUnit.SECONDS)
+                                                        .readTimeout(3, TimeUnit.SECONDS)
+                                                        .build();
         return client;
     }
 

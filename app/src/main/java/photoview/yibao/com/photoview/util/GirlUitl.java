@@ -25,7 +25,7 @@ public class GirlUitl {
     private static GirlUitl     downloadUtil;
     private        OkHttpClient mClient;
     String url = Constans.BASE_URL + "/1000/1";
-    public static List<ResultsBean> mResults;
+    private List<ResultsBean> mResults;
 
 
     GirlUitl() {
@@ -81,9 +81,10 @@ public class GirlUitl {
                        //                       LogUtil.d(
                        //                               "================Girl 哈哈 =="+json);
 
-                       Gson     gson     = new Gson();
-                       GirlBean girlData = gson.fromJson(json, GirlBean.class);
+                       Gson              gson     = new Gson();
+                       GirlBean          girlData = gson.fromJson(json, GirlBean.class);
                        mResults = girlData.getResults();
+
 
                        ResultsBean resultsBean = mResults.get(460);
 

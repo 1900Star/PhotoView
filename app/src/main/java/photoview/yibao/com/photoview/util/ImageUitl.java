@@ -6,6 +6,7 @@ import android.support.annotation.NonNull;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -40,7 +41,7 @@ public class ImageUitl {
     }
 
 
-    static        String   TAG       = "ImageUitl";
+    static String TAG = "ImageUitl";
 
 
     public static ImageUitl get() {
@@ -59,8 +60,8 @@ public class ImageUitl {
         System.out.println("this is ImageUrl    " + url);
 
         Glide.with(context)
-             .load(url)
-             .asBitmap()
+             .load(url).asBitmap()
+             .diskCacheStrategy(DiskCacheStrategy.ALL)
              .placeholder(R.drawable.girl)
              .error(R.drawable.beautiful)
              .into(imageView);

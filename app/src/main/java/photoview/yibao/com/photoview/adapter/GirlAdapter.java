@@ -17,9 +17,11 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import photoview.yibao.com.photoview.Interface.IChangeFragment;
 import photoview.yibao.com.photoview.R;
 import photoview.yibao.com.photoview.bean.GirlData;
 import photoview.yibao.com.photoview.http.Api;
+import photoview.yibao.com.photoview.util.LogUtil;
 
 /**
  * 作者：Stran on 2017/3/29 06:11
@@ -28,6 +30,7 @@ import photoview.yibao.com.photoview.http.Api;
  */
 public class GirlAdapter
         extends RecyclerView.Adapter<RecyclerView.ViewHolder>
+        implements View.OnClickListener
 {
     @BindView(R.id.pbLoad)
     ProgressBar  mPbLoad;
@@ -53,25 +56,29 @@ public class GirlAdapter
 
     //上拉加载更多状态-默认为0
     private int mLoadMoreStatus = 0;
-    private LayoutInflater mInflater;
 
-    public GirlAdapter(Context context) {
+    IChangeFragment mIChangeFragment;
+    private int mNum;
+
+    public GirlAdapter(Context context, IChangeFragment iChangeFragment) {
         mContext = context;
+       this.mIChangeFragment = iChangeFragment;
     }
 
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         if (viewType == TYPE_ITEM) {
-            mView = mInflater.from(parent.getContext())
-                             .inflate(R.layout.item_girl, parent, false);
+            mView = LayoutInflater.from(parent.getContext())
+                                  .inflate(R.layout.item_girl, parent, false);
+            mView.setOnClickListener(this);
             ViewHolder holder = new ViewHolder(mView);
 
             return holder;
 
         } else if (viewType == LOADING_MORE) {
-            mView = mInflater.from(parent.getContext())
-                             .inflate(R.layout.load_more_footview_layout, parent, false);
+            mView = LayoutInflater.from(parent.getContext())
+                                  .inflate(R.layout.load_more_footview_layout, parent, false);
             LoadMoreViewHolder moreHolder = new LoadMoreViewHolder(mView);
             return moreHolder;
 
@@ -81,10 +88,13 @@ public class GirlAdapter
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+        mNum = position;
+        send(mNum);
+        LogUtil.d("888888888888             === "+mNum);
         if (holder instanceof ViewHolder) {
             ViewHolder viewHolder = (ViewHolder) holder;
             //绑定图片
-            Uri        url        = Uri.parse(Api.picUrlArr[position]);
+            Uri url = Uri.parse(Api.picUrlArr[position]);
             viewHolder.mGrilImageView.setImageURI(url);
         } else if (holder instanceof LoadMoreViewHolder) {
             LoadMoreViewHolder moreViewHolder = (LoadMoreViewHolder) holder;
@@ -116,10 +126,17 @@ public class GirlAdapter
     }
 
     public int getTypeItem(int position) {
+
         if (position + 1 == getItemCount()) {
             return TYPE_FOOTER;
         }
         return TYPE_ITEM;
+    }
+
+    private void send(int position) {
+        LogUtil.d("99999999999999999999     Send===" + position);
+        mNum=position;
+
     }
 
     public void AddHeader(List<GirlData> items) {
@@ -152,9 +169,17 @@ public class GirlAdapter
         }
     }
 
+    @Override
+    public void onClick(View view) {
+
+        mIChangeFragment.change(mNum);
+        LogUtil.d("444444444444444444444444444444"+mNum);
+    }
+    //**************************************************************************************
 
     static class ViewHolder
             extends RecyclerView.ViewHolder
+
     {
         @BindView(R.id.gril_image_view)
         SimpleDraweeView mGrilImageView;
@@ -163,6 +188,8 @@ public class GirlAdapter
             super(view);
             ButterKnife.bind(this, view);
         }
+
+
     }
 
     static class LoadMoreViewHolder
@@ -181,4 +208,5 @@ public class GirlAdapter
             ButterKnife.bind(this, view);
         }
     }
+
 }

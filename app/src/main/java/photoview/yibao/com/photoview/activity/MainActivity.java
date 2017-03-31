@@ -2,12 +2,18 @@ package photoview.yibao.com.photoview.activity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.res.Configuration;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.constraint.ConstraintLayout;
+import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
 import android.support.v4.view.ViewPager;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.app.AppCompatDelegate;
 import android.support.v7.widget.Toolbar;
 import android.view.KeyEvent;
 import android.view.Menu;
@@ -31,7 +37,8 @@ import photoview.yibao.com.photoview.view.ProgressView;
  */
 public class MainActivity
         extends AppCompatActivity
-        implements ViewPager.OnPageChangeListener, View.OnClickListener
+        implements ViewPager.OnPageChangeListener, View.OnClickListener,
+                   NavigationView.OnNavigationItemSelectedListener
 
 {
     private static Context mContext;
@@ -59,6 +66,8 @@ public class MainActivity
      */
     public static final int STATUS_MAX_NUM       = 3;
     private RelativeLayout mRv;
+    private NavigationView mNavigationView;
+    private DrawerLayout mDrawerLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,9 +80,13 @@ public class MainActivity
 
     private void initListener() {
         mFab.setOnClickListener(this);
+        mNavigationView.setNavigationItemSelectedListener(this);
     }
 
     private void initView() {
+        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+
+        mNavigationView = (NavigationView) findViewById(R.id.nav_view);
         mRv = (RelativeLayout) findViewById(R.id.rv);
         mLayout = (ConstraintLayout) findViewById(R.id.content);
         mVp = (ViewPager) mLayout.findViewById(R.id.vp);
@@ -197,5 +210,50 @@ public class MainActivity
         MyApplication.getIntstance()
                      .refreshResources(this);
         super.onResume();
+    }
+
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.nav_send:
+                mDrawerLayout.addDrawerListener(new DrawerLayout.DrawerListener() {
+                    @Override
+                    public void onDrawerSlide(View drawerView, float slideOffset) {
+
+                    }
+
+                    @Override
+                    public void onDrawerOpened(View drawerView) {
+
+                    }
+
+                    @Override
+                    public void onDrawerClosed(View drawerView) {
+                        SharedPreferences sp =  getSharedPreferences("user_settings", MODE_PRIVATE);
+                        if ((getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK)
+                                == Configuration.UI_MODE_NIGHT_YES) {
+                            sp.edit().putInt("theme", 0).apply();
+                            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+                        } else {
+                            sp.edit().putInt("theme", 1).apply();
+                            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+                        }
+                        getWindow().setWindowAnimations(R.style.WindowAnimationFadeInOut);
+                        recreate();
+                    }
+
+                    @Override
+                    public void onDrawerStateChanged(int newState) {
+
+                    }
+                });
+
+                 break;
+            default:
+                 break;
+        }
+
+
+        return false;
     }
 }

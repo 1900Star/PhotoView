@@ -32,4 +32,12 @@
     </style>
     <style name="AppBaseTheme" parent="android:Theme.Holo.Light.NoActionBar.TranslucentDecor"
            type="text/css"/>
+
+
+    <!--自定义CollapsingToolbarLayout字体大小 end-->
+
+    <style name="WindowAnimationFadeInOut">
+        <item name="android:windowEnterAnimation">@anim/fade_in</item>
+        <item name="android:windowExitAnimation">@anim/fade_out</item>
+    </style>
 </resources>

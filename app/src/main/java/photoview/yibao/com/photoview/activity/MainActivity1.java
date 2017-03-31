@@ -29,7 +29,7 @@ import photoview.yibao.com.photoview.view.ProgressView;
  * 描述：${}
  * 邮箱：strangermy@outlook.com
  */
-public class MainActivity
+public class MainActivity1
         extends AppCompatActivity
         implements ViewPager.OnPageChangeListener, View.OnClickListener
 

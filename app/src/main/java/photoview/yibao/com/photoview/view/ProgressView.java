@@ -12,7 +12,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import photoview.yibao.com.photoview.R;
-import photoview.yibao.com.photoview.util.LogUtil;
 
 /**
  * 作者：Stran on 2017/3/27 16:55
@@ -98,7 +97,7 @@ public class ProgressView
         int top = mIvIcon.getTop();
         int left=mIvIcon.getLeft();
         int right=mIvIcon.getRight();
-        LogUtil.d("BOTTOM===============BOTTOM  ",left+"========"+top+   "  =="+right+"    =="+bottom);
+//        LogUtil.d("BOTTOM===============BOTTOM  ",left+"========"+top+   "  =="+right+"    =="+bottom);
         if (isProgressEnable) {
             if (mOval == null) {
 

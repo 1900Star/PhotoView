@@ -49,7 +49,7 @@ public class SnakbarUtil {
                                         public void onDismissed(Snackbar transientBottomBar,
                                                                 int event)
                                         {
-                                            //                                            AnimationUtil.getDownTranslateY(view);
+//                                                                                        AnimationUtil.getDownTranslateY(view);
 
                                             super.onDismissed(transientBottomBar, event);
                                         }

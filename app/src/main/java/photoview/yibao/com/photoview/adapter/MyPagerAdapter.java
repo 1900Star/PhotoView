@@ -54,7 +54,7 @@ public class MyPagerAdapter
         ViewGroup.LayoutParams params = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
                                                                    ViewGroup.LayoutParams.MATCH_PARENT);
 
-        view.setScaleType(ImageView.ScaleType.CENTER_CROP);
+        view.setScaleType(ImageView.ScaleType.FIT_CENTER);
         view.setAnimation(animation);
 
         view.reSetState();

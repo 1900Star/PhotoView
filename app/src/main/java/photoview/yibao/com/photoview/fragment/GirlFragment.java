@@ -1,25 +1,25 @@
 package photoview.yibao.com.photoview.fragment;
 
-import android.app.Fragment;
+import android.app.FragmentManager;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 
-import java.util.ArrayList;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 import butterknife.Unbinder;
 import photoview.yibao.com.photoview.R;
 import photoview.yibao.com.photoview.adapter.GirlAdapter;
-import photoview.yibao.com.photoview.bean.GirlData;
+import photoview.yibao.com.photoview.base.BaseFragment;
 import photoview.yibao.com.photoview.util.LogUtil;
 
 /**
@@ -28,66 +28,153 @@ import photoview.yibao.com.photoview.util.LogUtil;
  * 邮箱：strangermy@outlook.com
  */
 public class GirlFragment
-        extends Fragment
+        extends BaseFragment
+        implements View.OnClickListener, RecyclerView.OnItemTouchListener
+
+
 {
 
+
     @BindView(R.id.fragment_girl_recycler)
-    RecyclerView       mRecyclerView;
+    RecyclerView       mRv;
     @BindView(R.id.swipe_refresh)
     SwipeRefreshLayout mSwipeRefresh;
     Unbinder unbinder;
-    public View mView;
+    private Handler handler = new Handler();
+    private GirlAdapter     mAdapter;
+    private FragmentManager mManager;
 
-    private ArrayList<GirlData> mList;
-    private RecyclerView        mRv;
+    @Override
+    protected int getLayoutId() {
+        return R.layout.fragmet_girl;
+    }
+
+    @Override
+    protected void initView(View view, Bundle savedInstanceState) {
+        unbinder = ButterKnife.bind(this, view);
+
+        initData();
+    }
+
+    @Override
+    protected void initListener() {
+       mRv.addOnItemTouchListener(this);
+
+    }
+
+
+    private void initData() {
+        mManager=getActivity().getFragmentManager();
+        mSwipeRefresh.setRefreshing(false);
+        mSwipeRefresh.setColorSchemeColors(Color.BLUE, Color.RED, Color.YELLOW);
+
+        mAdapter = new GirlAdapter(getActivity(),mManager);
+        LinearLayoutManager manager1 = new LinearLayoutManager(getActivity());
+        StaggeredGridLayoutManager manager = new StaggeredGridLayoutManager(2,
+                                                                            StaggeredGridLayoutManager.VERTICAL);
+        mRv.setLayoutManager(manager);
+        mRv.setHasFixedSize(true);
+        mRv.setItemAnimator(new DefaultItemAnimator());
+        mRv.setAdapter(mAdapter);
+
+    }
+
+
+    private void loadMoreDatat() {
+        mRv.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            int lastItem;
+
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+                if (newState == RecyclerView.SCROLL_STATE_IDLE && lastItem + 1 == mAdapter.getItemCount()) {
+                    boolean isRefresh = mSwipeRefresh.isRefreshing();
+                    if (isRefresh) {
+                        mAdapter.notifyItemRemoved(mAdapter.getItemCount());
+                        return;
+                    } else if (!isRefresh) {
+                        mAdapter.changeMoreStatus(mAdapter.LOADING_MORE);
+                        handler.postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+
+                                //                                mAdapter.AddFooter(m);
+
+                            }
+                        }, 1000);
+                    }
+
+                }
+
+            }
+
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+            }
+        });
+
+    }
+
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        unbinder.unbind();
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater,
                              ViewGroup container,
                              Bundle savedInstanceState)
     {
-        mView = View.inflate(getActivity(), R.layout.fragmet_girl, null);
-        mRv = (RecyclerView) mView.findViewById(R.id.fragment_girl_recycler);
-        initData();
 
-
-        unbinder = ButterKnife.bind(this, mView);
-        return mView;
-    }
-
-    private void initData() {
-        if (mRecyclerView == null) {
-            LogUtil.d("777777777777777777777777");
-
-        }
-
-        GirlAdapter         adapter  = new GirlAdapter(getActivity());
-        LinearLayoutManager manager1 = new LinearLayoutManager(getActivity());
-        StaggeredGridLayoutManager manager = new StaggeredGridLayoutManager(2,
-                                                                            StaggeredGridLayoutManager.VERTICAL);
-        //        manager.setOrientation(LinearLayoutManager.VERTICAL);
-        mRv.setLayoutManager(manager);
-        mRv.setHasFixedSize(true);
-        mRv.setItemAnimator(new DefaultItemAnimator());
-        //        mRv.setAd
-        mRv.setAdapter(adapter);
+        View rootView = super.onCreateView(inflater, container, savedInstanceState);
+        ButterKnife.bind(this, rootView);
+        return rootView;
     }
 
 
-    @OnClick({R.id.fragment_girl_recycler,
-              R.id.swipe_refresh})
-    public void onViewClicked(View view) {
-        switch (view.getId()) {
-            case R.id.fragment_girl_recycler:
+    @Override
+    public boolean onInterceptTouchEvent(RecyclerView rv, MotionEvent e) {
+        switch (e.getAction()) {
+            case MotionEvent.ACTION_DOWN:
+
+                LogUtil.d("AAAAAAAAAA====");
                 break;
-            case R.id.swipe_refresh:
+            case MotionEvent.ACTION_POINTER_DOWN:
+
+            default:
                 break;
         }
+        return false;
     }
 
     @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        unbinder.unbind();
+    public void onTouchEvent(RecyclerView rv, MotionEvent e) {
+        switch (e.getAction()) {
+            case MotionEvent.ACTION_DOWN:
+
+                LogUtil.d("BBBBBBBBBBBB====");
+                break;
+            case MotionEvent.ACTION_POINTER_DOWN:
+
+            default:
+                break;
+        }
+
+
+
+    }
+
+    @Override
+    public void onRequestDisallowInterceptTouchEvent(boolean disallowIntercept) {
+
+        LogUtil.d("CCCCCCCCCCCCCCCCCCCC=="+disallowIntercept);
+    }
+
+    @Override
+    public void onClick(View view) {
+        LogUtil.d("DDDDDDDDDDDDDDDDDDDDDDDD");
     }
 }

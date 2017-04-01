@@ -17,11 +17,9 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import photoview.yibao.com.photoview.Interface.IChangeFragment;
 import photoview.yibao.com.photoview.R;
 import photoview.yibao.com.photoview.bean.GirlData;
 import photoview.yibao.com.photoview.http.Api;
-import photoview.yibao.com.photoview.util.LogUtil;
 
 /**
  * 作者：Stran on 2017/3/29 06:11
@@ -30,7 +28,8 @@ import photoview.yibao.com.photoview.util.LogUtil;
  */
 public class GirlAdapter
         extends RecyclerView.Adapter<RecyclerView.ViewHolder>
-        implements View.OnClickListener
+
+
 {
     @BindView(R.id.pbLoad)
     ProgressBar  mPbLoad;
@@ -57,12 +56,25 @@ public class GirlAdapter
     //上拉加载更多状态-默认为0
     private int mLoadMoreStatus = 0;
 
-    IChangeFragment mIChangeFragment;
     private int mNum;
 
-    public GirlAdapter(Context context, IChangeFragment iChangeFragment) {
+
+    //回调接口
+    public OnRvItemClickListener mItemClickListener;
+
+    public interface OnRvItemClickListener {
+        void showPagerFragment(int position);
+
+    }
+
+    public void setShowPagerViewListener(OnRvItemClickListener listener) {
+        this.mItemClickListener = listener;
+    }
+
+
+    public GirlAdapter(Context context) {
         mContext = context;
-       this.mIChangeFragment = iChangeFragment;
+        //       this.mIChangeFragment = iChangeFragment;
     }
 
 
@@ -71,31 +83,40 @@ public class GirlAdapter
         if (viewType == TYPE_ITEM) {
             mView = LayoutInflater.from(parent.getContext())
                                   .inflate(R.layout.item_girl, parent, false);
-            mView.setOnClickListener(this);
-            ViewHolder holder = new ViewHolder(mView);
 
-            return holder;
+            return new ViewHolder(mView);
 
         } else if (viewType == LOADING_MORE) {
             mView = LayoutInflater.from(parent.getContext())
                                   .inflate(R.layout.load_more_footview_layout, parent, false);
-            LoadMoreViewHolder moreHolder = new LoadMoreViewHolder(mView);
-            return moreHolder;
+            return new LoadMoreViewHolder(mView);
 
         }
         return null;
     }
 
+    //绑定视图
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        mNum = position;
-        send(mNum);
-        LogUtil.d("888888888888             === "+mNum);
+    public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
+        send(position);
         if (holder instanceof ViewHolder) {
-            ViewHolder viewHolder = (ViewHolder) holder;
+            final ViewHolder viewHolder = (ViewHolder) holder;
+            //设置监听
+            viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+
+                    //打开PagerView的回调
+                    if (mContext instanceof OnRvItemClickListener) {
+                        ((OnRvItemClickListener)mContext).showPagerFragment(position);
+                    }
+                }
+            });
             //绑定图片
             Uri url = Uri.parse(Api.picUrlArr[position]);
+
             viewHolder.mGrilImageView.setImageURI(url);
+
         } else if (holder instanceof LoadMoreViewHolder) {
             LoadMoreViewHolder moreViewHolder = (LoadMoreViewHolder) holder;
             switch (mLoadMoreStatus) {
@@ -134,8 +155,7 @@ public class GirlAdapter
     }
 
     private void send(int position) {
-        LogUtil.d("99999999999999999999     Send===" + position);
-        mNum=position;
+        //        LogUtil.d("99999999999999999999     Send===" + position);
 
     }
 
@@ -169,12 +189,7 @@ public class GirlAdapter
         }
     }
 
-    @Override
-    public void onClick(View view) {
 
-        mIChangeFragment.change(mNum);
-        LogUtil.d("444444444444444444444444444444"+mNum);
-    }
     //**************************************************************************************
 
     static class ViewHolder

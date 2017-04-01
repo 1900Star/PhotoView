@@ -3,6 +3,8 @@ package photoview.yibao.com.photoview.util;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Environment;
 import android.os.Handler;
@@ -22,7 +24,9 @@ import okhttp3.Callback;
 import okhttp3.Request;
 import okhttp3.Response;
 import photoview.yibao.com.photoview.MyApplication;
-import photoview.yibao.com.photoview.adapter.MyPagerAdapter;
+import photoview.yibao.com.photoview.R;
+import photoview.yibao.com.photoview.activity.MainActivity;
+import photoview.yibao.com.photoview.adapter.PagerViewAdapter;
 import photoview.yibao.com.photoview.bean.GirlBean;
 import photoview.yibao.com.photoview.bean.ResultsBean;
 import photoview.yibao.com.photoview.http.Api;
@@ -48,22 +52,24 @@ public class SaveImageUtil {
     private static int     DOWN_PIC_SUCCESS = 0;
     private static boolean isSuccess        = false;
     static List<ResultsBean> mResults;
-    static Handler mHandler = new Handler() {
+    protected static Handler mHandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
             int what = msg.what;
             //将下载进度设置到ProgressBar上
             if (DOWN_PROGRESS == what) {
-//                int          progress     = (int) msg.obj;
-////                ProgressView progressView = MainActivity.getProgressView();
-//                progressView.setIcon(R.drawable.share_evernote);
-//                progressView.setBackground(new ColorDrawable(Color.TRANSPARENT));
-//                progressView.setMax(100);
-//                progressView.setProgress(progress);
+                int          progress     = (int) msg.obj;
+                LogUtil.d("handler ===  "+progress);
+                ProgressView progressView = MainActivity.getProgressView();
+
+                progressView.setIcon(R.drawable.share_evernote);
+                progressView.setBackground(new ColorDrawable(Color.TRANSPARENT));
+                progressView.setMax(100);
+                progressView.setProgress(progress);
             } else if (DOWN_PIC_SUCCESS == what) {
                 //弹出下载完成通知
-//                MainActivity.showSavePicSuccess();
+//                showSavePicSuccess();
 
             }
 
@@ -75,8 +81,7 @@ public class SaveImageUtil {
 
     public static void savePic(final Context mContext,
                                int itemPosition,
-                               final MyPagerAdapter mAdapter,
-                               final ProgressView progressView)
+                               final PagerViewAdapter mAdapter)
     {
 
         String url  = Api.picUrlArr[itemPosition];
@@ -129,20 +134,19 @@ public class SaveImageUtil {
                                       message.obj = progress;
                                       message.what = DOWN_PROGRESS;
                                       mHandler.sendMessage(message);
-
-
+                                      LogUtil.d("===========    "+progress);
                                   }
 
                                   @Override
                                   public void onDownloadFailed() {
-
+                                        LogUtil.d("--------------------------    failed");
 
                                   }
                               });
     }
 
     /**
-     * 加载图片数据
+     * 加载GanKio图片数据
      */
     public static List<ResultsBean> initGirlData()
     {
@@ -156,7 +160,7 @@ public class SaveImageUtil {
                          @Override
                          public void onFailure(Call call, IOException e) {
                              //下载失败
-                             //                       listener.onDownloadFailed();
+                             //                                                    listener.onDownloadFailed();
                          }
 
                          @Override

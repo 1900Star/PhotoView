@@ -8,8 +8,8 @@ import android.widget.FrameLayout;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import photoview.yibao.com.photoview.fragment.GirlFragment;
 import photoview.yibao.com.photoview.R;
+import photoview.yibao.com.photoview.fragment.PagerViewFragment;
 
 /**
  * 作者：Stran on 2017/3/27 18:58
@@ -31,7 +31,8 @@ public class ViewActivty
         super.onCreate(savedInstanceState);
         setContentView(R.layout.view_activity);
         ButterKnife.bind(this);
-        GirlFragment        fragment = new GirlFragment();
+        PagerViewFragment
+                fragment = new PagerViewFragment();
         FragmentManager     fm       = getFragmentManager();
         FragmentTransaction ft       = fm.beginTransaction();
         ft.add(R.id.activity_content, fragment);

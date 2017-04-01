@@ -7,8 +7,7 @@ package photoview.yibao.com.photoview.http;
  */
 public class Api {
 
-    public static String[] picUrlArr  = {"http://askpanda.cc/ask/pics/star/movie/11144/11144-dm42016052860621.jpg",
-                                         "http://imgsrc.baidu.com/forum/pic/item/e7e0d7544db50873d009068e.jpg",
+    public static String[] picUrlArr  = {"http://imgsrc.baidu.com/forum/pic/item/e7e0d7544db50873d009068e.jpg",
                                          "http://n1.itc.cn/img8/wb/recom/2016/05/05/146239586418056758.JPEG",
                                          "http://imgsrc.baidu.com/forum/pic/item/c75c10385343fbf2b829caa0b07eca8065388f2f.jpg",
                                          "http://imgsrc.baidu.com/forum/pic/item/cdbf6c81800a19d88200df4833fa828ba61e467f.jpg",
@@ -45,6 +44,7 @@ public class Api {
                                          "http://easyread.ph.126.net/x3_6y9OE_WFz3AK32xS2Sw==/7916958709012274228.jpg",
                                          "http://img22.mtime.cn/up/2011/04/07/083214.54902292_o.jpg",
                                          "http://www.sun0769.com/subject/xunsufei/images/photo_sf_13b.jpg",
+                                         "http://askpanda.cc/ask/pics/star/movie/11144/11144-dm42016052860621.jpg",
                                          "http://i2.qhimg.com/t01e6494970fb1220ac.jpg",
                                          "http://imgsrc.baidu.com/forum/pic/item/d3febe1f4134970a0835e5fd95cad1c8a6865d4f.jpg",
                                          "http://image55.360doc.com/DownloadImg/2012/10/1307/27496677_2.jpg",

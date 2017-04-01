@@ -1,23 +1,31 @@
 package photoview.yibao.com.photoview.activity;
 
-import android.content.Context;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
-import android.support.design.widget.Snackbar;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
-import android.view.KeyEvent;
+import android.support.v7.widget.Toolbar;
+import android.view.Menu;
 import android.view.MenuItem;
+import android.view.WindowManager;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
+import photoview.yibao.com.photoview.MyApplication;
 import photoview.yibao.com.photoview.R;
+import photoview.yibao.com.photoview.adapter.GirlAdapter;
 import photoview.yibao.com.photoview.fragment.GirlFragment;
-import photoview.yibao.com.photoview.util.LogUtil;
+import photoview.yibao.com.photoview.fragment.PagerViewFragment;
+import photoview.yibao.com.photoview.util.SnakbarUtil;
+import photoview.yibao.com.photoview.util.WallPaperUtil;
+import photoview.yibao.com.photoview.view.ProgressView;
+
 
 /**
  * 作者：Stran on 2017/3/23 15:12
@@ -26,58 +34,119 @@ import photoview.yibao.com.photoview.util.LogUtil;
  */
 public class MainActivity
         extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener
+        implements NavigationView.OnNavigationItemSelectedListener,
+                   GirlAdapter.OnRvItemClickListener
 
 
 {
-    private static Context mContext;
-
-
-    /**
-     * 闲置状态
-     */
-    public static final int SCROLL_STATE_IDLE = 0;
-
-
-    /**
-     * 默认下载进度
-     */
-    public static final int DEFULT_DOWN_PREGRESS = 0;
     @BindView(R.id.content_activity)
     FrameLayout    mContentActivity;
     @BindView(R.id.nav_view)
     NavigationView mNavView;
     @BindView(R.id.drawer_layout)
     DrawerLayout   mDrawerLayout;
+    @BindView(R.id.toolbar)
+    Toolbar        mToolbar;
 
 
     private long exitTime = 0;
+    private PagerViewFragment mPagerViewFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
-        initData();
+        if (savedInstanceState == null) {
+            initView();
+            initData();
+        }
 
     }
 
+    private void initView() {
+        mToolbar.setTitle("Smartisan T1");
+        mToolbar.setNavigationIcon(R.mipmap.google);
+        setSupportActionBar(mToolbar);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this,
+                                                                 mDrawerLayout,
+                                                                 mToolbar,
+                                                                 R.string.navigation_drawer_open,
+                                                                 R.string.navigation_drawer_close);
+        //        mDrawerLayout.setDrawerListener(toggle);
+        mDrawerLayout.addDrawerListener(toggle);
+        toggle.syncState();
 
+        mNavView = (NavigationView) findViewById(R.id.nav_view);
+        mNavView.setNavigationItemSelectedListener(this);
+
+    }
 
     private void initData() {
         mNavView.setNavigationItemSelectedListener(this);
         getFragmentManager().beginTransaction()
-                            .add(R.id.content_activity, new GirlFragment())
+                            .add(R.id.content_activity, new GirlFragment(), "one")
+                            .commit();
+    }
+
+    //打开ViewPager浏览大图
+    @Override
+    public void showPagerFragment(int position) {
+        //        mToolbar.setTitle("Google");
+        if (mPagerViewFragment == null) {
+            mPagerViewFragment = new PagerViewFragment();
+        }
+        Bundle bundle = new Bundle();
+        bundle.putInt("position", position);
+        mPagerViewFragment.setArguments(bundle);
+        getFragmentManager().beginTransaction()
+                            .replace(R.id.content_activity, mPagerViewFragment, "two")
+                            .addToBackStack(null)
                             .commit();
 
 
     }
 
+    /**
+     * 图片保存成功提示
+     */
+    public static void showSavePicSuccess() {
+        int       color     = Color.rgb(90, 181, 63);
+        ImageView imageView = new ImageView(MyApplication.getIntstance());
+        SnakbarUtil.showSuccessStatus(imageView, "图片保存成功~", color)
+                   .show();
+    }
 
-    @OnClick(R.id.nav_view)
-    public void onViewClicked() {
+    @Override
+    public void onWindowAttributesChanged(WindowManager.LayoutParams params) {
+
+    }
 
 
+    public static ProgressView getProgressView() {
+
+        return new ProgressView(MyApplication.getIntstance());
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        mToolbar.inflateMenu(R.menu.main);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        switch (id) {
+            case R.id.action_setwallpaper: //设置壁纸
+                //                WallPaperUtil.setWallPaper(this, mAdapter);
+                //                startActivity(new Intent(this, ViewActivty.class));
+                break;
+            case R.id.action_gallery:  //从相册选择壁纸
+                WallPaperUtil.choiceWallPaper(this);
+                break;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override
@@ -85,17 +154,6 @@ public class MainActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_camera) {
-            LogUtil.d("ooooooooooooooooooooooooooooooooooooooooooooooooooo");
-        } else if (id == R.id.nav_gallery) {
-
-        } else if (id == R.id.nav_slideshow) {
-
-        } else if (id == R.id.nav_manage) {
-
-        } else if (id == R.id.nav_share) {
-
-        } else if (id == R.id.nav_send) {
-
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -103,20 +161,5 @@ public class MainActivity
         return true;
     }
 
-    @Override
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if (keyCode == KeyEvent.KEYCODE_BACK && event.getAction() == KeyEvent.ACTION_DOWN) {
 
-            if ((System.currentTimeMillis() - exitTime) > 2000) {
-                Snackbar.make(mNavView, "再按一次我就离开了~", Snackbar.LENGTH_LONG)
-                        .show();
-                exitTime = System.currentTimeMillis();
-            } else {
-                finish();
-                System.exit(0);
-            }
-            return true;
-        }
-        return super.onKeyDown(keyCode, event);
-    }
 }

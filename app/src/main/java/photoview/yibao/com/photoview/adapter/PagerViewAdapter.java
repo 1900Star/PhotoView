@@ -4,7 +4,6 @@ import android.content.Context;
 import android.support.v4.view.PagerAdapter;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.AlphaAnimation;
 import android.widget.ImageView;
 
 import photoview.yibao.com.photoview.http.Api;
@@ -16,15 +15,20 @@ import photoview.yibao.com.photoview.view.ZoomImageView;
  * 描述：${TODO}
  * 邮箱：strangermy@outlook.com
  */
-public class MyPagerAdapter
+public class PagerViewAdapter
         extends PagerAdapter
 {
     private Context mContext;
     private View    mCurrentView;
+    private int currentPosition;
 
-    public MyPagerAdapter(Context context) {
+    public PagerViewAdapter(Context context, int position) {
+
         this.mContext = context;
+        this.currentPosition=position;
     }
+
+
 
 
     @Override
@@ -46,20 +50,15 @@ public class MyPagerAdapter
 
     @Override
     public Object instantiateItem(ViewGroup container, int position) {
-        AlphaAnimation animation = new AlphaAnimation(1.0f, 1.0f);
-        animation.setDuration(3000);
-        animation.setFillAfter(true);
 
         ZoomImageView view = new ZoomImageView(mContext);
         ViewGroup.LayoutParams params = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
                                                                    ViewGroup.LayoutParams.MATCH_PARENT);
 
         view.setScaleType(ImageView.ScaleType.CENTER_CROP);
-        view.setAnimation(animation);
-
         view.reSetState();
         //加载图片
-        ImageUitl.glideLoadPic(mContext, position, view);
+        ImageUitl.glideLoadPic(mContext,currentPosition , view);
 
         container.addView(view, params);
 
@@ -77,5 +76,4 @@ public class MyPagerAdapter
 
         return mCurrentView;
     }
-
 }

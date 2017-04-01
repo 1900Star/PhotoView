@@ -17,7 +17,7 @@ public class SnakbarUtil {
      * @param color
      * @return
      */
-    public static Snackbar showSetSnakBarBagrand(View view, String message, int color) {
+    public static Snackbar showSuccessStatus(View view, String message, int color) {
         Snackbar snackbar = Snackbar.make(view, message, Snackbar.LENGTH_LONG);
         snackbar.getView()
                 .setBackgroundColor(color);
@@ -63,17 +63,15 @@ public class SnakbarUtil {
      * showShortSnakbar
      * @param view
      * @param message
-     * @param action
-     * @param listener
+    //     * @param action
+    //     * @param listener
      * @return
      */
-    public static Snackbar showSnakbarShort(View view,
-                                            String message,
-                                            String action,
-                                            View.OnClickListener listener)
+    public static Snackbar showSnakbarShort(View view, String message, int color)
     {
-        Snackbar snackbar = Snackbar.make(view, message, Snackbar.LENGTH_SHORT)
-                                    .setAction(action, listener);
+        Snackbar snackbar = Snackbar.make(view, message, Snackbar.LENGTH_SHORT);
+        snackbar.getView()
+                .setBackgroundColor(color);
 
         return snackbar;
     }
@@ -85,7 +83,7 @@ public class SnakbarUtil {
      */
     public static Snackbar dismissSnakbar(View view)
     {
-        Snackbar snackbar = Snackbar.make(view, "",Snackbar.LENGTH_SHORT);
+        Snackbar snackbar = Snackbar.make(view, "", Snackbar.LENGTH_SHORT);
         snackbar.dismiss();
         return snackbar;
     }

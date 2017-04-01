@@ -57,7 +57,7 @@ public class ProgressView
     public void setProgress(int progress) {
         mProgress = progress;
         //重绘
-//        invalidate();
+//        invalidate()        这个方法会报子线程修改UIn异常，
         postInvalidate();
     }
 
@@ -105,9 +105,9 @@ public class ProgressView
                 mOval = new RectF(left,top, right,bottom);
 
             }
-            float startAngle = -90;
-            float sweepAngle = mProgress * 1.0f / mMax * 360;
-            boolean useCenter = false;
+            float   startAngle = -90;
+            float   sweepAngle = mProgress * 1.0f / mMax * 360;
+            boolean useCenter  = false;
             if (mPaint == null) {
                 mPaint = new Paint();
                 mPaint.setStyle(Paint.Style.STROKE);

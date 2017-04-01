@@ -57,7 +57,6 @@ public class ImageUitl {
         String url = picUrlArr[position];
         //        String url = MainActivity.initGirlData().get(position)
         //                                 .getUrl();
-        System.out.println("this is ImageUrl    " + url);
 
         Glide.with(context)
              .load(url).asBitmap()
@@ -77,7 +76,6 @@ public class ImageUitl {
                             final OnDownloadListener listener)
     {
 
-        LogUtil.d("进入下载方法", "////////////////////////////////////////////");
         Request request = new Request.Builder().url(url)
                                                .build();
         mClient.newCall(request)
@@ -155,20 +153,13 @@ public class ImageUitl {
 
     //下载图片回调接口
     public interface OnDownloadListener {
-        /**
-         * 下载成功
-         */
+
         void onDownloadSuccess();
 
-        /**
-         * @param progress
-         * 下载进度
-         */
+
         void onDownloading(int progress);
 
-        /**
-         * 下载失败
-         */
+
         void onDownloadFailed();
     }
 

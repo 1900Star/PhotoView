@@ -72,8 +72,6 @@ public class SaveImageUtil {
 //                showSavePicSuccess();
 
             }
-
-
         }
     };
     private Bitmap bitmap;
@@ -189,6 +187,4 @@ public class SaveImageUtil {
 
         return mResults;
     }
-
-
 }

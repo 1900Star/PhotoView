@@ -20,7 +20,7 @@
             android:name=".activity.MainActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar"
-           >
+        >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
@@ -28,7 +28,13 @@
             </intent-filter>
         </activity>
         <activity android:name=".activity.ViewActivty"/>
-
+        <!--<service android:name=".adapter.MessengerService" android:enabled="true"
+                 android:exported="true" android:permission="">
+            <intent-filter>
+                <action android:name="com.zhy.aidl.calc"/>
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </service>-->
     </application>
 
 </manifest>

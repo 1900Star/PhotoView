@@ -55,7 +55,7 @@ public class PagerViewAdapter
         ViewGroup.LayoutParams params = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
                                                                    ViewGroup.LayoutParams.MATCH_PARENT);
 
-        view.setScaleType(ImageView.ScaleType.CENTER_CROP);
+        view.setScaleType(ImageView.ScaleType.MATRIX);
         view.reSetState();
         //加载图片
         ImageUitl.glideLoadPic(mContext,currentPosition , view);

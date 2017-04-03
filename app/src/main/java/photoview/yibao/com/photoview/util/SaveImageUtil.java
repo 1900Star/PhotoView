@@ -32,6 +32,8 @@ import photoview.yibao.com.photoview.bean.ResultsBean;
 import photoview.yibao.com.photoview.http.Api;
 import photoview.yibao.com.photoview.view.ProgressView;
 
+import static photoview.yibao.com.photoview.activity.MainActivity.showSavePicSuccess;
+
 
 /**
  * 作者：Stran on 2017/3/23 19:52
@@ -59,17 +61,16 @@ public class SaveImageUtil {
             int what = msg.what;
             //将下载进度设置到ProgressBar上
             if (DOWN_PROGRESS == what) {
-                int          progress     = (int) msg.obj;
-                LogUtil.d("handler ===  "+progress);
+                int progress = (int) msg.obj;
+                LogUtil.d("HandlerMessage ===  " + progress);
                 ProgressView progressView = MainActivity.getProgressView();
-
                 progressView.setIcon(R.drawable.share_evernote);
                 progressView.setBackground(new ColorDrawable(Color.TRANSPARENT));
                 progressView.setMax(100);
                 progressView.setProgress(progress);
             } else if (DOWN_PIC_SUCCESS == what) {
                 //弹出下载完成通知
-//                showSavePicSuccess();
+                showSavePicSuccess();
 
             }
         }
@@ -132,12 +133,11 @@ public class SaveImageUtil {
                                       message.obj = progress;
                                       message.what = DOWN_PROGRESS;
                                       mHandler.sendMessage(message);
-                                      LogUtil.d("===========    "+progress);
                                   }
 
                                   @Override
                                   public void onDownloadFailed() {
-                                        LogUtil.d("--------------------------    failed");
+                                      LogUtil.d("--------------------------    failed");
 
                                   }
                               });

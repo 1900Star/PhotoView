@@ -16,7 +16,6 @@ import butterknife.OnClick;
 import butterknife.Unbinder;
 import photoview.yibao.com.photoview.R;
 import photoview.yibao.com.photoview.adapter.PagerViewAdapter;
-import photoview.yibao.com.photoview.util.AnimationUtil;
 import photoview.yibao.com.photoview.util.LogUtil;
 import photoview.yibao.com.photoview.util.NetWorkUtils;
 import photoview.yibao.com.photoview.util.SaveImageUtil;
@@ -30,6 +29,7 @@ import photoview.yibao.com.photoview.view.ProgressView;
  */
 public class PagerViewFragment
         extends Fragment
+        implements ViewPager.OnPageChangeListener
 {
     @BindView(R.id.toolbar)
     Toolbar      mToolbar;
@@ -40,10 +40,10 @@ public class PagerViewFragment
     Unbinder unbinder;
 
 
-    private int              mPosition;
+    private int mPosition;
+    private boolean isFirst = true;
     private PagerViewAdapter mPagerAdapter;
-    private View             mView;
-    private boolean          mConnected;
+    private int              mMCrurrentPosition;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -59,17 +59,24 @@ public class PagerViewFragment
                              @Nullable ViewGroup container,
                              Bundle savedInstanceState)
     {
-        mView = inflater.inflate(R.layout.fragment_pager_view, container, false);
+        View view = inflater.inflate(R.layout.fragment_pager_view, container, false);
 
-        unbinder = ButterKnife.bind(this, mView);
+        unbinder = ButterKnife.bind(this, view);
 
         initData();
-        return mView;
+        return view;
     }
 
     private void initData() {
-        mPagerAdapter = new PagerViewAdapter(getActivity(), mPosition);
+        if (isFirst) {
+            mPagerAdapter = new PagerViewAdapter(getActivity(), mPosition);
+            isFirst = false;
+        } else {
+            LogUtil.d("555555555555555555555555555555555555555");
+            mPagerAdapter = new PagerViewAdapter(getActivity(), mMCrurrentPosition);
+        }
         mVp.setAdapter(mPagerAdapter);
+        mVp.addOnPageChangeListener(this);
 
     }
 
@@ -77,11 +84,11 @@ public class PagerViewFragment
     @OnClick(R.id.pb_down)
     public void onViewClicked() {
 
-        mConnected = NetWorkUtils.isConnected();
-        LogUtil.d("11111" + mConnected);
-        if (mConnected) {
-
-            AnimationUtil.getUpTranslateY(mPbDown);
+        boolean connected = NetWorkUtils.isConnected();
+        LogUtil.d("11111" + connected);
+        if (connected) {
+            //平移动画
+//            AnimationUtil.getUpTranslateY(mPbDown);
 
             SnakbarUtil.showSnakbarLong(mPbDown,
                                         "可以将图片保存起来-_-",
@@ -98,6 +105,8 @@ public class PagerViewFragment
         } else {
 
             int color = Color.rgb(255, 64, 129);
+
+
             SnakbarUtil.showSnakbarShort(mPbDown, "网络异常，请检查您的网络连接。-_-", color)
                        .show();
         }
@@ -108,13 +117,13 @@ public class PagerViewFragment
     /**
      * 图片保存成功提示
      */
-    public void showSavePicSuccess() {
-        int color = Color.rgb(90, 181, 63);
-
-        SnakbarUtil.showSuccessStatus(mPbDown, "图片保存成功~", color)
-                   .show();
-
-    }
+//    public void showSavePicSuccess() {
+//        int color = Color.rgb(90, 181, 63);
+//
+//        SnakbarUtil.showSuccessStatus(mPbDown, "图片保存成功~", color)
+//                   .show();
+//
+//    }
 
     @Override
     public void onDestroyView() {
@@ -122,4 +131,18 @@ public class PagerViewFragment
         unbinder.unbind();
     }
 
+    @Override
+    public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+    }
+
+    @Override
+    public void onPageSelected(int position) {
+        mMCrurrentPosition = position;
+    }
+
+    @Override
+    public void onPageScrollStateChanged(int state) {
+
+    }
 }

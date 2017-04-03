@@ -11,9 +11,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.view.WindowManager;
 import android.widget.FrameLayout;
-import android.widget.ImageView;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -50,12 +50,15 @@ public class MainActivity
 
 
     private long exitTime = 0;
-    private PagerViewFragment mPagerViewFragment;
+    private        PagerViewFragment mPagerViewFragment;
+//    @SuppressLint("StaticFieldLeak")
+    private static View mV;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        mV = findViewById(R.id.view);
         ButterKnife.bind(this);
         if (savedInstanceState == null) {
             initView();
@@ -112,9 +115,9 @@ public class MainActivity
      */
     public static void showSavePicSuccess() {
         int       color     = Color.rgb(90, 181, 63);
-        ImageView imageView = new ImageView(MyApplication.getIntstance());
-        SnakbarUtil.showSuccessStatus(imageView, "图片保存成功~", color)
+        SnakbarUtil.showSuccessStatus(mV, "图片保存成功~", color)
                    .show();
+//        LogUtil.d("success=======================================================");
     }
 
     @Override

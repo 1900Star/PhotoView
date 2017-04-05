@@ -82,6 +82,7 @@ public class ProgressView
     public ProgressView(Context context, AttributeSet attrs) {
         super(context, attrs);
         //挂载布局
+
         View view = View.inflate(context, R.layout.progress_btn, this);
         mIvIcon = (ImageView) view.findViewById(R.id.fab);
     }
@@ -107,6 +108,7 @@ public class ProgressView
             }
             float   startAngle = -90;
             float   sweepAngle = mProgress * 1.0f / mMax * 360;
+            //是否以图片的中心为圆点
             boolean useCenter  = false;
             if (mPaint == null) {
                 mPaint = new Paint();

@@ -175,7 +175,7 @@ public class SaveImageUtil {
                              GirlBean girlData = gson.fromJson(json, GirlBean.class);
                              mResults = girlData.getResults();
 
-                             ResultsBean resultsBean = mResults.get(460);
+                             ResultsBean resultsBean = mResults.get(461);
 
                              String ganhuo_id = resultsBean.getUrl();
                              LogUtil.d("__-----++=++++++++++这是图片的 长度=====Url ==" + mResults.size());

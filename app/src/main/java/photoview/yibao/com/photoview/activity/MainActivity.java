@@ -22,6 +22,7 @@ import photoview.yibao.com.photoview.R;
 import photoview.yibao.com.photoview.adapter.GirlAdapter;
 import photoview.yibao.com.photoview.fragment.GirlFragment;
 import photoview.yibao.com.photoview.fragment.PagerViewFragment;
+import photoview.yibao.com.photoview.util.SaveImageUtil;
 import photoview.yibao.com.photoview.util.SnakbarUtil;
 import photoview.yibao.com.photoview.util.WallPaperUtil;
 import photoview.yibao.com.photoview.view.ProgressView;
@@ -144,6 +145,7 @@ public class MainActivity
             case R.id.action_setwallpaper: //设置壁纸
                 //                WallPaperUtil.setWallPaper(this, mAdapter);
                 //                startActivity(new Intent(this, ViewActivty.class));
+                SaveImageUtil.initGirlData();
                 break;
             case R.id.action_gallery:  //从相册选择壁纸
                 WallPaperUtil.choiceWallPaper(this);

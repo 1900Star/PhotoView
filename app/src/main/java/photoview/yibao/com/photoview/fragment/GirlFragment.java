@@ -55,7 +55,7 @@ public class GirlFragment
                              ViewGroup container,
                              Bundle savedInstanceState)
     {
-        mView = View.inflate(getActivity(), R.layout.fragmet_girl, null);
+        mView = View.inflate(getActivity(), R.layout.fragmet_main_girl, null);
 
 
         unbinder = ButterKnife.bind(this, mView);

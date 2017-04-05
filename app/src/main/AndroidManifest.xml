@@ -27,7 +27,6 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".activity.ViewActivty"/>
         <!--<service android:name=".adapter.MessengerService" android:enabled="true"
                  android:exported="true" android:permission="">
             <intent-filter>

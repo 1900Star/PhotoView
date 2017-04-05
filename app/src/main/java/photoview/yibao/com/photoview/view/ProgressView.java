@@ -12,6 +12,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import photoview.yibao.com.photoview.R;
+import photoview.yibao.com.photoview.util.LogUtil;
 
 /**
  * 作者：Stran on 2017/3/27 16:55
@@ -56,7 +57,7 @@ public class ProgressView
     public void setProgress(int progress) {
         mProgress = progress;
         //重绘
-//        invalidate();
+//        invalidate()        这个方法会报子线程修改UIn异常，
         postInvalidate();
     }
 
@@ -81,6 +82,7 @@ public class ProgressView
     public ProgressView(Context context, AttributeSet attrs) {
         super(context, attrs);
         //挂载布局
+
         View view = View.inflate(context, R.layout.progress_btn, this);
         mIvIcon = (ImageView) view.findViewById(R.id.fab);
     }
@@ -97,16 +99,17 @@ public class ProgressView
         int top = mIvIcon.getTop();
         int left=mIvIcon.getLeft();
         int right=mIvIcon.getRight();
-//        LogUtil.d("BOTTOM===============BOTTOM  ",left+"========"+top+   "  =="+right+"    =="+bottom);
+        LogUtil.d("BOTTOM===============BOTTOM  ",left+"========"+top+   "  =="+right+"    =="+bottom);
         if (isProgressEnable) {
             if (mOval == null) {
 
                 mOval = new RectF(left,top, right,bottom);
 
             }
-            float startAngle = -90;
-            float sweepAngle = mProgress * 1.0f / mMax * 360;
-            boolean useCenter = false;
+            float   startAngle = -90;
+            float   sweepAngle = mProgress * 1.0f / mMax * 360;
+            //是否以图片的中心为圆点
+            boolean useCenter  = false;
             if (mPaint == null) {
                 mPaint = new Paint();
                 mPaint.setStyle(Paint.Style.STROKE);

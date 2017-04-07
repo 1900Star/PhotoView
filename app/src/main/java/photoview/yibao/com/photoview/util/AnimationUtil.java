@@ -32,7 +32,7 @@ public class AnimationUtil {
     public static Animator getDownTranslateY(final View view) {
 
         final ValueAnimator animator = ValueAnimator.ofInt(0, 1)
-                                                    .setDuration(800);
+                                                    .setDuration(1000);
         animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
             @Override
             public void onAnimationUpdate(ValueAnimator valueAnimator) {

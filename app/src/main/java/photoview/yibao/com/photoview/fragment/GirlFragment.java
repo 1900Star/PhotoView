@@ -12,15 +12,20 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.umeng.analytics.MobclickAgent;
+
 import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
 import photoview.yibao.com.photoview.R;
-import photoview.yibao.com.photoview.adapter.GirlAdapter;
+import photoview.yibao.com.photoview.adapter.GirlsAdapter;
 import photoview.yibao.com.photoview.bean.GirlData;
+import photoview.yibao.com.photoview.util.ImageUitl;
+import photoview.yibao.com.photoview.util.LogUtil;
 
 /**
  * 作者：Stran on 2017/3/29 01:18
@@ -29,6 +34,7 @@ import photoview.yibao.com.photoview.bean.GirlData;
  */
 public class GirlFragment
         extends Fragment
+        implements ImageUitl.OnData
 
 {
 
@@ -47,8 +53,9 @@ public class GirlFragment
 
     private ArrayList<GirlData> mList;
     private AppCompatActivity   mActivity;
-    private GirlAdapter         mAdapter;
+    private GirlsAdapter        mAdapter;
     private FragmentManager     mFragmentManager;
+    private ArrayList<String>   mGirlsList;
 
     @Override
     public View onCreateView(LayoutInflater inflater,
@@ -59,8 +66,9 @@ public class GirlFragment
 
 
         unbinder = ButterKnife.bind(this, mView);
+
         initData();
-        initListener();
+        //        initListener();
         return mView;
     }
 
@@ -68,15 +76,11 @@ public class GirlFragment
     //
 
 
-    private void initListener() {
-
-
-    }
-
-
     private void initData() {
+        mGirlsList = new ArrayList<>();
+        ImageUitl.getGirls();
         mFragmentManager = getActivity().getFragmentManager();
-        mAdapter = new GirlAdapter(getActivity());
+        mAdapter = new GirlsAdapter(getActivity());
         StaggeredGridLayoutManager manager = new StaggeredGridLayoutManager(2,
                                                                             StaggeredGridLayoutManager.VERTICAL);
         mRecyclerView.setLayoutManager(manager);
@@ -97,6 +101,15 @@ public class GirlFragment
         }
     }
 
+    public void onResume() {
+        super.onResume();
+        MobclickAgent.onPageStart("GirlFragment"); //统计页面，"MainScreen"为页面名称，可自定义
+    }
+
+    public void onPause() {
+        super.onPause();
+        MobclickAgent.onPageEnd("GirlFragment");
+    }
 
     @Override
     public void onDestroyView() {
@@ -105,4 +118,8 @@ public class GirlFragment
     }
 
 
+    @Override
+    public void getGrilsData(List<String> list) {
+        LogUtil.d("222222222222222222222222222222222222========================      " + list.size());
+    }
 }

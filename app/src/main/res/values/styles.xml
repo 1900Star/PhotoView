@@ -2,7 +2,6 @@
 
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat">
-        <!--<item name="android:windowBackground">@drawable/shape_launch</item>-->
 
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>

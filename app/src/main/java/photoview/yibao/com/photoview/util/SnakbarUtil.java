@@ -38,8 +38,9 @@ public class SnakbarUtil {
                                            String action,
                                            View.OnClickListener listener)
     {
-        Snackbar snackbar = Snackbar.make(view, message, Snackbar.LENGTH_LONG)
-                                    .addCallback(new Snackbar.Callback() {
+
+        return Snackbar.make(view, message, Snackbar.LENGTH_LONG)
+                       .addCallback(new Snackbar.Callback() {
                                         @Override
                                         public void onShown(Snackbar sb) {
                                             super.onShown(sb);
@@ -49,14 +50,12 @@ public class SnakbarUtil {
                                         public void onDismissed(Snackbar transientBottomBar,
                                                                 int event)
                                         {
-                                            //                                            AnimationUtil.getDownTranslateY(view);
+                                                                                        AnimationUtil.getDownTranslateY(view);
 
                                             super.onDismissed(transientBottomBar, event);
                                         }
                                     })
-                                    .setAction(action, listener);
-
-        return snackbar;
+                       .setAction(action, listener);
     }
 
     /**
@@ -65,7 +64,7 @@ public class SnakbarUtil {
      * @param message
     //     * @param action
     //     * @param listener
-     * @return
+     *
      */
     public static Snackbar showSnakbarShort(View view, String message, int color)
     {

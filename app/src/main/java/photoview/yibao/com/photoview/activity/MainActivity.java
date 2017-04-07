@@ -15,17 +15,16 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.FrameLayout;
 
+import com.umeng.analytics.MobclickAgent;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import photoview.yibao.com.photoview.MyApplication;
 import photoview.yibao.com.photoview.R;
-import photoview.yibao.com.photoview.adapter.GirlAdapter;
+import photoview.yibao.com.photoview.adapter.GirlsAdapter;
 import photoview.yibao.com.photoview.fragment.GirlFragment;
 import photoview.yibao.com.photoview.fragment.PagerViewFragment;
-import photoview.yibao.com.photoview.util.SaveImageUtil;
 import photoview.yibao.com.photoview.util.SnakbarUtil;
 import photoview.yibao.com.photoview.util.WallPaperUtil;
-import photoview.yibao.com.photoview.view.ProgressView;
 
 
 /**
@@ -36,7 +35,7 @@ import photoview.yibao.com.photoview.view.ProgressView;
 public class MainActivity
         extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener,
-                   GirlAdapter.OnRvItemClickListener
+                   GirlsAdapter.OnRvItemClickListener
 
 
 {
@@ -52,8 +51,8 @@ public class MainActivity
 
     private long exitTime = 0;
     private        PagerViewFragment mPagerViewFragment;
-//    @SuppressLint("StaticFieldLeak")
-    private static View mV;
+    //    @SuppressLint("StaticFieldLeak")
+    private static View              mV;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,6 +60,8 @@ public class MainActivity
         setContentView(R.layout.activity_main);
         mV = findViewById(R.id.view);
         ButterKnife.bind(this);
+        MobclickAgent.setDebugMode(true);
+        MobclickAgent.openActivityDurationTrack(false);
         if (savedInstanceState == null) {
             initView();
             initData();
@@ -69,15 +70,16 @@ public class MainActivity
     }
 
     private void initView() {
+        setSupportActionBar(mToolbar);
         mToolbar.setTitle("Smartisan T1");
         mToolbar.setNavigationIcon(R.mipmap.google);
-        setSupportActionBar(mToolbar);
+
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this,
                                                                  mDrawerLayout,
                                                                  mToolbar,
                                                                  R.string.navigation_drawer_open,
                                                                  R.string.navigation_drawer_close);
-        //        mDrawerLayout.setDrawerListener(toggle);
+//                mDrawerLayout.setDrawerListener(toggle);
         mDrawerLayout.addDrawerListener(toggle);
         toggle.syncState();
 
@@ -86,6 +88,7 @@ public class MainActivity
 
     }
 
+
     private void initData() {
         mNavView.setNavigationItemSelectedListener(this);
         getFragmentManager().beginTransaction()
@@ -93,10 +96,12 @@ public class MainActivity
                             .commit();
     }
 
-    //打开ViewPager浏览大图
+    //接口回调打开ViewPager浏览大图
     @Override
     public void showPagerFragment(int position) {
-        //        mToolbar.setTitle("Google");
+                mToolbar.setTitle("Google");
+//        mToolbar.setBackgroundColor();
+        mToolbar.setVisibility(View.GONE);
         if (mPagerViewFragment == null) {
             mPagerViewFragment = new PagerViewFragment();
         }
@@ -115,10 +120,10 @@ public class MainActivity
      * 图片保存成功提示
      */
     public static void showSavePicSuccess() {
-        int       color     = Color.rgb(90, 181, 63);
+        int color = Color.rgb(90, 181, 63);
         SnakbarUtil.showSuccessStatus(mV, "图片保存成功~", color)
                    .show();
-//        LogUtil.d("success=======================================================");
+        //        LogUtil.d("success=======================================================");
     }
 
     @Override
@@ -126,11 +131,6 @@ public class MainActivity
 
     }
 
-
-    public static ProgressView getProgressView() {
-
-        return new ProgressView(MyApplication.getIntstance());
-    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -145,7 +145,8 @@ public class MainActivity
             case R.id.action_setwallpaper: //设置壁纸
                 //                WallPaperUtil.setWallPaper(this, mAdapter);
                 //                startActivity(new Intent(this, ViewActivty.class));
-                SaveImageUtil.initGirlData();
+
+                //                ImageUitl.getGirls();
                 break;
             case R.id.action_gallery:  //从相册选择壁纸
                 WallPaperUtil.choiceWallPaper(this);
@@ -164,6 +165,14 @@ public class MainActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+    public void onResume() {
+        super.onResume();
+        MobclickAgent.onResume(this);       //统计时长
+    }
+    public void onPause() {
+        super.onPause();
+        MobclickAgent.onPause(this);
     }
 
 

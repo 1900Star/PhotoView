@@ -3,6 +3,7 @@ package photoview.yibao.com.photoview;
 import android.app.Application;
 
 import com.facebook.drawee.backends.pipeline.Fresco;
+import com.umeng.analytics.MobclickAgent;
 
 import java.util.concurrent.TimeUnit;
 
@@ -24,7 +25,8 @@ public class MyApplication
         super.onCreate();
         Fresco.initialize(this);
         mApplication = this;
-
+        MobclickAgent.setDebugMode(true);
+        MobclickAgent.openActivityDurationTrack(false);
 
     }
 

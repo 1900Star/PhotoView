@@ -18,7 +18,6 @@ import butterknife.ButterKnife;
 import photoview.yibao.com.photoview.R;
 import photoview.yibao.com.photoview.adapter.GirlsAdapter;
 import photoview.yibao.com.photoview.fragment.GirlFragment;
-import photoview.yibao.com.photoview.fragment.PagerViewFragment;
 import photoview.yibao.com.photoview.util.WallPaperUtil;
 
 
@@ -45,8 +44,6 @@ public class MainActivity
     @BindView(R.id.drawer_layout)
     DrawerLayout   mDrawerLayout;
     private long exitTime = 0;
-    private PagerViewFragment mPagerViewFragment;
-    private GirlFragment      mGirlFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,9 +76,9 @@ public class MainActivity
 
 
     private void initData() {
-        mGirlFragment = new GirlFragment();
+        GirlFragment girlFragment = new GirlFragment();
         getFragmentManager().beginTransaction()
-                            .add(R.id.content_activity, mGirlFragment, "one")
+                            .add(R.id.content_activity, girlFragment, "one")
                             .commit();
     }
 

@@ -2,11 +2,11 @@ package photoview.yibao.com.photoview.fragment;
 
 import android.app.Fragment;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
-import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,12 +34,10 @@ import photoview.yibao.com.photoview.util.LogUtil;
  */
 public class GirlFragment
         extends Fragment
+        implements SwipeRefreshLayout.OnRefreshListener
 
 
 {
-
-
-    public View mView;
 
 
     @BindView(R.id.fragment_girl_recycler)
@@ -47,9 +45,6 @@ public class GirlFragment
     @BindView(R.id.swipe_refresh)
     SwipeRefreshLayout mSwipeRefresh;
     Unbinder unbinder;
-    @BindView(R.id.toolbar)
-    Toolbar mToolbar;
-
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -64,22 +59,17 @@ public class GirlFragment
                              ViewGroup container,
                              Bundle savedInstanceState)
     {
-        mView = View.inflate(getActivity(), R.layout.fragmet_main_girl, null);
-        ViewGroup parent = (ViewGroup) mView.getParent();
-        unbinder = ButterKnife.bind(this, mView);
+        View view = View.inflate(getActivity(), R.layout.fragmet_main_girl, null);
 
+        unbinder = ButterKnife.bind(this, view);
         initData();
-        //        initListener();
-        return mView;
+        return view;
     }
 
-
-    //
-
-
     private void initData() {
-        mSwipeRefresh.setRefreshing(false);
         ImageUitl.getGirls();
+
+        mSwipeRefresh.setOnRefreshListener(this);
 
     }
 
@@ -122,4 +112,17 @@ public class GirlFragment
     }
 
 
+    @OnClick(R.id.swipe_refresh)
+    public void onViewClicked() {}
+
+    @Override
+    public void onRefresh() {
+        mSwipeRefresh.setRefreshing(false);
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+
+            }
+        }, 1000);
+    }
 }

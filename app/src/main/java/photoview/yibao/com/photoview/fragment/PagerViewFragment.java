@@ -117,8 +117,6 @@ public class PagerViewFragment
                                          mPagerGirlAdapter)
                        .show();
         } else {
-
-
             SnakbarUtil.showSnakbarShort(mPbDown, "网络异常，请检查您的网络连接。-_-")
                        .show();
         }

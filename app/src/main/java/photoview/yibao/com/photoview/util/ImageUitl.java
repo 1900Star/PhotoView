@@ -128,6 +128,7 @@ public class ImageUitl {
 
         Retrofit retrofit = new Retrofit.Builder().baseUrl("http://gank.io/")
                                                   .addConverterFactory(GsonConverterFactory.create())
+                                                  .client(MyApplication.defaultOkHttpClient())
                                                   .build();
         retrofit.create(GirlService.class)
                 .getGrils("福利", 10000, 1)

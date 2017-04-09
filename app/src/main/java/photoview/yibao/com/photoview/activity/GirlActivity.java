@@ -3,13 +3,13 @@ package photoview.yibao.com.photoview.activity;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
-import android.view.Window;
 import android.widget.FrameLayout;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import photoview.yibao.com.photoview.R;
 import photoview.yibao.com.photoview.fragment.PagerViewFragment;
+import photoview.yibao.com.photoview.util.LogUtil;
 
 /**
  * Author：Sid
@@ -28,12 +28,14 @@ public class GirlActivity
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activty_gril);
-        mBundle = getIntent().getExtras();
-
-
         ButterKnife.bind(this);
+        if (savedInstanceState == null) {
+        mBundle = getIntent().getExtras();
+        LogUtil.d("111111111111111111111111111111111111111111111======");
 
         initData();
+
+        }
 
     }
 

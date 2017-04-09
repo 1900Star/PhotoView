@@ -63,9 +63,11 @@ public class PagerViewFragment
         super.onCreate(savedInstanceState);
         EventBus.getDefault()
                 .register(this);
+        if (savedInstanceState == null) {
+
         Bundle arguments = getArguments();
-        mPosition = arguments.getInt("position");
-        LogUtil.d("HHHHHHHHHHHHH====      " + mPosition);
+            mPosition = arguments.getInt("position");
+        }
     }
 
     @Nullable
@@ -74,11 +76,14 @@ public class PagerViewFragment
                              @Nullable ViewGroup container,
                              Bundle savedInstanceState)
     {
-        if (mView == null) {
-            mView = inflater.inflate(R.layout.fragment_pager_view, container, false);
-            unbinder = ButterKnife.bind(this, mView);
-            initData();
+        LogUtil.d("22222222222222222222======");
+        if (savedInstanceState == null) {
+            if (mView == null) {
+                mView = inflater.inflate(R.layout.fragment_pager_view, container, false);
+                unbinder = ButterKnife.bind(this, mView);
+                initData();
 
+            }
         }
         return mView;
     }
@@ -145,6 +150,7 @@ public class PagerViewFragment
         unbinder.unbind();
         EventBus.getDefault()
                 .unregister(this);
+        LogUtil.d("------------_________________------------------");
     }
 
     @Override

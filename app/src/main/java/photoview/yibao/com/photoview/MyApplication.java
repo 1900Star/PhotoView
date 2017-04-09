@@ -8,9 +8,13 @@ import android.support.v7.app.AppCompatDelegate;
 
 import com.facebook.drawee.backends.pipeline.Fresco;
 
+import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
+import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 import photoview.yibao.com.photoview.util.ConfigUtil;
 
 /**
@@ -22,8 +26,8 @@ public class MyApplication
         extends Application
 {
     private static MyApplication appContext;
-    public static String currentGirl = "http://7xi8d6.com1.z0.glb.clouddn.com/2017-03-23-17265820_645330569008169_4543676027339014144_n.jpg";
-    private static String THEME_KEY = "theme_mode";
+    public static  String currentGirl = "http://7xi8d6.com1.z0.glb.clouddn.com/2017-03-23-17265820_645330569008169_4543676027339014144_n.jpg";
+    private static String THEME_KEY   = "theme_mode";
     private boolean isNight;
 
     public static MyApplication getIntstance() {
@@ -32,6 +36,7 @@ public class MyApplication
         }
         return appContext;
     }
+
     @Override
     public void onCreate() {
         super.onCreate();
@@ -41,12 +46,26 @@ public class MyApplication
     }
 
     public static OkHttpClient defaultOkHttpClient() {
-        OkHttpClient client = new OkHttpClient.Builder().connectTimeout(3, TimeUnit.SECONDS)
+        OkHttpClient client = new OkHttpClient.Builder().addInterceptor(new Interceptor() {
+            @Override
+            public Response intercept(Chain chain)
+                    throws IOException
+
+            {
+                Request request = chain.request();
+//                LogUtil.d("request ====     "+request.toString());
+                Response proceed = chain.proceed(request);
+//                LogUtil.d("proced=====      "+proceed);
+                return proceed;
+            }
+        })
+                                                        .connectTimeout(3, TimeUnit.SECONDS)
                                                         .writeTimeout(3, TimeUnit.SECONDS)
                                                         .readTimeout(3, TimeUnit.SECONDS)
                                                         .build();
         return client;
     }
+
     private void initThemeMode() {
         isNight = ConfigUtil.getBoolean(THEME_KEY, false);
         if (isNight) {
@@ -65,11 +84,13 @@ public class MyApplication
         if (!mode) {
             //白天模式
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-            activity.getDelegate().setLocalNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+            activity.getDelegate()
+                    .setLocalNightMode(AppCompatDelegate.MODE_NIGHT_NO);
         } else {
             //白天模式
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-            activity.getDelegate().setLocalNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+            activity.getDelegate()
+                    .setLocalNightMode(AppCompatDelegate.MODE_NIGHT_YES);
         }
         isNight = mode;
         ConfigUtil.putBoolean(THEME_KEY, isNight);
@@ -94,12 +115,13 @@ public class MyApplication
      * 手机切屏后重新设置UI_MODE模式（因为在dayNight主题下，切换横屏后UI_MODE会出错，会导致资源获取出错，需要重新设置回来）
      */
     private void updateConfig(Activity activity, int uiNightMode) {
-        Configuration newConfig = new Configuration(activity.getResources().getConfiguration());
+        Configuration newConfig = new Configuration(activity.getResources()
+                                                            .getConfiguration());
         newConfig.uiMode &= ~Configuration.UI_MODE_NIGHT_MASK;
         newConfig.uiMode |= uiNightMode;
-        activity.getResources().updateConfiguration(newConfig, null);
+        activity.getResources()
+                .updateConfiguration(newConfig, null);
     }
-
 
 
 }

@@ -25,7 +25,6 @@ import photoview.yibao.com.photoview.R;
 import photoview.yibao.com.photoview.adapter.GirlsAdapter;
 import photoview.yibao.com.photoview.bean.GirlData;
 import photoview.yibao.com.photoview.util.ImageUitl;
-import photoview.yibao.com.photoview.util.LogUtil;
 
 /**
  * 作者：Stran on 2017/3/29 01:18
@@ -49,7 +48,6 @@ public class GirlFragment
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        LogUtil.d("555555555555555555555555555555555555S");
         EventBus.getDefault()
                 .register(this);
     }
@@ -121,7 +119,7 @@ public class GirlFragment
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-
+                //TODO
             }
         }, 1000);
     }

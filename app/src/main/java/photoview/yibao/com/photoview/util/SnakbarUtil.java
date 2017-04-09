@@ -53,11 +53,6 @@ public class SnakbarUtil {
                                         public void onDismissed(Snackbar transientBottomBar,
                                                                 int event)
                                         {
-<<<<<<< HEAD
-//                                                                                        AnimationUtil.getDownTranslateY(view);
-=======
-                                            //                                            AnimationUtil.downTranslateY(view);
->>>>>>> dev
 
                                             super.onDismissed(transientBottomBar, event);
                                         }

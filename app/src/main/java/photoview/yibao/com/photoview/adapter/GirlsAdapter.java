@@ -2,12 +2,6 @@ package photoview.yibao.com.photoview.adapter;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-<<<<<<< HEAD:app/src/main/java/photoview/yibao/com/photoview/adapter/GirlAdapter.java
-import android.net.Uri;
-import android.app.FragmentManager;
-import android.os.Bundle;
-=======
->>>>>>> dev:app/src/main/java/photoview/yibao/com/photoview/adapter/GirlsAdapter.java
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,13 +17,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import photoview.yibao.com.photoview.R;
-<<<<<<< HEAD:app/src/main/java/photoview/yibao/com/photoview/adapter/GirlAdapter.java
-import photoview.yibao.com.photoview.bean.GirlData;
-import photoview.yibao.com.photoview.fragment.LadyFrangment;
-import photoview.yibao.com.photoview.http.Api;
-import photoview.yibao.com.photoview.util.LogUtil;
-=======
->>>>>>> dev:app/src/main/java/photoview/yibao/com/photoview/adapter/GirlsAdapter.java
+
 
 /**
  * 作者：Stran on 2017/3/29 06:11
@@ -53,7 +41,6 @@ public class GirlsAdapter
     private String TAG = "RefreshAdapter";
     @SuppressLint("StaticFieldLeak")
     private static Context         mContext;
-    private static FragmentManager mManager;
 
     private List<String> mList;
 
@@ -69,21 +56,13 @@ public class GirlsAdapter
 
     //上拉加载更多状态-默认为0
     private int mLoadMoreStatus = 0;
-<<<<<<< HEAD:app/src/main/java/photoview/yibao/com/photoview/adapter/GirlAdapter.java
-    private static int mCurrentItem;
-
-    public GirlAdapter(Context context, FragmentManager manager) {
-        mManager = manager;
-        mContext = context;
-
-
-=======
 
     private int mNum;
 
 
     //回调接口
     public OnRvItemClickListener mItemClickListener;
+    private View mView;
 
     public interface OnRvItemClickListener {
         void showPagerFragment(int position);
@@ -99,32 +78,20 @@ public class GirlsAdapter
         mContext = context;
         mList = list;
         //       this.mIChangeFragment = iChangeFragment;
->>>>>>> dev:app/src/main/java/photoview/yibao/com/photoview/adapter/GirlsAdapter.java
     }
 
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         if (viewType == TYPE_ITEM) {
-<<<<<<< HEAD:app/src/main/java/photoview/yibao/com/photoview/adapter/GirlAdapter.java
-            View mView = LayoutInflater.from(parent.getContext())
-                                       .inflate(R.layout.item_girl, parent, false);
-=======
             mView = LayoutInflater.from(parent.getContext())
                                   .inflate(R.layout.item_girl, parent, false);
->>>>>>> dev:app/src/main/java/photoview/yibao/com/photoview/adapter/GirlsAdapter.java
 
             return new ViewHolder(mView);
 
         } else if (viewType == LOADING_MORE) {
-<<<<<<< HEAD:app/src/main/java/photoview/yibao/com/photoview/adapter/GirlAdapter.java
-            View mView = LayoutInflater.from(parent.getContext())
-                                       .inflate(R.layout.load_more_footview_layout, parent, false);
-
-=======
             mView = LayoutInflater.from(parent.getContext())
                                   .inflate(R.layout.load_more_footview_layout, parent, false);
->>>>>>> dev:app/src/main/java/photoview/yibao/com/photoview/adapter/GirlsAdapter.java
             return new LoadMoreViewHolder(mView);
 
         }
@@ -135,15 +102,6 @@ public class GirlsAdapter
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
         if (holder instanceof ViewHolder) {
-<<<<<<< HEAD:app/src/main/java/photoview/yibao/com/photoview/adapter/GirlAdapter.java
-            ViewHolder viewHolder = (ViewHolder) holder;
-            mCurrentItem = position;
-            //绑定图片
-            Uri url = Uri.parse(Api.picUrlArr[position]);
-
-            viewHolder.mGrilImageView.setImageURI(url);
-
-=======
             final ViewHolder viewHolder = (ViewHolder) holder;
             //设置监听
             viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
@@ -160,7 +118,6 @@ public class GirlsAdapter
 //            Uri url = Uri.parse(Api.picUrlArr[position]);
 
             viewHolder.mGrilImageView.setImageURI(mList.get(position));
->>>>>>> dev:app/src/main/java/photoview/yibao/com/photoview/adapter/GirlsAdapter.java
         } else if (holder instanceof LoadMoreViewHolder) {
             LoadMoreViewHolder moreViewHolder = (LoadMoreViewHolder) holder;
             switch (mLoadMoreStatus) {
@@ -199,12 +156,6 @@ public class GirlsAdapter
     }
 
 
-<<<<<<< HEAD:app/src/main/java/photoview/yibao/com/photoview/adapter/GirlAdapter.java
-    //列表的Holder
-    static class ViewHolder
-            extends RecyclerView.ViewHolder
-            implements View.OnClickListener
-=======
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.pbLoad:
@@ -222,7 +173,6 @@ public class GirlsAdapter
     static class ViewHolder
             extends RecyclerView.ViewHolder
 
->>>>>>> dev:app/src/main/java/photoview/yibao/com/photoview/adapter/GirlsAdapter.java
     {
         private static final String ARGUMENTS = "arguments";
         @BindView(R.id.gril_image_view)
@@ -231,26 +181,6 @@ public class GirlsAdapter
         ViewHolder(View view) {
             super(view);
             ButterKnife.bind(this, view);
-            mGrilImageView.setOnClickListener(this);
-        }
-
-        @Override
-        public void onClick(View view) {
-            LadyFrangment frangment=new LadyFrangment();
-            Bundle bundle = new Bundle();
-            bundle.putInt(ARGUMENTS, mCurrentItem);
-
-            frangment.setArguments(bundle);
-            LogUtil.d("ZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZ");
-            mManager.beginTransaction()
-                    .add(R.id.activity_content, frangment)
-                    .addToBackStack(null)
-                    .commit();
-            //            Intent intent = new Intent(mContext, ViewActivty.class);
-            //            intent.putExtra("position", mCurrentItem);
-            //          mContext.startActivity(intent);
-
-
         }
 
 

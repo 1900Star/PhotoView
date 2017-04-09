@@ -9,13 +9,6 @@ public class Api {
     //    感谢干货集中营  http://gank.io/api
     public static String[] picUrlArr = {"http://askpanda.cc/ask/pics/star/movie/11144/11144-dm42016052860621.jpg",
                                         "http://ww3.sinaimg.cn/large/7a8aed7bjw1f2h04lir85j20fa0mx784.jpg",
-
-<<<<<<< HEAD
-    public static String[] picUrlArr = {"http://image1.xyzs.com/upload/57/51/729/20150506/143087262842234_0.jpg",
-                                        "http://imgstore.cdn.sogou.com/app/a/100540002/842935.jpg",
-                                        "http://askpanda.cc/ask/pics/star/movie/11144/11144-dm42016052860621.jpg",
-                                        "http://imgsrc.baidu.com/forum/pic/item/e7e0d7544db50873d009068e.jpg",
-=======
                                         "http://ww3.sinaimg.cn/large/7a8aed7bjw1f2fuecji0lj20f009oab3.jpg",
 
                                         "http://ww1.sinaimg.cn/large/610dc034jw1f2ewruruvij20d70miadg.jpg",
@@ -236,7 +229,6 @@ public class Api {
                                         "http://p1.ishecdn.com/c/12505669_0_0_2_80.jpg",
                                         "http://askpanda.cc/ask/pics/star/cnnvxing/5639/5639-bb29201605760620.jpg",
                                         "http://imgsrc.baidu.com/forum/pic/item/893a2612c3a53c7eb251b95f.jpg",
->>>>>>> dev
                                         "http://n1.itc.cn/img8/wb/recom/2016/05/05/146239586418056758.JPEG",
                                         "http://imgsrc.baidu.com/forum/pic/item/c75c10385343fbf2b829caa0b07eca8065388f2f.jpg",
                                         "http://imgsrc.baidu.com/forum/pic/item/cdbf6c81800a19d88200df4833fa828ba61e467f.jpg",
@@ -244,10 +236,7 @@ public class Api {
                                         "http://img1.fjtv.net/material/news/img/2016/02/8384bb5e6ce34aa7feea03737c8d40e2.jpg",
                                         "http://img3.duitang.com/uploads/item/201408/09/20140809204026_GnRjF.jpeg",
                                         "http://img4.imgtn.bdimg.com/it/u=2737938541,2991793350&fm=214&gp=0.jpg",
-<<<<<<< HEAD
-=======
                                         "http://image101.360doc.com/DownloadImg/2016/11/2116/85069119_17.jpg",
->>>>>>> dev
                                         "http://img1.byecity.com.cn/fs/brs/imgs/jingdiantupian/2015-12/luomajiarizhaopian2.jpg",
                                         "https://images.unsplash.com/photo-1433424007598-bd5d102e8597?ixlib=rb-0.3.5&q=100&fm=jpg&crop=entropy&cs=tinysrgb&s=ec1ef3f714bd94a29d6a67c16327cece",
                                         "http://imgsrc.baidu.com/baike/pic/item/9c16fdfaaf51f3deb964f35a91eef01f3a29793d.jpg",
@@ -274,15 +263,10 @@ public class Api {
                                         "http://imgsrc.baidu.com/baike/pic/item/0b46f21fbe096b631cbe31410e338744ebf8ac78.jpg",
                                         "http://a.hiphotos.baidu.com/zhidao/pic/item/38dbb6fd5266d016a9589112942bd40735fa3542.jpg",
                                         "http://easyread.ph.126.net/x3_6y9OE_WFz3AK32xS2Sw==/7916958709012274228.jpg",
-<<<<<<< HEAD
-                                        "http://img22.mtime.cn/up/2011/04/07/083214.54902292_o.jpg",
-                                        "http://www.sun0769.com/subject/xunsufei/images/photo_sf_13b.jpg",
-=======
                                         "http://imgsrc.baidu.com/forum/pic/item/e7e0d7544db50873d009068e.jpg",
                                         "http://img22.mtime.cn/up/2011/04/07/083214.54902292_o.jpg",
                                         "http://www.sun0769.com/subject/xunsufei/images/photo_sf_13b.jpg",
                                         "http://askpanda.cc/ask/pics/star/movie/11144/11144-dm42016052860621.jpg",
->>>>>>> dev
                                         "http://i2.qhimg.com/t01e6494970fb1220ac.jpg",
                                         "http://imgsrc.baidu.com/forum/pic/item/d3febe1f4134970a0835e5fd95cad1c8a6865d4f.jpg",
                                         "http://image55.360doc.com/DownloadImg/2012/10/1307/27496677_2.jpg",
@@ -367,53 +351,6 @@ public class Api {
                                         "http://img3.duitang.com/uploads/item/201605/12/20160512192447_mFjeG.jpeg",
                                         "http://img.7160.com/uploads/allimg/160707/1-160FG34214.jpg",
                                         "http://cdn.duitang.com/uploads/item/201509/17/20150917160112_QZCKu.jpeg",
-<<<<<<< HEAD
-                                        "http://image11.m1905.com/uploadfile/2009/1221/20091221061006829.jpg",
-                                        "http://qximg.lightplan.cc/2016/05/10/1462863397324242.gif?imageView2/2/w/900/h/1600",
-                                        "http://img0.imgtn.bdimg.com/it/u=1036761068,3361653394&fm=214&gp=0.jpg",
-                                        "http://imgsrc.baidu.com/baike/pic/item/7c1ed21b0ef41bd576ca27bf51da81cb38db3de4.jpg",
-                                        "http://img5.cache.netease.com/photo/0003/2015-01-04/AF45G9UF00B60003.jpg",
-                                        "http://imgsrc.baidu.com/baike/pic/item/73ca5910059f3fb7c2ce797e.jpg",
-                                        "http://img5q.duitang.com/uploads/item/201501/06/20150106174636_jNKfw.jpeg",
-                                        "http://img0.imgtn.bdimg.com/it/u=1595133316,3591177800&fm=214&gp=0.jpg",
-                                        "http://imgm.ph.126.net/f0a9kqPV3uvCyTcnfEAJOQ==/6630497119165734554.jpg",
-                                        "http://img9.ph.126.net/lCNTSAS027aP6NN7rp5_vw==/2605613859427854169.jpg",
-                                        "http://image2.xyzs.com/upload/7f/11/724/20150506/143087263295253_0.jpg",
-                                        "http://image1.xyzs.com/upload/57/51/729/20150506/143087262842234_0.jpg",
-                                        "http://img.hackhome.com/newimg/20145/201452110151170163.jpg",
-                                        "http://tupian.enterdesk.com/2015/gha/09/0104/02.jpg",
-                                        "http://image102.360doc.com/DownloadImg/2016/12/2620/87864260_8.jpg",
-                                        "http://img.vogue.com.tw/userfiles/FCK/2015102242620825.JPG",
-                                        "http://imgsrc.baidu.com/forum/pic/item/0dd1a9ec72b6437863d09f77.jpg",
-                                        "http://pic1.win4000.com/wallpaper/d/55c86ce76176e.jpg",
-                                        "http://imgsrc.baidu.com/forum/pic/item/0dd7912397dda144a3180750b2b7d0a20cf4863a.jpg",
-                                        "http://img5.imgtn.bdimg.com/it/u=1638764199,3734962296&fm=23&gp=0.jpg",
-                                        "http://img2.imgtn.bdimg.com/it/u=4004729779,1610762380&fm=214&gp=0.jpg",
-                                        "http://imgsrc.baidu.com/forum/pic/item/a8b674995a4c9b6bf9dc61a6.jpg",
-                                        "http://img2.imgtn.bdimg.com/it/u=1016002276,1569660146&fm=214&gp=0.jpg",
-                                        "http://img3.imgtn.bdimg.com/it/u=2632969770,3237816361&fm=23&gp=0.jpg",
-                                        "http://image35.360doc.com/DownloadImg/2011/08/2916/16671551_17.jpg",
-                                        "http://imgsrc.baidu.com/forum/pic/item/0b2f29a438ac73ef9152ee69.jpg",
-                                        "http://cdn.duitang.com/uploads/item/201601/03/20160103220022_Vr5vm.thumb.700_0.jpeg",
-                                        "http://image30.360doc.com/DownloadImg/2011/06/1007/12670593_11.jpg",
-                                        "http://h5.86.cc/walls/20150109/1024x768_c7b9d62e46bc524.jpg",
-                                        "http://s6.sinaimg.cn/orignal/47644b1a44b3af93f0585&000",
-                                        "http://e.hiphotos.baidu.com/zhidao/pic/item/6609c93d70cf3bc733bcf56cd600baa1cc112af5.jpg",
-                                        "http://img1.ph.126.net/s3vPdXW29wx-tiJAeFky3g==/4851502698685350157.jpg",
-                                        "http://m15.mask9.com/sites/default/files/styles/lg/public/graphics/20150605/164324-ee2d7e6528487b1b554952e006ac34c14ba93fef-23/people-singer-shao-yibei-p2-mask9.jpg?itok=MBWKmFkb",
-                                        "http://img4.imgtn.bdimg.com/it/u=4199968251,2321509994&fm=214&gp=0.jpg",
-                                        "http://www.wed114.cn/jiehun/uploads/allimg/130422/23_130422144522_4.jpg",
-                                        "http://img2.imgtn.bdimg.com/it/u=3773886563,3596131833&fm=214&gp=0.jpg",
-                                        "http://ent.sun0769.com/music/news/201311/W020131126420260416278.jpg",
-                                        "http://cdn.duitang.com/uploads/item/201407/25/20140725121058_j2wKR.jpeg",
-                                        "http://a3.att.hudong.com/60/01/01200000193375136359017074846.jpg",
-                                        "http://imgsrc.baidu.com/forum/pic/item/e1edd862490057a6838b1340.jpg",
-                                        "http://img3.duitang.com/uploads/blog/201309/08/20130908131153_TsRZn.thumb.700_0.jpeg",
-                                        "http://p1.ishecdn.com/c/12505669_0_0_2_80.jpg",
-                                        "http://askpanda.cc/ask/pics/star/cnnvxing/5639/5639-bb29201605760620.jpg",
-                                        "http://imgsrc.baidu.com/forum/pic/item/893a2612c3a53c7eb251b95f.jpg",
-=======
->>>>>>> dev
                                         "http://pptdown.pptbz.com/pptbeijing/%CA%AF%D4%AD%C0%EF%C3%C0PPT%B1%B3%BE%B0%CD%BC%C6%AC.jpg",
                                         "http://img3.imgtn.bdimg.com/it/u=665072948,1670720521&fm=23&gp=0.jpg",
                                         "http://image94.360doc.com/DownloadImg/2016/02/1312/65859389_3.jpg",
@@ -422,15 +359,6 @@ public class Api {
                                         "http://space.rayliimg.cn/space/forum/201502/20/20094112pgqqjzqgfh2j8j.jpg",
                                         "http://img4.duitang.com/uploads/item/201602/21/20160221131416_nyZAa.thumb.700_0.png",
                                         "http://nobon.me/wp-content/uploads/2016/10/iphone_KIMINONAHA__0003_Unknown-3.jpg",
-<<<<<<< HEAD
-                                        "http://f.hiphotos.baidu.com/zhidao/pic/item/1e30e924b899a9011996a8bd1f950a7b0308f59e.jpg",
-                                        "http://img.pconline.com.cn/images/upload/upc/tx/wallpaper/1204/27/c5/11401279_1335506542552.jpg",
-                                        "http://img0.imgtn.bdimg.com/it/u=1458129646,164881532&fm=23&gp=0.jpg",
-                                        "http://jiangsu.china.com.cn/uploadfile/2015/0822/1440233219970262.jpg",
-                                        "http://p0.qhimg.com/t0101e4efe822dbe633.jpg",
-                                        "http://img0.imgtn.bdimg.com/it/u=515009173,3916624537&fm=214&gp=0.jpg",
-=======
->>>>>>> dev
                                         "http://wx4.sinaimg.cn/mw690/005T4vvxly1falxqf43j9j31sc15m4qp0.jpg",
                                         "http://wx3.sinaimg.cn/mw690/005T4vvxly1falxqfrogzj31sc16oke40.jpg",
                                         "http://wx4.sinaimg.cn/mw690/005T4vvxly1falxqdyn4aj31sc16oe840.jpg",
@@ -438,24 +366,10 @@ public class Api {
                                         "http://ww2.sinaimg.cn/large/610dc034jw1f5k1k4azguj20u00u0421.jpg",
                                         "http://qz_coffee.dupao.com/XiuXiuUpload/SharePic/XiuXiu2013820850243.jpg",
                                         "http://imgsrc.baidu.com/forum/pic/item/b25f0e465153f0868b139989.jpg",
-                                        "http://album.sina.com.cn/pic/49cef469020003w6",
-<<<<<<< HEAD
-                                        "http://image48.360doc.com/DownloadImg/2012/01/2606/21058460_12.jpg",
-=======
->>>>>>> dev
                                         "http://ww1.sinaimg.cn/large/610dc034gw1fb6aqccs3nj20u00u0wk4.jpg",
                                         "http://img2.imgtn.bdimg.com/it/u=3271180130,1167809918&fm=23&gp=0.jpg",
                                         "https://images.unsplash.com/uploads/141327328038701afeede/eda0fb7c?ixlib=rb-0.3.5&q=100&fm=jpg&crop=entropy&cs=tinysrgb&s=b1418e0650f85155b76164dc6655c8a0",
                                         "http://7xi8d6.com1.z0.glb.clouddn.com/2017-03-23-17265820_645330569008169_4543676027339014144_n.jpg",
-<<<<<<< HEAD
-                                        "http://bizhi.zhuoku.com/2010/04/16/SHE/she07.jpg",
-                                        "http://img2015.zdface.com/20160808/8f018d917f76c32e0818dd8b727ad391.jpg",
-                                        "http://bizhi.zhuoku.com/2010/12/19/she/she14.jpg",
-                                        "http://imgsrc.baidu.com/forum/pic/item/9825bc315c6034a856081936cb1349540823769a.jpg",
-                                        "http://h.hiphotos.baidu.com/zhidao/pic/item/c9fcc3cec3fdfc03cd20bafad53f8794a4c22613.jpg",
-
-=======
->>>>>>> dev
                                         "http://pic8.nipic.com/20100623/2568996_083300720588_2.jpg",
                                         "http://pic8.nipic.com/20100623/2568996_083301157944_2.jpg",
                                         "http://www.asahi.com/showbiz/gallery/20110309sada/images/home03.jpg",
@@ -465,31 +379,6 @@ public class Api {
                                         "http://img.yule.com.cn/upload/jpg/nagasawamasami/yule0092.jpg",
                                         "http://posters.imdb.cn/ren-pp/0619178/YB8kFxWnY_1190911372.jpg",
                                         "http://imgsrc.baidu.com/baike/pic/item/e4dde71190ef76c604622df99816fdfaae5167b4.jpg",
-<<<<<<< HEAD
-                                        "http://img1.efu.com.cn/upfile/news/commonly/2014/2014-06-26/944aeb9d-0ac8-45d8-9da8-a8ca5d420cfd.jpg",
-                                        "http://wii.tgbus.com/UploadFiles_7653/201111/20111107104412313.jpg",
-                                        "http://www.xunxiwang.com/uploads/allimg/1607/3_0H000041260Q.jpg",
-                                        "http://www.tpqq.com/newpic/20130116/1-130116095540.jpg",
-                                        "http://www.tpqq.com/newpic/20130116/1-130116095540.jpg",
-                                        "http://image40.360doc.com/DownloadImg/2011/10/2019/18632728_16.jpg",
-                                        "http://i2.hdslb.com/bfs/archive/76aa61e905b1e1c6da8faa7987c8f3c45840a153.jpg",
-                                        "http://p5.qhimg.com/t014780d4e057655db3.jpg",
-                                        "http://img22.mtime.cn/up/2010/11/29/060335.43273923_o.jpg",
-                                        "http://s.nownews.com/media_crop/64070/hash/9c/d8/9cd8a1a09604dd98a88b9a95ab4b47ca.jpg",
-                                        "http://img.2258.com/d/file/yule/music/tuwen/2014-02-22/3038076f2ddb1070b12bb120d3f1ee6d.jpg",
-                                        "http://imgm.ph.126.net/HL6XaYchRK_J83PrrGUBWw==/6631328349955867427.jpg",
-                                        "http://pic1.win4000.com/wallpaper/b/546c42e84f837.jpg",
-                                        "http://imgsrc.baidu.com/forum/pic/item/9f2f070828381f3054cee54ba9014c086f06f079.jpg",
-                                        "http://www.worldlife.com.cn/uploads/allimg/140925/1-1409251243090-L.jpg",
-                                        "http://fwimage.cnfanews.com/websiteimg/2016/20161120/20035223/20161120140853_11718c0db1242409f4323b7c6d2009b6_1.jpg",
-                                        "http://askpanda.cc/ask/pics/star/cnnvxing/5767/5767-n4182016051144511.jpg",
-                                        "http://img4.ph.126.net/MI3jMPHpRQQHNZBhet0_Cw==/1083960135329534544.jpg",
-                                        "http://userimage8.360doc.com/16/0409/14/5202148_201604091452380620409197.jpg",
-                                        "http://image61.360doc.com/DownloadImg/2013/06/0223/32791981_14.jpg",
-                                        "http://image80.360doc.com/DownloadImg/2014/12/0609/47797134_2.jpg",
-                                        "http://imgsrc.baidu.com/forum/pic/item/3812b31bb051f81981bd32d6dab44aed2f73e795.jpg",
-=======
->>>>>>> dev
                                         "http://cdn.duitang.com/uploads/item/201603/27/20160327100800_ysidF.thumb.700_0.jpeg",
                                         "http://image.xinmin.cn/2012/06/27/20120627113211233486.jpg",
                                         "http://cdn.duitang.com/uploads/item/201205/28/20120528121844_CNemU.jpeg",
@@ -501,11 +390,6 @@ public class Api {
                                         "http://img3.duitang.com/uploads/item/201302/15/20130215110229_HnMGj.jpeg",
                                         "http://imgsrc.baidu.com/baike/pic/item/a08b87d6277f9e2f79c9bcd81a30e924b999f366.jpg",
                                         "http://pic9.nipic.com/20100819/2568996_152536117301_2.jpg",
-<<<<<<< HEAD
-                                        "http://img3.imgtn.bdimg.com/it/u=3930475635,589881904&fm=23&gp=0.jpg",
-                                        "http://image55.360doc.com/DownloadImg/2012/11/0913/28106185_23.jpg",
-=======
->>>>>>> dev
                                         "http://pic9.nipic.com/20100819/2568996_152535489648_2.jpg",
                                         "http://img0.imgtn.bdimg.com/it/u=290611155,1857671296&fm=214&gp=0.jpg",
                                         "http://i2.w.yun.hjfile.cn/slide/201506/201506052390726352.jpg",
@@ -515,30 +399,10 @@ public class Api {
                                         "http://cdn.duitang.com/uploads/item/201509/17/20150917160112_QZCKu.jpeg",
                                         "http://image11.m1905.com/uploadfile/2009/1221/20091221061006829.jpg",
                                         "http://qximg.lightplan.cc/2016/05/10/1462863397324242.gif?imageView2/2/w/900/h/1600",
-<<<<<<< HEAD
-                                        "http://ent.news.cn/2017-02/22/1120509015_14877293446201n.jpg",
-                                        "http://i0.hdslb.com/bfs/archive/374f7e8825867d471ee36edc8623395811d2b197.jpg",
-                                        "http://userimage8.360doc.com/16/0409/14/5202148_201604091453570495777893.jpg",
-                                        "http://image55.360doc.com/DownloadImg/2012/11/0913/28106185_7.jpg",
-                                        "http://image55.360doc.com/DownloadImg/2012/11/0913/28106185_12.jpg",
-=======
->>>>>>> dev
                                         "http://img0.imgtn.bdimg.com/it/u=1036761068,3361653394&fm=214&gp=0.jpg",
                                         "http://imgsrc.baidu.com/baike/pic/item/7c1ed21b0ef41bd576ca27bf51da81cb38db3de4.jpg",
                                         "http://img5.cache.netease.com/photo/0003/2015-01-04/AF45G9UF00B60003.jpg",
                                         "http://www.yoka.com/dna/pics/Star/ba15111c/164/d35e311de7dc7ec97d.jpg",
-<<<<<<< HEAD
-                                        "http://image53.360doc.com/DownloadImg/2012/07/3114/25866228_18.jpg",
-                                        "http://p3.gexing.com/G1/M00/36/4E/rBACE1PDmCnwbQTSAAHC_T7-fSs001.jpg",
-                                        "http://www.qd580.cn/uploads/allimg/150829/41-150R910464LM.jpg",
-                                        "http://imgsrc.baidu.com/forum/pic/item/6a074b36e8050e82a2cc2b73.jpg",
-                                        "http://p3.music.126.net/66rZDh0gO53fPqD3YhAPZA==/1391981722898739.jpg",
-                                        "http://img6.faloo.com/Picture/0x0/0/18/18922.jpg",
-                                        "http://y2.ifengimg.com/a/2014_26/f30c7ccf7f9b3ed.jpg",
-                                        "http://imgsrc.baidu.com/forum/pic/item/7f2962d00c63b1d0a0ec9caa.jpg",
-                                        "http://image.cnwest.com/attachement/jpg/site1/20110317/001372d899ef0eebf17449.jpg",
-=======
->>>>>>> dev
                                         "http://img1.ph.126.net/s3vPdXW29wx-tiJAeFky3g==/4851502698685350157.jpg",
                                         "http://m15.mask9.com/sites/default/files/styles/lg/public/graphics/20150605/164324-ee2d7e6528487b1b554952e006ac34c14ba93fef-23/people-singer-shao-yibei-p2-mask9.jpg?itok=MBWKmFkb",
                                         "http://img4.imgtn.bdimg.com/it/u=4199968251,2321509994&fm=214&gp=0.jpg",
@@ -546,10 +410,6 @@ public class Api {
                                         "http://img2.imgtn.bdimg.com/it/u=3773886563,3596131833&fm=214&gp=0.jpg",
                                         "http://ent.sun0769.com/music/news/201311/W020131126420260416278.jpg",
                                         "http://cdn.duitang.com/uploads/item/201407/25/20140725121058_j2wKR.jpeg",
-<<<<<<< HEAD
-                                        "http://imgsrc.baidu.com/forum/pic/item/9f2f070828381f305476e50ea9014c086e06f02e.jpg",
-=======
->>>>>>> dev
                                         "http://a3.att.hudong.com/60/01/01200000193375136359017074846.jpg",
                                         "http://img4.duitang.com/uploads/item/201602/21/20160221131416_nyZAa.thumb.700_0.png",
                                         "http://nobon.me/wp-content/uploads/2016/10/iphone_KIMINONAHA__0003_Unknown-3.jpg",
@@ -561,31 +421,6 @@ public class Api {
                                         "http://qz_coffee.dupao.com/XiuXiuUpload/SharePic/XiuXiu2013820850243.jpg",
                                         "http://imgsrc.baidu.com/forum/pic/item/b25f0e465153f0868b139989.jpg",
                                         "http://album.sina.com.cn/pic/49cef469020003w6",
-<<<<<<< HEAD
-                                        "http://imgsrc.baidu.com/forum/mpic/item/088a471089bae0e6c3ce79a7.jpg",
-                                        "http://img1.qq.com/music/20041008845074.jpg",
-                                        "http://img4q.duitang.com/uploads/item/201502/02/20150202134803_Femyk.jpeg",
-                                        "http://image38.360doc.com/DownloadImg/2011/10/0620/18278587_18.jpg",
-                                        "http://www.tradeduck.com/uploads/139074_13311976.jpg",
-                                        "http://imgsrc.baidu.com/forum/pic/item/b812c8fcc3cec3fd70a6ad31d688d43f869427dd.jpg",
-                                        "http://askpanda.cc/ask/pics/star/cnnvxing/5598/5598-1292016056124349.jpg",
-                                        "http://cdn6.hbimg.cn/store/uploads/2015/1008/1444296362.942.jpg",
-                                        "http://img1.imgtn.bdimg.com/it/u=4277728223,391195086&fm=23&gp=0.jpg",
-                                        "http://imgsrc.baidu.com/forum/pic/item/962bd40735fae6cdb7bf89da0fb30f2442a70f05.jpg",
-                                        "http://imgsrc.baidu.com/forum/pic/item/b21c8701a18b87d67e7622b1070828381f30fd6c.jpg",
-                                        "http://img4.imgtn.bdimg.com/it/u=781566404,3698293505&fm=214&gp=0.jpg",
-                                        "http://image38.360doc.com/DownloadImg/2011/10/0620/18278587_16.jpg",
-                                        "http://img27.51tietu.net/pic/2017-011423/20170114233141aqlv2kpjevk153886.jpg",
-                                        "http://imgsrc.baidu.com/forum/pic/item/2112fb1fbe096b63e8a79e900c338744eaf8ac0c.jpg",
-                                        "http://image44.360doc.com/DownloadImg/2011/11/2504/19543033_1.jpg",
-                                        "http://image4.xyzs.com/upload/0d/0f/408/20150506/143087302156723_0.jpg",
-                                        "http://ww1.sinaimg.cn/large/610dc034gw1fb6aqccs3nj20u00u0wk4.jpg",
-                                        "http://img2.imgtn.bdimg.com/it/u=3271180130,1167809918&fm=23&gp=0.jpg",
-                                        "http://cdn6.hbimg.cn/store/piccommon/1183/11833/liMGiBR8UbN3s.jpg",
-                                        "http://img.askpanda.cc/ask/cnnvxing/5770/5770-n402016051191551.jpg",
-                                        "http://images.missyuan.com/attachments/day_130507/20130507_c3ffd0b33afb240525af1CFgYsWcp6yl.jpg"};
-=======
                                         "http://ww1.sinaimg.cn/large/610dc034gw1fb6aqccs3nj20u00u0wk4.jpg",
                                         "http://img2.imgtn.bdimg.com/it/u=3271180130,1167809918&fm=23&gp=0.jpg"};
->>>>>>> dev
 }

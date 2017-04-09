@@ -56,13 +56,7 @@ public class PagerGirlAdapter
         ViewGroup.LayoutParams params = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
                                                                    ViewGroup.LayoutParams.MATCH_PARENT);
 
-<<<<<<< HEAD:app/src/main/java/photoview/yibao/com/photoview/adapter/MyPagerAdapter.java
-        view.setScaleType(ImageView.ScaleType.FIT_CENTER);
-        view.setAnimation(animation);
-
-=======
         view.setScaleType(ImageView.ScaleType.MATRIX);
->>>>>>> dev:app/src/main/java/photoview/yibao/com/photoview/adapter/PagerGirlAdapter.java
         view.reSetState();
         //加载图片
         ImageUitl.glideLoadPic(mContext, mList.get(position), view);

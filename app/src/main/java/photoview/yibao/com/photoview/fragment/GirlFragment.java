@@ -4,10 +4,7 @@ import android.app.FragmentManager;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
-<<<<<<< HEAD
-=======
 import android.support.annotation.Nullable;
->>>>>>> dev
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
@@ -15,29 +12,22 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-
-<<<<<<< HEAD
-=======
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.List;
 
->>>>>>> dev
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import photoview.yibao.com.photoview.R;
-<<<<<<< HEAD
 import photoview.yibao.com.photoview.adapter.GirlAdapter;
 import photoview.yibao.com.photoview.base.BaseFragment;
 import photoview.yibao.com.photoview.util.LogUtil;
-=======
 import photoview.yibao.com.photoview.adapter.GirlsAdapter;
 import photoview.yibao.com.photoview.bean.GirlData;
 import photoview.yibao.com.photoview.util.ImageUitl;
->>>>>>> dev
 
 /**
  * 作者：Stran on 2017/3/29 01:18
@@ -45,30 +35,23 @@ import photoview.yibao.com.photoview.util.ImageUitl;
  * 邮箱：strangermy@outlook.com
  */
 public class GirlFragment
-<<<<<<< HEAD
         extends BaseFragment
         implements View.OnClickListener, RecyclerView.OnItemTouchListener
-=======
         extends Fragment
         implements SwipeRefreshLayout.OnRefreshListener
->>>>>>> dev
 
 
 {
 
 
-<<<<<<< HEAD
-=======
     public View mView = null;
 
 
->>>>>>> dev
     @BindView(R.id.fragment_girl_recycler)
     RecyclerView       mRv;
     @BindView(R.id.swipe_refresh)
     SwipeRefreshLayout mSwipeRefresh;
     Unbinder unbinder;
-<<<<<<< HEAD
     private Handler handler = new Handler();
     private GirlAdapter     mAdapter;
     private FragmentManager mManager;
@@ -106,7 +89,6 @@ public class GirlFragment
         mRv.setItemAnimator(new DefaultItemAnimator());
         mRv.setAdapter(mAdapter);
 
-=======
 
 
     @Override
@@ -142,7 +124,6 @@ public class GirlFragment
         mSwipeRefresh.setOnRefreshListener(this);
         ImageUitl.getGirls();
 
->>>>>>> dev
     }
 
 
@@ -182,8 +163,6 @@ public class GirlFragment
 
     }
 
-<<<<<<< HEAD
-=======
     @Subscribe(threadMode = ThreadMode.MAIN,
                priority = 100) //在ui线程执行 优先级100
     public void onGirlsDataEvent(GirlData data) {
@@ -201,7 +180,6 @@ public class GirlFragment
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.setAdapter(adapter);
     }
->>>>>>> dev
 
     @Override
     public void onDestroyView() {

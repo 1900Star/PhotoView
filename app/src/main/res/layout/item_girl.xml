@@ -4,12 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginTop="1dp"
-<<<<<<< HEAD
-    android:background="#fff"
-=======
-    android:orientation="vertical"
     android:background="#FFFFFF"
->>>>>>> dev
+    android:orientation="vertical"
 >
     <com.facebook.drawee.view.SimpleDraweeView
         android:id="@+id/gril_image_view"

@@ -17,16 +17,11 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".activity.MainActivity"
-            android:theme="@style/AppTheme.NoActionBar"
-<<<<<<< HEAD
             android:screenOrientation="sensor"
-        >
-=======
-        >
+            android:theme="@style/AppTheme.NoActionBar">
             <meta-data android:name="UMENG_APPKEY" android:value="58e6af4f99f0c718b4001eda"/>
             <!--Channel ID多渠道统计-->
             <meta-data android:name="UMENG_CHANNEL" android:value="Channel ID"/>
->>>>>>> dev
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
@@ -36,7 +31,5 @@
         <activity android:name=".activity.GirlActivity"
                   android:theme="@style/AppTheme.NoActionBar"/>
 
-
     </application>
-
 </manifest>

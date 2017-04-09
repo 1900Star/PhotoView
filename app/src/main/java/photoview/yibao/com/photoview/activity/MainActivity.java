@@ -18,7 +18,6 @@ import butterknife.ButterKnife;
 import photoview.yibao.com.photoview.R;
 import photoview.yibao.com.photoview.adapter.GirlsAdapter;
 import photoview.yibao.com.photoview.fragment.GirlFragment;
-import photoview.yibao.com.photoview.fragment.PagerViewFragment;
 import photoview.yibao.com.photoview.util.WallPaperUtil;
 
 
@@ -34,19 +33,17 @@ public class MainActivity
 
 
 {
+
+
+    @BindView(R.id.toolbar)
+    Toolbar        mToolbar;
     @BindView(R.id.content_activity)
     FrameLayout    mContentActivity;
     @BindView(R.id.nav_view)
     NavigationView mNavView;
     @BindView(R.id.drawer_layout)
     DrawerLayout   mDrawerLayout;
-    @BindView(R.id.toolbar)
-    Toolbar        mToolbar;
-
-
     private long exitTime = 0;
-    private PagerViewFragment mPagerViewFragment;
-    private GirlFragment      mGirlFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,9 +76,9 @@ public class MainActivity
 
 
     private void initData() {
-        mGirlFragment = new GirlFragment();
+        GirlFragment girlFragment = new GirlFragment();
         getFragmentManager().beginTransaction()
-                            .add(R.id.content_activity, mGirlFragment, "one")
+                            .add(R.id.content_activity, girlFragment, "one")
                             .commit();
     }
 
@@ -90,23 +87,23 @@ public class MainActivity
     public void showPagerFragment(int position) {
         Intent intent = new Intent(this, GirlActivity.class);
         Bundle bundle = new Bundle();
-        bundle.putInt("position",position);
+        bundle.putInt("position", position);
         intent.putExtras(bundle);
         startActivity(intent);
         //        mToolbar.setTitle("Google");
 
         //        mToolbar.setVisibility(View.GONE);
-//        if (mPagerViewFragment == null) {
-//            mPagerViewFragment = new PagerViewFragment();
-//        }
-//        Bundle bundle = new Bundle();
-//        bundle.putInt("position", position);
-//        mPagerViewFragment.setArguments(bundle);
-//        getFragmentManager().beginTransaction()
-//                            .hide(mGirlFragment)
-//                            .add(R.id.content_activity, mPagerViewFragment, "two")
-//                            .addToBackStack(null)
-//                            .commit();
+        //        if (mPagerViewFragment == null) {
+        //            mPagerViewFragment = new PagerViewFragment();
+        //        }
+        //        Bundle bundle = new Bundle();
+        //        bundle.putInt("position", position);
+        //        mPagerViewFragment.setArguments(bundle);
+        //        getFragmentManager().beginTransaction()
+        //                            .hide(mGirlFragment)
+        //                            .add(R.id.content_activity, mPagerViewFragment, "two")
+        //                            .addToBackStack(null)
+        //                            .commit();
 
 
     }
@@ -124,8 +121,8 @@ public class MainActivity
         switch (id) {
 
             case R.id.action_gallery:  //从相册选择壁纸
-//                WallPaperUtil.choiceWallPaper(this);
-//                startActivity();
+                //                WallPaperUtil.choiceWallPaper(this);
+                //                startActivity();
 
                 break;
         }

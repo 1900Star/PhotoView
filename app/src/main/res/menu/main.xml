@@ -10,5 +10,14 @@
 
           android:title="@string/action_settings"
           app:showAsAction="never"/>
+    <item
+        android:id="@+id/day"
+        android:title="@string/action_day"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/night"
+        android:title="@string/action_night"
+        app:showAsAction="never" />
+
 
 </menu>

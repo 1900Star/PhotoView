@@ -1,7 +1,6 @@
 package photoview.yibao.com.photoview.adapter;
 
 import android.content.Context;
-import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,14 +11,11 @@ import android.widget.TextView;
 
 import com.facebook.drawee.view.SimpleDraweeView;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import photoview.yibao.com.photoview.R;
-import photoview.yibao.com.photoview.bean.GirlData;
-import photoview.yibao.com.photoview.http.Api;
 
 /**
  * 作者：Stran on 2017/3/29 06:11
@@ -41,7 +37,7 @@ public class GirlsAdapter
     private String TAG = "RefreshAdapter";
     private Context mContext;
 
-    private ArrayList<GirlData> mList;
+    private List<String> mList;
 
     private static final int TYPE_ITEM   = 0;
     private static final int TYPE_FOOTER = 1;
@@ -72,8 +68,9 @@ public class GirlsAdapter
     }
 
 
-    public GirlsAdapter(Context context) {
+    public GirlsAdapter(Context context, List<String> list) {
         mContext = context;
+        mList = list;
         //       this.mIChangeFragment = iChangeFragment;
     }
 
@@ -98,7 +95,6 @@ public class GirlsAdapter
     //绑定视图
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
-        send(position);
         if (holder instanceof ViewHolder) {
             final ViewHolder viewHolder = (ViewHolder) holder;
             //设置监听
@@ -108,15 +104,14 @@ public class GirlsAdapter
 
                     //打开PagerView的回调
                     if (mContext instanceof OnRvItemClickListener) {
-                        ((OnRvItemClickListener)mContext).showPagerFragment(position);
+                        ((OnRvItemClickListener) mContext).showPagerFragment(position);
                     }
                 }
             });
             //绑定图片
-            Uri url = Uri.parse(Api.picUrlArr[position]);
+//            Uri url = Uri.parse(Api.picUrlArr[position]);
 
-            viewHolder.mGrilImageView.setImageURI(url);
-
+            viewHolder.mGrilImageView.setImageURI(mList.get(position));
         } else if (holder instanceof LoadMoreViewHolder) {
             LoadMoreViewHolder moreViewHolder = (LoadMoreViewHolder) holder;
             switch (mLoadMoreStatus) {
@@ -141,9 +136,9 @@ public class GirlsAdapter
 
     @Override
     public int getItemCount() {
-        return Api.picUrlArr == null
+        return mList == null
                ? 0
-               : Api.picUrlArr.length;
+               : mList.size();
     }
 
     public int getTypeItem(int position) {
@@ -152,29 +147,6 @@ public class GirlsAdapter
             return TYPE_FOOTER;
         }
         return TYPE_ITEM;
-    }
-
-    private void send(int position) {
-        //        LogUtil.d("99999999999999999999     Send===" + position);
-
-    }
-
-    public void AddHeader(List<GirlData> items) {
-        mList.addAll(0, items);
-        notifyDataSetChanged();
-    }
-
-    public void AddFooter(List<GirlData> items) {
-        mList.addAll(0, items);
-        notifyDataSetChanged();
-
-
-    }
-
-    public void changeMoreStatus(int status) {
-        mLoadMoreStatus = status;
-        notifyDataSetChanged();
-
     }
 
 

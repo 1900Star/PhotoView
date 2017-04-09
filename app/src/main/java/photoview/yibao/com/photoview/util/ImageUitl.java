@@ -8,6 +8,8 @@ import android.widget.ImageView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 
+import org.greenrobot.eventbus.EventBus;
+
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -20,8 +22,8 @@ import okhttp3.Callback;
 import okhttp3.Request;
 import okhttp3.Response;
 import photoview.yibao.com.photoview.MyApplication;
-import photoview.yibao.com.photoview.R;
 import photoview.yibao.com.photoview.bean.GirlBean;
+import photoview.yibao.com.photoview.bean.GirlData;
 import photoview.yibao.com.photoview.bean.ResultsBean;
 import photoview.yibao.com.photoview.http.Api;
 import photoview.yibao.com.photoview.http.GirlService;
@@ -46,8 +48,6 @@ public class ImageUitl {
              .load(url)
              .asBitmap()
              .diskCacheStrategy(DiskCacheStrategy.ALL)
-             .placeholder(R.drawable.girl)
-             .error(R.drawable.beautiful)
              .into(imageView);
 
         return imageView;
@@ -76,8 +76,6 @@ public class ImageUitl {
                          public void onResponse(Call call, Response response)
                                  throws IOException
                          {
-                             LogUtil.i(
-                                     "================Call call, Response response==================================    已经下载 完了");
 
                              InputStream      is   = null;
                              byte[]           buff = new byte[1024 * 4];
@@ -122,21 +120,11 @@ public class ImageUitl {
         void onDownloadFailed();
     }
 
-    //*********************************************************************
-    private static OnData mOnData;
-
-    public interface OnData {
-        void getGrilsData(List<String> list);
-    }
-
-    public void setOnData(OnData data) {
-        this.mOnData = data;
-    }
 
     /**
      * 加载干货妹子图片数据
      */
-    public static List<String> getGirls() {
+    public static void getGirls() {
 
         Retrofit retrofit = new Retrofit.Builder().baseUrl("http://gank.io/")
                                                   .addConverterFactory(GsonConverterFactory.create())
@@ -150,18 +138,14 @@ public class ImageUitl {
                     {
                         List<ResultsBean> results = response.body()
                                                             .getResults();
-                        //                        ResultsBean bean = results.get(1);
                         for (int i = 0; i < results.size(); i++) {
 
-                            //                            LogUtil.d("哈哈       ===" + results.get(i)
-                            //                                                              .getUrl());
                             list.add(results.get(i)
                                             .getUrl());
 
                         }
-                        if (mOnData != null) {
-                            mOnData.getGrilsData(list);
-                        }
+                        EventBus.getDefault()
+                                .post(new GirlData(list));
 
                     }
 
@@ -172,8 +156,6 @@ public class ImageUitl {
 
                 });
 
-                        LogUtil.d("     88888===============       " + list.size());
-        return list;
     }
 
     //初始化数据

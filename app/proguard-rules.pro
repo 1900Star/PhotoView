@@ -26,6 +26,33 @@
 
 #忽略警告
 -ignorewarnings
+
+
+#gson
+-dontwarn com.google.gson.**
+-keep class com.google.gson.** { *;}
+
+#v4
+-dontwarn android.support.v4.**
+-keep class android.support.v4.** { *;}
+
+#v7
+-dontwarn android.support.v7.**
+-keep class android.support.v7.** { *;}
+
+#annotation
+-dontwarn android.support.annotation.**
+-keep class android.support.annotation.** { *;}
+
+-dontwarn android.net.**
+-keep class android.net.** { *;}
+
+-dontwarn org.apache.**
+-keep class org.apache.** { *;}
+
+-dontwarn com.android.internal.http.multipart.**
+-keep class com.android.internal.http.multipart.** { *;}
+#fresco
 -keep @com.facebook.common.internal.DoNotStrip class *
 -keepclassmembers class * {
     @com.facebook.common.internal.DoNotStrip *;
@@ -36,9 +63,29 @@
     native <methods>;
 }
 
+# OkHttp3----------------------------------------------------------------
+-dontwarn okhttp3.logging.**
+-keep class okhttp3.internal.**{*;}
+-dontwarn okio.**
+
+# Retrofit---------------------------------------------------------------
+
+
+#fresco------------------------------------------------------------------
 -dontwarn okio.**
 -dontwarn com.squareup.okhttp.**
 -dontwarn okhttp3.**
 -dontwarn javax.annotation.**
 -dontwarn com.android.volley.toolbox.**
 -dontwarn com.facebook.infer.**
+
+#Eventbus---------------------------------------------------------------
+-keepattributes *Annotation*
+-keepclassmembers class ** {
+    @org.greenrobot.eventbus.Subscribe <methods>;
+}
+-keep enum org.greenrobot.eventbus.ThreadMode {*;}
+# Only required if you use AsyncExecutor
+-keepclassmembers class * extends org.greenrobot.eventbus.util.ThrowableFailureEvent {
+    <init>(java.lang.Throwable);
+}

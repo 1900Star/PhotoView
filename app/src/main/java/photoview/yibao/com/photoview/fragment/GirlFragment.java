@@ -1,20 +1,20 @@
 package photoview.yibao.com.photoview.fragment;
 
 import android.app.Fragment;
-import android.app.FragmentManager;
 import android.os.Bundle;
+import android.os.Handler;
+import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
-import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.umeng.analytics.MobclickAgent;
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -25,7 +25,6 @@ import photoview.yibao.com.photoview.R;
 import photoview.yibao.com.photoview.adapter.GirlsAdapter;
 import photoview.yibao.com.photoview.bean.GirlData;
 import photoview.yibao.com.photoview.util.ImageUitl;
-import photoview.yibao.com.photoview.util.LogUtil;
 
 /**
  * 作者：Stran on 2017/3/29 01:18
@@ -34,12 +33,13 @@ import photoview.yibao.com.photoview.util.LogUtil;
  */
 public class GirlFragment
         extends Fragment
-        implements ImageUitl.OnData
+        implements SwipeRefreshLayout.OnRefreshListener
+
 
 {
 
 
-    public View mView;
+    public View mView = null;
 
 
     @BindView(R.id.fragment_girl_recycler)
@@ -47,27 +47,29 @@ public class GirlFragment
     @BindView(R.id.swipe_refresh)
     SwipeRefreshLayout mSwipeRefresh;
     Unbinder unbinder;
-    @BindView(R.id.toolbar)
-    Toolbar mToolbar;
 
 
-    private ArrayList<GirlData> mList;
-    private AppCompatActivity   mActivity;
-    private GirlsAdapter        mAdapter;
-    private FragmentManager     mFragmentManager;
-    private ArrayList<String>   mGirlsList;
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setRetainInstance(true);
+        EventBus.getDefault()
+                .register(this);
+
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater,
                              ViewGroup container,
                              Bundle savedInstanceState)
     {
-        mView = View.inflate(getActivity(), R.layout.fragmet_main_girl, null);
+        if (mView == null) {
 
+            mView = View.inflate(getActivity(), R.layout.fragmet_main_girl, null);
+            unbinder = ButterKnife.bind(this, mView);
+            initData();
+        }
 
-        unbinder = ButterKnife.bind(this, mView);
-
-        initData();
         //        initListener();
         return mView;
     }
@@ -77,15 +79,8 @@ public class GirlFragment
 
 
     private void initData() {
-        mGirlsList = new ArrayList<>();
+        mSwipeRefresh.setOnRefreshListener(this);
         ImageUitl.getGirls();
-        mFragmentManager = getActivity().getFragmentManager();
-        mAdapter = new GirlsAdapter(getActivity());
-        StaggeredGridLayoutManager manager = new StaggeredGridLayoutManager(2,
-                                                                            StaggeredGridLayoutManager.VERTICAL);
-        mRecyclerView.setLayoutManager(manager);
-        mRecyclerView.setHasFixedSize(true);
-        mRecyclerView.setAdapter(mAdapter);
 
     }
 
@@ -101,25 +96,41 @@ public class GirlFragment
         }
     }
 
-    public void onResume() {
-        super.onResume();
-        MobclickAgent.onPageStart("GirlFragment"); //统计页面，"MainScreen"为页面名称，可自定义
+    @Subscribe(threadMode = ThreadMode.MAIN,
+               priority = 100) //在ui线程执行 优先级100
+    public void onGirlsDataEvent(GirlData data) {
+
+
+        initRecyclerView(data.getList());
+
     }
 
-    public void onPause() {
-        super.onPause();
-        MobclickAgent.onPageEnd("GirlFragment");
+    private void initRecyclerView(List<String> mList) {
+        GirlsAdapter adapter = new GirlsAdapter(getActivity(), mList);
+        StaggeredGridLayoutManager manager = new StaggeredGridLayoutManager(2,
+                                                                            StaggeredGridLayoutManager.VERTICAL);
+        mRecyclerView.setLayoutManager(manager);
+        mRecyclerView.setHasFixedSize(true);
+        mRecyclerView.setAdapter(adapter);
     }
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
+        EventBus.getDefault()
+                .unregister(this);
     }
 
 
     @Override
-    public void getGrilsData(List<String> list) {
-        LogUtil.d("222222222222222222222222222222222222========================      " + list.size());
+    public void onRefresh() {
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                //刷新完成将刷新状态为false
+                mSwipeRefresh.setRefreshing(false);
+            }
+        }, 1000);
     }
 }

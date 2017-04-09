@@ -13,7 +13,7 @@ public class AnimationUtil {
     private static final int startY = 0;
     private final static int deltaY = 100;
 
-    public static Animator getUpTranslateY(final View view) {
+    public static Animator upTranslateY(final View view) {
 
         final ValueAnimator animator = ValueAnimator.ofInt(0, 1)
                                                     .setDuration(1000);
@@ -29,7 +29,7 @@ public class AnimationUtil {
         return animator;
     }
 
-    public static Animator getDownTranslateY(final View view) {
+    public static Animator downTranslateY(final View view) {
 
         final ValueAnimator animator = ValueAnimator.ofInt(0, 1)
                                                     .setDuration(1000);
@@ -37,7 +37,7 @@ public class AnimationUtil {
             @Override
             public void onAnimationUpdate(ValueAnimator valueAnimator) {
                 float fraction = animator.getAnimatedFraction();
-                view.scrollTo(0, -(startY + (int) (deltaY * fraction))/2);
+                view.scrollTo(0, -(startY + (int) (deltaY * fraction))/2+2);
 
             }
         });

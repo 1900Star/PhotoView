@@ -7,7 +7,8 @@ package photoview.yibao.com.photoview.http;
  */
 public class Api {
     //    感谢干货集中营  http://gank.io/api
-    public static String[] picUrlArr = {"http://ww3.sinaimg.cn/large/7a8aed7bjw1f2h04lir85j20fa0mx784.jpg",
+    public static String[] picUrlArr = {"http://askpanda.cc/ask/pics/star/movie/11144/11144-dm42016052860621.jpg",
+                                        "http://ww3.sinaimg.cn/large/7a8aed7bjw1f2h04lir85j20fa0mx784.jpg",
 
                                         "http://ww3.sinaimg.cn/large/7a8aed7bjw1f2fuecji0lj20f009oab3.jpg",
 
@@ -15,11 +16,11 @@ public class Api {
 
                                         "http://ww3.sinaimg.cn/large/7a8aed7bjw1f2cfxa9joaj20f00fzwg2.jpg",
                                         "https://images.unsplash.com/photo-1458724029936-2cc6ee38f5ef?ixlib=rb-0.3.5&q=100&fm=jpg&crop=entropy&cs=tinysrgb&s=3cc7f26c29576bd56ec60209a929bed2",
-
+                                        "http://cdn.duitang.com/uploads/item/201508/30/20150830132240_rYxXR.jpeg",
                                         "http://ww1.sinaimg.cn/large/610dc034gw1f2cf4ulmpzj20dw0kugn0.jpg",
-
+                                        "http://img.weixinyidu.com/150707/c64ed78b.jpg",
                                         "http://ww1.sinaimg.cn/large/7a8aed7bjw1f27uhoko12j20ez0miq4p.jpg",
-
+                                        "http://imgsrc.baidu.com/forum/pic/item/ae226bb0e986eb69adafd5ba.jpg",
                                         "http://ww2.sinaimg.cn/large/610dc034jw1f27tuwswd3j20hs0qoq6q.jpg",
 
                                         "http://ww3.sinaimg.cn/large/7a8aed7bjw1f26lox908uj20u018waov.jpg",
@@ -45,7 +46,7 @@ public class Api {
                                         "http://ww2.sinaimg.cn/large/7a8aed7bjw1f1qed6rs61j20ss0zkgrt.jpg",
 
                                         "http://ww3.sinaimg.cn/large/7a8aed7bjw1f1p77v97xpj20k00zkgpw.jpg",
-
+                                        "http://askpanda.cc/ask/pics/star/movie/11144/11144-dm42016052860621.jpg",
                                         "http://ww1.sinaimg.cn/large/7a8aed7bjw1f1o75j517xj20u018iqnf.jpg",
 
                                         "http://ww4.sinaimg.cn/large/7a8aed7bjw1f1klhuc8w5j20d30h9gn8.jpg",

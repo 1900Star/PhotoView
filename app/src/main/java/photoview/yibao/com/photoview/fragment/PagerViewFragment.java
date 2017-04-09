@@ -1,37 +1,30 @@
 package photoview.yibao.com.photoview.fragment;
 
-import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.app.Fragment;
-import android.graphics.Bitmap;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.view.ViewPager;
-import android.support.v7.graphics.Palette;
-import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 
-import com.umeng.analytics.MobclickAgent;
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
-import photoview.yibao.com.photoview.MyApplication;
 import photoview.yibao.com.photoview.R;
 import photoview.yibao.com.photoview.adapter.PagerGirlAdapter;
-import photoview.yibao.com.photoview.util.AnimationUtil;
-import photoview.yibao.com.photoview.util.BitmapUtil;
+import photoview.yibao.com.photoview.bean.DownProgress;
+import photoview.yibao.com.photoview.bean.GirlData;
 import photoview.yibao.com.photoview.util.ImageUitl;
+import photoview.yibao.com.photoview.util.LogUtil;
 import photoview.yibao.com.photoview.util.NetworkUtil;
-import photoview.yibao.com.photoview.util.SaveImageUtil;
 import photoview.yibao.com.photoview.util.SnakbarUtil;
 import photoview.yibao.com.photoview.view.ProgressView;
 
@@ -44,28 +37,35 @@ public class PagerViewFragment
         extends Fragment
         implements ViewPager.OnPageChangeListener
 {
-    @BindView(R.id.toolbar)
-    Toolbar      mToolbar;
+
     @BindView(R.id.vp)
     ViewPager    mVp;
-    @BindView(R.id.pb_down)
+    @BindView(R.id.iv_down)
     ProgressView mPbDown;
     Unbinder unbinder;
 
     //传递过来的position
-    private int              mPosition;
+    private int mPosition;
+    //默认下载进度
+    public static final int DEFULT_DOWN_PREGRESS = 0;
+    //下载进度最大值
+    public static       int MAX_DOWN_PREGRESS    = 100;
+
+    //PerView滑动的状态的最值
+    public static final int STATUS_MAX_NUM = 3;
     private PagerGirlAdapter mPagerGirlAdapter;
-    private List<String> mList = new ArrayList<>();
-    private        int      mRgb;
-    public static  Activity mActivity;
-    @SuppressLint("StaticFieldLeak")
-    private static View     mFl;
+    private int              mRgb;
+    private View mView = null;
+
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        EventBus.getDefault()
+                .register(this);
         Bundle arguments = getArguments();
         mPosition = arguments.getInt("position");
+        LogUtil.d("HHHHHHHHHHHHH====      " + mPosition);
     }
 
     @Nullable
@@ -74,128 +74,94 @@ public class PagerViewFragment
                              @Nullable ViewGroup container,
                              Bundle savedInstanceState)
     {
-        View view = inflater.inflate(R.layout.fragment_pager_view, container, false);
-        mFl = view.findViewById(R.id.fl);
-        unbinder = ButterKnife.bind(this, view);
+        if (mView == null) {
+            mView = inflater.inflate(R.layout.fragment_pager_view, container, false);
+            unbinder = ButterKnife.bind(this, mView);
+            initData();
 
-        initData();
-        return view;
+        }
+        return mView;
     }
 
     private void initData() {
+        ImageUitl.getGirls();
 
-        mActivity = getActivity();
-        mPagerGirlAdapter = new PagerGirlAdapter(getActivity(), ImageUitl.getUrl(mList));
+
+    }
+
+    private void initViewPager(List<String> mList) {
+        mPagerGirlAdapter = new PagerGirlAdapter(getActivity(), mList);
 
         mVp.setAdapter(mPagerGirlAdapter);
         mVp.setCurrentItem(mPosition);
         mVp.addOnPageChangeListener(this);
+    }
 
+    @Subscribe(threadMode = ThreadMode.MAIN,
+               priority = 100) //在ui线程执行 优先级100
+    public void onGirlDataEvent(GirlData data) {
+        initViewPager(data.getList());
     }
 
     //图片保存
-    @OnClick(R.id.pb_down)
+    @OnClick(R.id.iv_down)
     public void onViewClicked() {
-
+        //网络检查
         boolean connected = NetworkUtil.isNetworkConnected(getActivity());
         if (connected) {
-            //平移动画
-            AnimationUtil.getUpTranslateY(mPbDown);
-
-            SnakbarUtil.showSnakbarLong(mPbDown,
-                                        "可以将图片保存起来-_-",
-                                        "保存图片",
-                                        new View.OnClickListener() {
-                                            @Override
-                                            public void onClick(View view) {
-                                                SaveImageUtil.savePic(getActivity().getApplicationContext(),
-                                                                      mPosition,
-                                                                      mPagerGirlAdapter);
-                                            }
-                                        })
+            SnakbarUtil.showSnakbarLongs(getActivity().getApplicationContext(),
+                                         mPbDown,
+                                         "可以将图片保存起来-_-",
+                                         "保存图片",
+                                         mPosition,
+                                         mPagerGirlAdapter)
                        .show();
         } else {
 
-            int color = Color.rgb(255, 64, 129);
 
-
-            SnakbarUtil.showSnakbarShort(mPbDown, "网络异常，请检查您的网络连接。-_-", color)
+            SnakbarUtil.showSnakbarShort(mPbDown, "网络异常，请检查您的网络连接。-_-")
                        .show();
         }
-
-
     }
 
-    public static ProgressView getProgressView() {
-
-        return new ProgressView(MyApplication.getIntstance());
+    //获取下载进度，设置ProgressBar
+    @Subscribe(threadMode = ThreadMode.MAIN,
+               priority = 100)
+    public void onSetProgress(DownProgress data) {
+        int progress = data.getProgress();
+        setProgress(progress);
     }
 
-
-    /**
-     * 根据图片获得主题色
-     */
-    private int getColor() {
-        ImageView       imageView = (ImageView) mPagerGirlAdapter.getPrimaryItem();
-        Bitmap          bitmap    = BitmapUtil.drawableToBitmap(imageView.getDrawable());
-        Palette.Builder builder   = Palette.from(bitmap);
-        builder.generate(new Palette.PaletteAsyncListener() {
-            @Override
-            public void onGenerated(Palette palette) {
-                Palette.Swatch vibrantSwatch = palette.getVibrantSwatch();
-                if (vibrantSwatch == null) {
-                    return;
-                }
-                mRgb = vibrantSwatch.getRgb();
-
-
-            }
-        });
-        return mRgb;
+    private void setProgress(int progress) {
+        mPbDown.setProgress(progress);
+        if (progress == MAX_DOWN_PREGRESS) {
+            SnakbarUtil.showSuccessStatus(mPbDown, "图片保存成功 -_-")
+                       .show();
+        }
     }
 
-
-    /**
-     * 图片保存成功提示
-     */
-    public static void showSavePicSuccess() {
-        int color = Color.rgb(90, 181, 63);
-
-        SnakbarUtil.showSuccessStatus(mFl, "图片保存成功~", color)
-                   .show();
-
-    }
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
+        EventBus.getDefault()
+                .unregister(this);
     }
 
     @Override
     public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
     }
 
     @Override
     public void onPageSelected(int position) {
-        //        getColor();
     }
 
     @Override
     public void onPageScrollStateChanged(int state) {
-        if (state == 2) {
-            getColor();
+
+        if (state < STATUS_MAX_NUM) {
+            mPbDown.setProgress(DEFULT_DOWN_PREGRESS);
         }
-    }
-
-    public void onResume() {
-        super.onResume();
-        MobclickAgent.onPageStart("PagerViewFragment"); //统计页面，"MainScreen"为页面名称，可自定义
-    }
-
-    public void onPause() {
-        super.onPause();
-        MobclickAgent.onPageEnd("PagerViewFragment");
     }
 }

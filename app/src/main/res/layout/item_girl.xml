@@ -4,15 +4,20 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginTop="1dp"
+<<<<<<< HEAD
     android:background="#fff"
+=======
+    android:orientation="vertical"
+    android:background="#FFFFFF"
+>>>>>>> dev
 >
     <com.facebook.drawee.view.SimpleDraweeView
         android:id="@+id/gril_image_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:adjustViewBounds="true"
-        android:minHeight="200dp"
-        android:scaleType="centerCrop"
+
+        android:scaleType="fitCenter"
     />
 
 </LinearLayout>

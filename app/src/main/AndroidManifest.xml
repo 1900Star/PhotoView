@@ -3,9 +3,10 @@
           xmlns:android="http://schemas.android.com/apk/res/android">
     <uses-permission android:name="android.permission.SET_WALLPAPER"/>
     <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGEad"/>
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS"/>
+
     <application
         android:name=".MyApplication"
         android:allowBackup="true"
@@ -17,15 +18,24 @@
         <activity
             android:name=".activity.MainActivity"
             android:theme="@style/AppTheme.NoActionBar"
+<<<<<<< HEAD
             android:screenOrientation="sensor"
         >
+=======
+        >
+            <meta-data android:name="UMENG_APPKEY" android:value="58e6af4f99f0c718b4001eda"/>
+            <!--Channel ID多渠道统计-->
+            <meta-data android:name="UMENG_CHANNEL" android:value="Channel ID"/>
+>>>>>>> dev
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".activity.ViewActivty"/>
+        <activity android:name=".activity.GirlActivity"
+                  android:theme="@style/AppTheme.NoActionBar"/>
+
 
     </application>
 

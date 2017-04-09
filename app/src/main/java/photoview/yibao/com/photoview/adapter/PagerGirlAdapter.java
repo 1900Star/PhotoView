@@ -1,13 +1,12 @@
 package photoview.yibao.com.photoview.adapter;
 
 import android.content.Context;
-import android.support.v4.view.PagerAdapter;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.AlphaAnimation;
 import android.widget.ImageView;
 
-import photoview.yibao.com.photoview.http.Api;
+import java.util.List;
+
 import photoview.yibao.com.photoview.util.ImageUitl;
 import photoview.yibao.com.photoview.view.ZoomImageView;
 
@@ -16,20 +15,26 @@ import photoview.yibao.com.photoview.view.ZoomImageView;
  * 描述：${TODO}
  * 邮箱：strangermy@outlook.com
  */
-public class MyPagerAdapter
-        extends PagerAdapter
+public class PagerGirlAdapter
+        extends android.support.v4.view.PagerAdapter
 {
-    private Context mContext;
-    private View    mCurrentView;
+    private Context      mContext;
+    private View         mCurrentView;
+    private List<String> mList;
 
-    public MyPagerAdapter(Context context) {
+
+    public PagerGirlAdapter(Context context, List<String> list) {
+
         this.mContext = context;
+        this.mList = list;
     }
 
 
     @Override
     public int getCount() {
-        return Api.picUrlArr.length;
+        return mList == null
+               ? 0
+               : mList.size();
     }
 
     @Override
@@ -46,20 +51,21 @@ public class MyPagerAdapter
 
     @Override
     public Object instantiateItem(ViewGroup container, int position) {
-        AlphaAnimation animation = new AlphaAnimation(1.0f, 1.0f);
-        animation.setDuration(3000);
-        animation.setFillAfter(true);
 
         ZoomImageView view = new ZoomImageView(mContext);
         ViewGroup.LayoutParams params = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
                                                                    ViewGroup.LayoutParams.MATCH_PARENT);
 
+<<<<<<< HEAD:app/src/main/java/photoview/yibao/com/photoview/adapter/MyPagerAdapter.java
         view.setScaleType(ImageView.ScaleType.FIT_CENTER);
         view.setAnimation(animation);
 
+=======
+        view.setScaleType(ImageView.ScaleType.MATRIX);
+>>>>>>> dev:app/src/main/java/photoview/yibao/com/photoview/adapter/PagerGirlAdapter.java
         view.reSetState();
         //加载图片
-        ImageUitl.glideLoadPic(mContext, position, view);
+        ImageUitl.glideLoadPic(mContext, mList.get(position), view);
 
         container.addView(view, params);
 
@@ -77,5 +83,4 @@ public class MyPagerAdapter
 
         return mCurrentView;
     }
-
 }

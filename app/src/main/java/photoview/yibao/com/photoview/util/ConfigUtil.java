@@ -7,10 +7,18 @@ import photoview.yibao.com.photoview.MyApplication;
 
 /**
  * Author：Sid
+<<<<<<< HEAD
  * Des：${白天和夜间模式切换}
  * Time:2017/3/31 01:57
  */
 public class ConfigUtil {
+=======
+ * Des：${TODO}
+ * Time:2017/4/8 04:18
+ */
+public class ConfigUtil {
+
+>>>>>>> dev
     private static SharedPreferences sharedPreferences;
 
     private static SharedPreferences getSharedPreferences() {
@@ -21,7 +29,10 @@ public class ConfigUtil {
     }
 
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> dev
     /**
      * 写入配置信息，需要最后面进行 commit()
      *
@@ -45,6 +56,9 @@ public class ConfigUtil {
     public static boolean getBoolean(String key, boolean def) {
         return getSharedPreferences().getBoolean(key, def);
     }
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> dev
 }

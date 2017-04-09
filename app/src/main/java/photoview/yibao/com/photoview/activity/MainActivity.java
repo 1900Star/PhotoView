@@ -1,28 +1,34 @@
 package photoview.yibao.com.photoview.activity;
 
-import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
-import android.support.constraint.ConstraintLayout;
-import android.support.design.widget.Snackbar;
-import android.support.v4.view.ViewPager;
+import android.support.annotation.NonNull;
+import android.support.design.widget.NavigationView;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
+<<<<<<< HEAD
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
 import photoview.yibao.com.photoview.MyApplication;
+=======
+import android.widget.FrameLayout;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
+>>>>>>> dev
 import photoview.yibao.com.photoview.R;
-import photoview.yibao.com.photoview.adapter.MyPagerAdapter;
-import photoview.yibao.com.photoview.util.SaveImageUtil;
-import photoview.yibao.com.photoview.util.SnakbarUtil;
+import photoview.yibao.com.photoview.adapter.GirlsAdapter;
+import photoview.yibao.com.photoview.fragment.GirlFragment;
+import photoview.yibao.com.photoview.fragment.PagerViewFragment;
 import photoview.yibao.com.photoview.util.WallPaperUtil;
-import photoview.yibao.com.photoview.view.ProgressView;
+
 
 /**
  * 作者：Stran on 2017/3/23 15:12
@@ -31,9 +37,12 @@ import photoview.yibao.com.photoview.view.ProgressView;
  */
 public class MainActivity
         extends AppCompatActivity
-        implements ViewPager.OnPageChangeListener, View.OnClickListener
+        implements GirlsAdapter.OnRvItemClickListener,
+                   NavigationView.OnNavigationItemSelectedListener
+
 
 {
+<<<<<<< HEAD
     private static Context mContext;
     private String TAG = "MainActivity";
     private        ConstraintLayout mLayout;
@@ -59,11 +68,27 @@ public class MainActivity
      */
     public static final int STATUS_MAX_NUM       = 3;
     private RelativeLayout mRv;
+=======
+    @BindView(R.id.content_activity)
+    FrameLayout    mContentActivity;
+    @BindView(R.id.nav_view)
+    NavigationView mNavView;
+    @BindView(R.id.drawer_layout)
+    DrawerLayout   mDrawerLayout;
+    @BindView(R.id.toolbar)
+    Toolbar        mToolbar;
+
+
+    private long exitTime = 0;
+    private PagerViewFragment mPagerViewFragment;
+    private GirlFragment      mGirlFragment;
+>>>>>>> dev
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+<<<<<<< HEAD
         initView();
         initData();
         initListener();
@@ -71,17 +96,34 @@ public class MainActivity
 
     private void initListener() {
         mFab.setOnClickListener(this);
+=======
+        ButterKnife.bind(this);
+        if (savedInstanceState == null) {
+            initView();
+            initData();
+        }
+
+>>>>>>> dev
     }
 
     private void initView() {
-        mRv = (RelativeLayout) findViewById(R.id.rv);
-        mLayout = (ConstraintLayout) findViewById(R.id.content);
-        mVp = (ViewPager) mLayout.findViewById(R.id.vp);
-        mToolbar = (Toolbar) findViewById(R.id.toolbar);
-        mPbDownView = (ProgressView) findViewById(R.id.pb_down_view);
-        mFab = (ImageView) findViewById(R.id.fab);
+        setSupportActionBar(mToolbar);
+        mToolbar.setTitle("Smartisan T1");
+        mToolbar.setNavigationIcon(R.mipmap.google);
+
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this,
+                                                                 mDrawerLayout,
+                                                                 mToolbar,
+                                                                 R.string.navigation_drawer_open,
+                                                                 R.string.navigation_drawer_close);
+        mDrawerLayout.addDrawerListener(toggle);
+        toggle.syncState();
+
+        mNavView.setNavigationItemSelectedListener(this);
+
     }
 
+<<<<<<< HEAD
     private void initData() {
         mFab.bringToFront();
         mRv.bringToFront();
@@ -93,17 +135,58 @@ public class MainActivity
         mVp.addOnPageChangeListener(this);
     }
 
+=======
+
+    private void initData() {
+        mGirlFragment = new GirlFragment();
+        getFragmentManager().beginTransaction()
+                            .add(R.id.content_activity, mGirlFragment, "one")
+                            .commit();
+    }
+
+    //接口回调打开ViewPager浏览大图
+    @Override
+    public void showPagerFragment(int position) {
+        Intent intent = new Intent(this, GirlActivity.class);
+        Bundle bundle = new Bundle();
+        bundle.putInt("position",position);
+        intent.putExtras(bundle);
+        startActivity(intent);
+        //        mToolbar.setTitle("Google");
+
+        //        mToolbar.setVisibility(View.GONE);
+//        if (mPagerViewFragment == null) {
+//            mPagerViewFragment = new PagerViewFragment();
+//        }
+//        Bundle bundle = new Bundle();
+//        bundle.putInt("position", position);
+//        mPagerViewFragment.setArguments(bundle);
+//        getFragmentManager().beginTransaction()
+//                            .hide(mGirlFragment)
+//                            .add(R.id.content_activity, mPagerViewFragment, "two")
+//                            .addToBackStack(null)
+//                            .commit();
+
+
+    }
+
+
+>>>>>>> dev
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.main, menu);
+        mToolbar.inflateMenu(R.menu.main);
         return true;
     }
 
+<<<<<<< HEAD
     //Settings
+=======
+>>>>>>> dev
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         switch (id) {
+<<<<<<< HEAD
             case R.id.action_setwallpaper: //设置壁纸
                 //                WallPaperUtil.setWallPaper(this, mAdapter);
                 startActivity(new Intent(this, ViewActivty.class));
@@ -120,11 +203,19 @@ public class MainActivity
                              .setTheme(this, true);
                 break;
             default:
+=======
+
+            case R.id.action_gallery:  //从相册选择壁纸
+//                WallPaperUtil.choiceWallPaper(this);
+//                startActivity();
+
+>>>>>>> dev
                 break;
         }
         return super.onOptionsItemSelected(item);
     }
 
+<<<<<<< HEAD
     /**
      *   ViewPager滑动监听
      */
@@ -173,13 +264,38 @@ public class MainActivity
                    .show();
     }
 
+=======
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
 
-    public static ProgressView getProgressView() {
+        switch (item.getItemId()) {
+            case R.id.nav_setwallpar: //设置壁纸
+                //                                WallPaperUtil.setWallPaper(this, mAdapter);
+                break;
+            case R.id.nav_gallery:  //从相册选择壁纸
+                WallPaperUtil.choiceWallPaper(this);
 
-        return mPbDownView;
+                break;
+            case R.id.nav_day:
+                //                MyApplication.getIntstance()
+                //                             .setTheme(this, false);
+                break;
+            case R.id.nav_night:
+                //                MyApplication.getIntstance()
+                //                             .setTheme(this, true);
+                break;
+            default:
+                break;
+        }
+>>>>>>> dev
+
+
+        mDrawerLayout.closeDrawer(GravityCompat.START);
+        return true;
     }
 
 
+<<<<<<< HEAD
     @Override
     public void onClick(View view) {
 //        AnimationUtil.getUpTranslateY(mPbDownView);
@@ -198,4 +314,6 @@ public class MainActivity
                      .refreshResources(this);
         super.onResume();
     }
+=======
+>>>>>>> dev
 }

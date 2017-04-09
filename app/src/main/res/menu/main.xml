@@ -18,5 +18,9 @@
         android:id="@+id/night"
         android:title="@string/action_night"
         app:showAsAction="never" />
+<<<<<<< HEAD
+=======
+
+>>>>>>> dev
 
 </menu>

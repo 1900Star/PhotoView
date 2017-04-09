@@ -4,9 +4,11 @@ import android.app.FragmentManager;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
+<<<<<<< HEAD
+=======
+import android.support.annotation.Nullable;
+>>>>>>> dev
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.widget.DefaultItemAnimator;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.LayoutInflater;
@@ -14,13 +16,28 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 
+<<<<<<< HEAD
+=======
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
+
+import java.util.List;
+
+>>>>>>> dev
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import photoview.yibao.com.photoview.R;
+<<<<<<< HEAD
 import photoview.yibao.com.photoview.adapter.GirlAdapter;
 import photoview.yibao.com.photoview.base.BaseFragment;
 import photoview.yibao.com.photoview.util.LogUtil;
+=======
+import photoview.yibao.com.photoview.adapter.GirlsAdapter;
+import photoview.yibao.com.photoview.bean.GirlData;
+import photoview.yibao.com.photoview.util.ImageUitl;
+>>>>>>> dev
 
 /**
  * 作者：Stran on 2017/3/29 01:18
@@ -28,18 +45,30 @@ import photoview.yibao.com.photoview.util.LogUtil;
  * 邮箱：strangermy@outlook.com
  */
 public class GirlFragment
+<<<<<<< HEAD
         extends BaseFragment
         implements View.OnClickListener, RecyclerView.OnItemTouchListener
+=======
+        extends Fragment
+        implements SwipeRefreshLayout.OnRefreshListener
+>>>>>>> dev
 
 
 {
 
 
+<<<<<<< HEAD
+=======
+    public View mView = null;
+
+
+>>>>>>> dev
     @BindView(R.id.fragment_girl_recycler)
     RecyclerView       mRv;
     @BindView(R.id.swipe_refresh)
     SwipeRefreshLayout mSwipeRefresh;
     Unbinder unbinder;
+<<<<<<< HEAD
     private Handler handler = new Handler();
     private GirlAdapter     mAdapter;
     private FragmentManager mManager;
@@ -77,6 +106,43 @@ public class GirlFragment
         mRv.setItemAnimator(new DefaultItemAnimator());
         mRv.setAdapter(mAdapter);
 
+=======
+
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setRetainInstance(true);
+        EventBus.getDefault()
+                .register(this);
+
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater,
+                             ViewGroup container,
+                             Bundle savedInstanceState)
+    {
+        if (mView == null) {
+
+            mView = View.inflate(getActivity(), R.layout.fragmet_main_girl, null);
+            unbinder = ButterKnife.bind(this, mView);
+            initData();
+        }
+
+        //        initListener();
+        return mView;
+    }
+
+
+    //
+
+
+    private void initData() {
+        mSwipeRefresh.setOnRefreshListener(this);
+        ImageUitl.getGirls();
+
+>>>>>>> dev
     }
 
 
@@ -116,11 +182,45 @@ public class GirlFragment
 
     }
 
+<<<<<<< HEAD
+=======
+    @Subscribe(threadMode = ThreadMode.MAIN,
+               priority = 100) //在ui线程执行 优先级100
+    public void onGirlsDataEvent(GirlData data) {
+
+
+        initRecyclerView(data.getList());
+
+    }
+
+    private void initRecyclerView(List<String> mList) {
+        GirlsAdapter adapter = new GirlsAdapter(getActivity(), mList);
+        StaggeredGridLayoutManager manager = new StaggeredGridLayoutManager(2,
+                                                                            StaggeredGridLayoutManager.VERTICAL);
+        mRecyclerView.setLayoutManager(manager);
+        mRecyclerView.setHasFixedSize(true);
+        mRecyclerView.setAdapter(adapter);
+    }
+>>>>>>> dev
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
+        EventBus.getDefault()
+                .unregister(this);
+    }
+
+
+    @Override
+    public void onRefresh() {
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                //刷新完成将刷新状态为false
+                mSwipeRefresh.setRefreshing(false);
+            }
+        }, 1000);
     }
 
     @Override

@@ -1,5 +1,7 @@
 package photoview.yibao.com.photoview.bean;
 
+import java.util.List;
+
 /**
  * 作者：Stran on 2017/3/29 06:47
  * 描述：${TODO}
@@ -7,13 +9,17 @@ package photoview.yibao.com.photoview.bean;
  */
 public class GirlData {
 
-  private String url;
+    private List<String> mList;
 
-    public String getUrl() {
-        return url;
+    public GirlData(List<String> list) {
+        this.mList = list;
     }
 
-    public void setUrl(String url) {
-        this.url = url;
+    public List<String> getList() {
+        return mList;
+    }
+
+    public void setList(List<String> list) {
+        this.mList = list;
     }
 }

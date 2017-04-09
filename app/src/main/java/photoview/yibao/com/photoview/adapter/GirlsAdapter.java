@@ -2,9 +2,12 @@ package photoview.yibao.com.photoview.adapter;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+<<<<<<< HEAD:app/src/main/java/photoview/yibao/com/photoview/adapter/GirlAdapter.java
 import android.net.Uri;
 import android.app.FragmentManager;
 import android.os.Bundle;
+=======
+>>>>>>> dev:app/src/main/java/photoview/yibao/com/photoview/adapter/GirlsAdapter.java
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,24 +18,28 @@ import android.widget.TextView;
 
 import com.facebook.drawee.view.SimpleDraweeView;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import photoview.yibao.com.photoview.R;
+<<<<<<< HEAD:app/src/main/java/photoview/yibao/com/photoview/adapter/GirlAdapter.java
 import photoview.yibao.com.photoview.bean.GirlData;
 import photoview.yibao.com.photoview.fragment.LadyFrangment;
 import photoview.yibao.com.photoview.http.Api;
 import photoview.yibao.com.photoview.util.LogUtil;
+=======
+>>>>>>> dev:app/src/main/java/photoview/yibao/com/photoview/adapter/GirlsAdapter.java
 
 /**
  * 作者：Stran on 2017/3/29 06:11
  * 描述：${TODO}
  * 邮箱：strangermy@outlook.com
  */
-public class GirlAdapter
+public class GirlsAdapter
         extends RecyclerView.Adapter<RecyclerView.ViewHolder>
+
+
 {
     @BindView(R.id.pbLoad)
     ProgressBar      mPbLoad;
@@ -48,7 +55,7 @@ public class GirlAdapter
     private static Context         mContext;
     private static FragmentManager mManager;
 
-    private ArrayList<GirlData> mList;
+    private List<String> mList;
 
     private static final int TYPE_ITEM   = 0;
     private static final int TYPE_FOOTER = 1;
@@ -62,6 +69,7 @@ public class GirlAdapter
 
     //上拉加载更多状态-默认为0
     private int mLoadMoreStatus = 0;
+<<<<<<< HEAD:app/src/main/java/photoview/yibao/com/photoview/adapter/GirlAdapter.java
     private static int mCurrentItem;
 
     public GirlAdapter(Context context, FragmentManager manager) {
@@ -69,30 +77,65 @@ public class GirlAdapter
         mContext = context;
 
 
+=======
+
+    private int mNum;
+
+
+    //回调接口
+    public OnRvItemClickListener mItemClickListener;
+
+    public interface OnRvItemClickListener {
+        void showPagerFragment(int position);
+
+    }
+
+    public void setShowPagerViewListener(OnRvItemClickListener listener) {
+        this.mItemClickListener = listener;
+    }
+
+
+    public GirlsAdapter(Context context, List<String> list) {
+        mContext = context;
+        mList = list;
+        //       this.mIChangeFragment = iChangeFragment;
+>>>>>>> dev:app/src/main/java/photoview/yibao/com/photoview/adapter/GirlsAdapter.java
     }
 
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         if (viewType == TYPE_ITEM) {
+<<<<<<< HEAD:app/src/main/java/photoview/yibao/com/photoview/adapter/GirlAdapter.java
             View mView = LayoutInflater.from(parent.getContext())
                                        .inflate(R.layout.item_girl, parent, false);
+=======
+            mView = LayoutInflater.from(parent.getContext())
+                                  .inflate(R.layout.item_girl, parent, false);
+>>>>>>> dev:app/src/main/java/photoview/yibao/com/photoview/adapter/GirlsAdapter.java
 
             return new ViewHolder(mView);
 
         } else if (viewType == LOADING_MORE) {
+<<<<<<< HEAD:app/src/main/java/photoview/yibao/com/photoview/adapter/GirlAdapter.java
             View mView = LayoutInflater.from(parent.getContext())
                                        .inflate(R.layout.load_more_footview_layout, parent, false);
 
+=======
+            mView = LayoutInflater.from(parent.getContext())
+                                  .inflate(R.layout.load_more_footview_layout, parent, false);
+>>>>>>> dev:app/src/main/java/photoview/yibao/com/photoview/adapter/GirlsAdapter.java
             return new LoadMoreViewHolder(mView);
 
         }
         return null;
     }
 
+    //绑定视图
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+    public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
         if (holder instanceof ViewHolder) {
+<<<<<<< HEAD:app/src/main/java/photoview/yibao/com/photoview/adapter/GirlAdapter.java
             ViewHolder viewHolder = (ViewHolder) holder;
             mCurrentItem = position;
             //绑定图片
@@ -100,6 +143,24 @@ public class GirlAdapter
 
             viewHolder.mGrilImageView.setImageURI(url);
 
+=======
+            final ViewHolder viewHolder = (ViewHolder) holder;
+            //设置监听
+            viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+
+                    //打开PagerView的回调
+                    if (mContext instanceof OnRvItemClickListener) {
+                        ((OnRvItemClickListener) mContext).showPagerFragment(position);
+                    }
+                }
+            });
+            //绑定图片
+//            Uri url = Uri.parse(Api.picUrlArr[position]);
+
+            viewHolder.mGrilImageView.setImageURI(mList.get(position));
+>>>>>>> dev:app/src/main/java/photoview/yibao/com/photoview/adapter/GirlsAdapter.java
         } else if (holder instanceof LoadMoreViewHolder) {
             LoadMoreViewHolder moreViewHolder = (LoadMoreViewHolder) holder;
             switch (mLoadMoreStatus) {
@@ -124,41 +185,44 @@ public class GirlAdapter
 
     @Override
     public int getItemCount() {
-        return Api.picUrlArr == null
+        return mList == null
                ? 0
-               : Api.picUrlArr.length;
+               : mList.size();
     }
 
     public int getTypeItem(int position) {
+
         if (position + 1 == getItemCount()) {
             return TYPE_FOOTER;
         }
         return TYPE_ITEM;
     }
 
-    public void AddHeader(List<GirlData> items) {
-        mList.addAll(0, items);
-        notifyDataSetChanged();
-    }
 
-    public void AddFooter(List<GirlData> items) {
-        mList.addAll(0, items);
-        notifyDataSetChanged();
-
-
-    }
-
-    public void changeMoreStatus(int status) {
-        mLoadMoreStatus = status;
-        notifyDataSetChanged();
-
-    }
-
-
+<<<<<<< HEAD:app/src/main/java/photoview/yibao/com/photoview/adapter/GirlAdapter.java
     //列表的Holder
     static class ViewHolder
             extends RecyclerView.ViewHolder
             implements View.OnClickListener
+=======
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.pbLoad:
+                break;
+            case R.id.tvLoadText:
+                break;
+            case R.id.loadLayout:
+                break;
+        }
+    }
+
+
+    //**************************************************************************************
+
+    static class ViewHolder
+            extends RecyclerView.ViewHolder
+
+>>>>>>> dev:app/src/main/java/photoview/yibao/com/photoview/adapter/GirlsAdapter.java
     {
         private static final String ARGUMENTS = "arguments";
         @BindView(R.id.gril_image_view)
@@ -188,6 +252,8 @@ public class GirlAdapter
 
 
         }
+
+
     }
 
     //加载更多的Holder
@@ -208,4 +274,5 @@ public class GirlAdapter
 
         }
     }
+
 }

@@ -8,7 +8,7 @@ import android.widget.ImageView;
 
 import java.io.IOException;
 
-import photoview.yibao.com.photoview.adapter.MyPagerAdapter;
+import photoview.yibao.com.photoview.adapter.PagerGirlAdapter;
 
 /**
  * 作者：Stran on 2017/3/28 22:22
@@ -22,7 +22,7 @@ public class WallPaperUtil {
      * @param adapter
      */
 
-    public static void setWallPaper(Context context, MyPagerAdapter adapter) {
+    public static void setWallPaper(Context context, PagerGirlAdapter adapter) {
         WallpaperManager mWpManager = WallpaperManager.getInstance(context);
         ImageView        view       = (ImageView) adapter.getPrimaryItem();
         Bitmap           bitmap     = BitmapUtil.drawableToBitmap(view.getDrawable());

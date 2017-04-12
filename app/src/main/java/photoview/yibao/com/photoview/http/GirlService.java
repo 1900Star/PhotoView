@@ -1,5 +1,6 @@
 package photoview.yibao.com.photoview.http;
 
+import io.reactivex.Observable;
 import photoview.yibao.com.photoview.bean.GirlBean;
 import retrofit2.Call;
 import retrofit2.http.GET;
@@ -15,4 +16,10 @@ public interface GirlService {
     Call<GirlBean> getGrils(@Path("type") String type,
                             @Path("count") int count,
                             @Path("page") int page);
+
+    @GET("api/data/{type}/{count}/{page}")
+    Observable getGril(@Path("type") String type,
+                                 @Path("count") int count,
+                                 @Path("page") int page);
+
 }

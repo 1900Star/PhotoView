@@ -44,6 +44,7 @@ public class GirlFragment
     @BindView(R.id.swipe_refresh)
     SwipeRefreshLayout mSwipeRefresh;
     Unbinder unbinder;
+    private View mView;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -57,15 +58,21 @@ public class GirlFragment
                              ViewGroup container,
                              Bundle savedInstanceState)
     {
-        View view = View.inflate(getActivity(), R.layout.fragmet_main_girl, null);
+        if (savedInstanceState == null) {
+            if (mView == null) {
+                mView = View.inflate(getActivity(), R.layout.fragmet_main_girl, null);
+                unbinder = ButterKnife.bind(this, mView);
+                initData();
 
-        unbinder = ButterKnife.bind(this, view);
-        initData();
-        return view;
+
+            }
+        }
+        return mView;
     }
 
     private void initData() {
         ImageUitl.getGirls();
+
 
         mSwipeRefresh.setOnRefreshListener(this);
 
@@ -119,8 +126,8 @@ public class GirlFragment
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                //TODO
+//                ImageUitl.getGirls();
             }
-        }, 1000);
+        }, 10);
     }
 }

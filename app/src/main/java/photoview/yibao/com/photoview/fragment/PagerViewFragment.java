@@ -4,7 +4,11 @@ import android.app.Fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.view.ViewPager;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -43,9 +47,12 @@ public class PagerViewFragment
     @BindView(R.id.iv_down)
     ProgressView mPbDown;
     Unbinder unbinder;
+    @BindView(R.id.toolbar)
+    Toolbar mToolbar;
 
     //传递过来的position
     private int mPosition;
+    //ViewPger当前显示的图片
     //默认下载进度
     public static final int DEFULT_DOWN_PREGRESS = 0;
     //下载进度最大值
@@ -54,8 +61,9 @@ public class PagerViewFragment
     //PerView滑动的状态的最值
     public static final int STATUS_MAX_NUM = 3;
     private PagerGirlAdapter mPagerGirlAdapter;
-    private int              mRgb;
     private View mView = null;
+    private List<String> mList;
+    private String mUrl = null;
 
 
     @Override
@@ -65,7 +73,7 @@ public class PagerViewFragment
                 .register(this);
         if (savedInstanceState == null) {
 
-        Bundle arguments = getArguments();
+            Bundle arguments = getArguments();
             mPosition = arguments.getInt("position");
         }
     }
@@ -76,54 +84,76 @@ public class PagerViewFragment
                              @Nullable ViewGroup container,
                              Bundle savedInstanceState)
     {
-        LogUtil.d("22222222222222222222======");
         if (savedInstanceState == null) {
             if (mView == null) {
+
                 mView = inflater.inflate(R.layout.fragment_pager_view, container, false);
                 unbinder = ButterKnife.bind(this, mView);
                 initData();
-
             }
         }
+
         return mView;
     }
 
     private void initData() {
+        //        ((AppCompatActivity) getActivity()).setSupportActionBar(mToolbar);
+        setHasOptionsMenu(true);
         ImageUitl.getGirls();
-
-
     }
 
-    private void initViewPager(List<String> mList) {
-        mPagerGirlAdapter = new PagerGirlAdapter(getActivity(), mList);
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        menu.clear();
+        inflater.inflate(R.menu.main, menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_setwallpaer: //设置壁纸
+                //                                WallPaperUtil.setWallPaper(this, mAdapter);
+                LogUtil.d("vb jjjjjjj   jj  jj  jj  j   j   jj");
+                break;
+            case R.id.action_gallery:  //从相册选择壁纸
+                //                WallPaperUtil.choiceWallPaper(getActivity());
+                break;
+
+        }
+
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN,
+               priority = 100) //在ui线程执行 优先级100
+    public void onGirlDataEvent(GirlData data) {
+        mList = data.getList();
+        initViewPager(mList);
+    }
+
+    private void initViewPager(List<String> list) {
+        mPagerGirlAdapter = new PagerGirlAdapter(getActivity(), list);
 
         mVp.setAdapter(mPagerGirlAdapter);
         mVp.setCurrentItem(mPosition);
         mVp.addOnPageChangeListener(this);
     }
 
-    @Subscribe(threadMode = ThreadMode.MAIN,
-               priority = 100) //在ui线程执行 优先级100
-    public void onGirlDataEvent(GirlData data) {
-        initViewPager(data.getList());
-    }
-
     //图片保存
     @OnClick(R.id.iv_down)
     public void onViewClicked() {
+
         //网络检查
         boolean connected = NetworkUtil.isNetworkConnected(getActivity());
+
         if (connected) {
-            SnakbarUtil.showSnakbarLongs(getActivity().getApplicationContext(),
-                                         mPbDown,
-                                         "可以将图片保存起来-_-",
-                                         "保存图片",
-                                         mPosition,
-                                         mPagerGirlAdapter)
-                       .show();
+            SnakbarUtil.savePic(getActivity().getApplicationContext(),
+                                mPbDown,
+                                mUrl,
+                                mPagerGirlAdapter);
         } else {
-            SnakbarUtil.showSnakbarShort(mPbDown, "网络异常，请检查您的网络连接。-_-")
-                       .show();
+            SnakbarUtil.netErrors(mPbDown);
         }
     }
 
@@ -138,8 +168,7 @@ public class PagerViewFragment
     private void setProgress(int progress) {
         mPbDown.setProgress(progress);
         if (progress == MAX_DOWN_PREGRESS) {
-            SnakbarUtil.showSuccessStatus(mPbDown, "图片保存成功 -_-")
-                       .show();
+            SnakbarUtil.showSuccessStatus(mPbDown);
         }
     }
 
@@ -150,15 +179,18 @@ public class PagerViewFragment
         unbinder.unbind();
         EventBus.getDefault()
                 .unregister(this);
-        LogUtil.d("------------_________________------------------");
     }
 
     @Override
     public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
     }
 
     @Override
     public void onPageSelected(int position) {
+        mUrl = mList.get(position);
+
+
     }
 
     @Override

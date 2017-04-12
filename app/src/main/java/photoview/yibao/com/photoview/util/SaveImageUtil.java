@@ -15,7 +15,6 @@ import java.io.FileOutputStream;
 
 import photoview.yibao.com.photoview.adapter.PagerGirlAdapter;
 import photoview.yibao.com.photoview.bean.DownProgress;
-import photoview.yibao.com.photoview.http.Api;
 
 
 /**
@@ -31,23 +30,18 @@ public class SaveImageUtil {
     private Bitmap bitmap;
 
 
-    public static void savePic(final Context mContext,
-                               int itemPosition,
-                               final PagerGirlAdapter mAdapter)
+    public static void savePic(final Context mContext, String url, final PagerGirlAdapter mAdapter)
     {
 
-        String url  = Api.picUrlArr[itemPosition];
         String name = url.substring(url.lastIndexOf("/") + 1);
-        LogUtil.d("当前的Url是      " + url);
-        File file = FileUtil.getFile(name);
-
+        LogUtil.d("name ====    "+name);
+        File   file = FileUtil.getFile(name);
 
         ImageUitl.downloadPic(url, file.toString(),
 
                               new ImageUitl.OnDownloadListener() {
                                   @Override
                                   public void onDownloadSuccess() {
-//                                      LogUtil.d(TAG, "下载成功  ");
                                       File file1 = new File(Environment.getExternalStorageDirectory(),
                                                             Constans.PIC_NAME + ".jpg");
 
@@ -58,14 +52,14 @@ public class SaveImageUtil {
                                           Bitmap    bitmap = BitmapUtil.drawableToBitmap(iv.getDrawable());
                                           //将图片保存到SD卡上
                                           bitmap.compress(Bitmap.CompressFormat.JPEG, 100, fos);
-//                                          LogUtil.d(TAG, "下载成功  文件大小==" + bitmap.getByteCount());
+                                          //                                          LogUtil.d(TAG, "下载成功  文件大小==" + bitmap.getByteCount());
 
                                           //发个意图让MediasSanner去扫描SD卡，将下载的图片更新到图库
                                           Intent intent = new Intent();
                                           intent.setAction(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
                                           intent.setData(Uri.fromFile(file1));
                                           mContext.sendBroadcast(intent);
-//                                          LogUtil.d(TAG, "广播发出去了");
+                                          //                                          LogUtil.d(TAG, "广播发出去了");
 
 
                                       } catch (FileNotFoundException e) {

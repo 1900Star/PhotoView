@@ -17,100 +17,76 @@ public class SnakbarUtil {
     /**
      * 下载成功提示
      */
-    public static Snackbar showSuccessStatus(View view, String message) {
+    public static void showSuccessStatus(View view) {
         int      color    = Color.rgb(90, 181, 63);
-        Snackbar snackbar = Snackbar.make(view, message, Snackbar.LENGTH_LONG);
+        Snackbar snackbar = Snackbar.make(view, "图片保存成功 -_-", Snackbar.LENGTH_LONG);
         snackbar.getView()
                 .setBackgroundColor(color);
+        snackbar.show();
 
-        return snackbar;
     }
+
 
     /**
      * 保存图片提示
      */
-    public static Snackbar showSnakbarLong(final View view,
-                                           String message,
-                                           String action,
-                                           View.OnClickListener listener)
+    public static void savePic(final Context context,
+                               final View view,
+                               final String url,
+                               final PagerGirlAdapter mPagerGirlAdapter)
     {
-        int color = Color.argb(255, 239, 152, 59);
-        Snackbar snackbar = Snackbar.make(view, message, Snackbar.LENGTH_LONG)
-                                    .addCallback(new Snackbar.Callback() {
-                                        @Override
-                                        public void onShown(Snackbar sb) {
-                                            super.onShown(sb);
-                                            view.setOnClickListener(new View.OnClickListener() {
-                                                @Override
-                                                public void onClick(View view) {
 
-                                                }
-                                            });
 
-                                        }
+        int color = Color.argb(255, 245, 115, 160);
 
-                                        @Override
-                                        public void onDismissed(Snackbar transientBottomBar,
-                                                                int event)
-                                        {
-
-                                            super.onDismissed(transientBottomBar, event);
-                                        }
-                                    })
-                                    .setAction(action, listener);
-        snackbar.getView()
-                .setBackgroundColor(color);
-        return snackbar;
-    }
-
-    /**
-     * 保存图片提示
-     */
-    public static Snackbar showSnakbarLongs(final Context context,
-                                            final View view,
-                                            String message,
-                                            String action,
-                                            final int mPosition,
-                                            final PagerGirlAdapter mPagerGirlAdapter)
-    {
-        int color = Color.argb(255, 239, 152, 59);
-        Snackbar snackbar = Snackbar.make(view, message, Snackbar.LENGTH_LONG)
-                                    .setAction(action, new View.OnClickListener() {
+        Snackbar snackbar = Snackbar.make(view, "可以将图片保存起来-_-", Snackbar.LENGTH_LONG)
+                                    .setAction("保存图片", new View.OnClickListener() {
                                         @Override
                                         public void onClick(View view) {
-                                            SaveImageUtil.savePic(context,
-                                                                  mPosition,
-                                                                  mPagerGirlAdapter);
+
+                                            SaveImageUtil.savePic(context, url, mPagerGirlAdapter);
                                         }
                                     });
         snackbar.getView()
                 .setBackgroundColor(color);
-        return snackbar;
+        snackbar.show();
     }
 
     /**
      * 网络异常提示
      */
-    public static Snackbar showSnakbarShort(View view, String message)
+    public static void netErrors(View view)
     {
         int      color    = Color.rgb(255, 64, 129);
-        Snackbar snackbar = Snackbar.make(view, message, Snackbar.LENGTH_SHORT);
+        Snackbar snackbar = Snackbar.make(view, "网络异常，请检查您的网络连接。-_-", Snackbar.LENGTH_SHORT);
         snackbar.getView()
                 .setBackgroundColor(color);
 
-        return snackbar;
+        snackbar.show();
+    }
+
+    /**
+     * 退出程序
+     */
+    public static void finishActivity(View view)
+    {
+        int      color    = Color.argb(255, 230, 195, 65);
+        Snackbar snackbar = Snackbar.make(view, "再按一次我就离开了 -_-", Snackbar.LENGTH_SHORT);
+        snackbar.getView()
+                .setBackgroundColor(color);
+        snackbar.show();
+
     }
 
     /**
      * 关闭Snakbar
      */
-    public static Snackbar dismissSnakbar(View view)
+    public static void dismissSnakbar(View view)
     {
 
-        Snackbar snackbar = Snackbar.make(view, "", Snackbar.LENGTH_SHORT);
+        Snackbar.make(view, "", Snackbar.LENGTH_SHORT)
+                .dismiss();
 
-        snackbar.dismiss();
-        return snackbar;
     }
 
 

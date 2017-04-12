@@ -9,7 +9,6 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import photoview.yibao.com.photoview.R;
 import photoview.yibao.com.photoview.fragment.PagerViewFragment;
-import photoview.yibao.com.photoview.util.LogUtil;
 
 /**
  * Author：Sid
@@ -30,10 +29,9 @@ public class GirlActivity
         setContentView(R.layout.activty_gril);
         ButterKnife.bind(this);
         if (savedInstanceState == null) {
-        mBundle = getIntent().getExtras();
-        LogUtil.d("111111111111111111111111111111111111111111111======");
+            mBundle = getIntent().getExtras();
 
-        initData();
+            initData();
 
         }
 

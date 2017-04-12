@@ -130,9 +130,11 @@ public class ImageUitl {
                                                   .addConverterFactory(GsonConverterFactory.create())
                                                   .client(MyApplication.defaultOkHttpClient())
                                                   .build();
+
         retrofit.create(GirlService.class)
                 .getGrils("福利", 10000, 1)
                 .enqueue(new retrofit2.Callback<GirlBean>() {
+
                     @Override
                     public void onResponse(retrofit2.Call<GirlBean> call,
                                            retrofit2.Response<GirlBean> response)

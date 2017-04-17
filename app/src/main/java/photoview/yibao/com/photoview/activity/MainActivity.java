@@ -55,6 +55,7 @@ public class MainActivity
     //接口回调打开ViewPager浏览大图
     @Override
     public void showPagerFragment(int position) {
+
         Intent intent = new Intent(this, GirlActivity.class);
         Bundle bundle = new Bundle();
         bundle.putInt("position", position);

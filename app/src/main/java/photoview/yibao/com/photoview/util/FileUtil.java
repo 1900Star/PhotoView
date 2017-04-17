@@ -21,11 +21,11 @@ public class FileUtil {
     public static final String ROOT_SDCARD = Environment.getExternalStorageDirectory()
                                                         .getAbsolutePath();
 
-    private static final String CAPTURE_IMAGE_TARGET_PATH = ROOT_SDCARD + "/DCIM/";
+    public static final String IMAGE_PATH = ROOT_SDCARD + "/DCIM/";
 
     public static File getFile(String name) {
 
-        File dir = new File(CAPTURE_IMAGE_TARGET_PATH);
+        File dir = new File(IMAGE_PATH);
         if (!dir.exists()) {
             if (!dir.mkdirs()) {
                 Log.e(TAG, "创建目录失败");

@@ -10,7 +10,7 @@ public class Api {
     public static String[] picUrlArr = {"http://askpanda.cc/ask/pics/star/movie/11144/11144-dm42016052860621.jpg",
                                         "http://ww3.sinaimg.cn/large/7a8aed7bjw1f2h04lir85j20fa0mx784.jpg",
                                         "http://ww3.sinaimg.cn/large/7a8aed7bjw1f2fuecji0lj20f009oab3.jpg",
-
+                                        "https://images.unsplash.com/photo-1476673160081-cf065607f449?ixlib=rb-0.3.5&q=100&fm=jpg&crop=entropy&cs=tinysrgb&s=6ab5bf6963718e505f3b76bdb6015e5b",
                                         "http://ww1.sinaimg.cn/large/610dc034jw1f2ewruruvij20d70miadg.jpg",
 
                                         "http://ww3.sinaimg.cn/large/7a8aed7bjw1f2cfxa9joaj20f00fzwg2.jpg",

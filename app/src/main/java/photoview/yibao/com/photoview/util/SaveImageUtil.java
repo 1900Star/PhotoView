@@ -35,9 +35,9 @@ public class SaveImageUtil {
 
         String name = url.substring(url.lastIndexOf("/") + 1);
         LogUtil.d("name ====    "+name);
-        File   file = FileUtil.getFile(name);
+//        File   file = FileUtil.getFile(name);
 
-        ImageUitl.downloadPic(url, file.toString(),
+        ImageUitl.downloadPic(url,
 
                               new ImageUitl.OnDownloadListener() {
                                   @Override

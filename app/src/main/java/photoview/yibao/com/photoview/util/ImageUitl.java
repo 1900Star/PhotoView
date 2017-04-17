@@ -57,7 +57,7 @@ public class ImageUitl {
      * 保存图片
      */
     public static void downloadPic(final String url,
-                                   final String saveDir,
+
                                    final OnDownloadListener listener)
     {
 
@@ -83,13 +83,15 @@ public class ImageUitl {
                              FileOutputStream fos  = null;
 
                              //保存地址
-                             //                       String savePath = isExistDir(saveDir);
+//                                                    String savePath = isExistDir(saveDir);
                              is = response.body()
                                           .byteStream();
-                             File file = new File(saveDir, getNameFromUrl(url));
+
+                             LogUtil.d("HHHHHHHHHHHH=== ===     "+getNameFromUrl(url));
+                             File file = new File(FileUtil.IMAGE_PATH, getNameFromUrl(url));
                              long length = response.body()
                                                    .contentLength();
-                             fos = new FileOutputStream(saveDir);
+                             fos = new FileOutputStream(file);
                              long sum = 0;
                              while ((len = is.read(buff)) != -1) {
                                  fos.write(buff, 0, len);
@@ -185,7 +187,7 @@ public class ImageUitl {
      * @throws IOException
      * 判断下载目录是否存在
      */
-    private String isExistDir(String saveDir)
+    private static String isExistDir(String saveDir)
             throws IOException
     {
         // 下载位置

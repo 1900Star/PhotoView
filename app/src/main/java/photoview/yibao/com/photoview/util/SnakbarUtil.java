@@ -7,6 +7,8 @@ import android.view.View;
 
 import photoview.yibao.com.photoview.adapter.PagerGirlAdapter;
 
+import static android.support.design.widget.Snackbar.make;
+
 
 /**
  * 作者：Stran on 2017/3/28 01:31
@@ -19,7 +21,7 @@ public class SnakbarUtil {
      */
     public static void showSuccessStatus(View view) {
         int      color    = Color.rgb(90, 181, 63);
-        Snackbar snackbar = Snackbar.make(view, "图片保存成功 -_-", Snackbar.LENGTH_LONG);
+        Snackbar snackbar = make(view, "图片保存成功 -_-", Snackbar.LENGTH_LONG);
         snackbar.getView()
                 .setBackgroundColor(color);
         snackbar.show();
@@ -39,7 +41,7 @@ public class SnakbarUtil {
 
         int color = Color.argb(255, 245, 115, 160);
 
-        Snackbar snackbar = Snackbar.make(view, "可以将图片保存起来-_-", Snackbar.LENGTH_LONG)
+        Snackbar snackbar = make(view, "可以将图片保存起来-_-", Snackbar.LENGTH_LONG)
                                     .setAction("保存图片", new View.OnClickListener() {
                                         @Override
                                         public void onClick(View view) {
@@ -58,7 +60,7 @@ public class SnakbarUtil {
     public static void netErrors(View view)
     {
         int      color    = Color.rgb(255, 64, 129);
-        Snackbar snackbar = Snackbar.make(view, "网络异常，请检查您的网络连接。-_-", Snackbar.LENGTH_SHORT);
+        Snackbar snackbar = make(view, "网络异常，请检查您的网络连接 -_-", Snackbar.LENGTH_SHORT);
         snackbar.getView()
                 .setBackgroundColor(color);
 
@@ -71,7 +73,7 @@ public class SnakbarUtil {
     public static void finishActivity(View view)
     {
         int      color    = Color.argb(255, 230, 195, 65);
-        Snackbar snackbar = Snackbar.make(view, "再按一次我就离开了 -_-", Snackbar.LENGTH_SHORT);
+        Snackbar snackbar = make(view, "再按一次我就离开了 -_-", Snackbar.LENGTH_SHORT);
         snackbar.getView()
                 .setBackgroundColor(color);
         snackbar.show();
@@ -81,11 +83,13 @@ public class SnakbarUtil {
     /**
      * 关闭Snakbar
      */
-    public static void dismissSnakbar(View view)
+    public static void setWallpaer(View view)
     {
-
-        Snackbar.make(view, "", Snackbar.LENGTH_SHORT)
-                .dismiss();
+        int      color    = Color.rgb(90, 181, 63);
+        Snackbar snackbar = make(view, "壁纸设置成功  -_-", Snackbar.LENGTH_LONG);
+        snackbar.getView()
+                .setBackgroundColor(color);
+        snackbar.show();
 
     }
 

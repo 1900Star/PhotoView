@@ -77,7 +77,6 @@ public class GirlsAdapter
     public GirlsAdapter(Context context, List<String> list) {
         mContext = context;
         mList = list;
-        //       this.mIChangeFragment = iChangeFragment;
     }
 
 

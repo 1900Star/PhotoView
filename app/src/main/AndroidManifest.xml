@@ -17,7 +17,6 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".activity.MainActivity"
-            android:screenOrientation="sensor"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data android:name="UMENG_APPKEY" android:value="58e6af4f99f0c718b4001eda"/>
             <!--Channel ID多渠道统计-->

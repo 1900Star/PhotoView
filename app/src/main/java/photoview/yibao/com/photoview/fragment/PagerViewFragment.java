@@ -27,9 +27,9 @@ import photoview.yibao.com.photoview.adapter.PagerGirlAdapter;
 import photoview.yibao.com.photoview.bean.DownProgress;
 import photoview.yibao.com.photoview.bean.GirlData;
 import photoview.yibao.com.photoview.util.ImageUitl;
-import photoview.yibao.com.photoview.util.LogUtil;
 import photoview.yibao.com.photoview.util.NetworkUtil;
 import photoview.yibao.com.photoview.util.SnakbarUtil;
+import photoview.yibao.com.photoview.util.WallPaperUtil;
 import photoview.yibao.com.photoview.view.ProgressView;
 
 /**
@@ -87,17 +87,16 @@ public class PagerViewFragment
         if (savedInstanceState == null) {
             if (mView == null) {
 
+            }
                 mView = inflater.inflate(R.layout.fragment_pager_view, container, false);
                 unbinder = ButterKnife.bind(this, mView);
                 initData();
-            }
         }
 
         return mView;
     }
 
     private void initData() {
-        //        ((AppCompatActivity) getActivity()).setSupportActionBar(mToolbar);
         setHasOptionsMenu(true);
         ImageUitl.getGirls();
     }
@@ -112,11 +111,11 @@ public class PagerViewFragment
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_setwallpaer: //设置壁纸
-                //                                WallPaperUtil.setWallPaper(this, mAdapter);
-                LogUtil.d("vb jjjjjjj   jj  jj  jj  j   j   jj");
+                WallPaperUtil.setWallPaper(getActivity(), mPagerGirlAdapter);
+                SnakbarUtil.setWallpaer(mPbDown);
                 break;
             case R.id.action_gallery:  //从相册选择壁纸
-                //                WallPaperUtil.choiceWallPaper(getActivity());
+                WallPaperUtil.choiceWallPaper(getActivity());
                 break;
 
         }

@@ -45,7 +45,6 @@ public class GirlActivity
             getFragmentManager().beginTransaction()
                                 .add(R.id.content_girl_activity, mFragment)
                                 .commit();
-
         }
     }
 }

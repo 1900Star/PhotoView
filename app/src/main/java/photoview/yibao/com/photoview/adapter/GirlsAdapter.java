@@ -40,7 +40,7 @@ public class GirlsAdapter
 
     private String TAG = "RefreshAdapter";
     @SuppressLint("StaticFieldLeak")
-    private static Context         mContext;
+    private Context mContext;
 
     private List<String> mList;
 
@@ -61,16 +61,11 @@ public class GirlsAdapter
 
 
     //回调接口
-    public OnRvItemClickListener mItemClickListener;
-    private View mView;
+    public  OnRvItemClickListener mItemClickListener;
 
     public interface OnRvItemClickListener {
-        void showPagerFragment(int position);
+        void showPagerFragment(int position,List<String> list);
 
-    }
-
-    public void setShowPagerViewListener(OnRvItemClickListener listener) {
-        this.mItemClickListener = listener;
     }
 
 
@@ -82,16 +77,17 @@ public class GirlsAdapter
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View view;
         if (viewType == TYPE_ITEM) {
-            mView = LayoutInflater.from(parent.getContext())
-                                  .inflate(R.layout.item_girl, parent, false);
+            view = LayoutInflater.from(parent.getContext())
+                                 .inflate(R.layout.item_girl, parent, false);
 
-            return new ViewHolder(mView);
+            return new ViewHolder(view);
 
         } else if (viewType == LOADING_MORE) {
-            mView = LayoutInflater.from(parent.getContext())
-                                  .inflate(R.layout.load_more_footview_layout, parent, false);
-            return new LoadMoreViewHolder(mView);
+            view = LayoutInflater.from(parent.getContext())
+                                 .inflate(R.layout.load_more_footview_layout, parent, false);
+            return new LoadMoreViewHolder(view);
 
         }
         return null;
@@ -109,12 +105,12 @@ public class GirlsAdapter
 
                     //打开PagerView的回调
                     if (mContext instanceof OnRvItemClickListener) {
-                        ((OnRvItemClickListener) mContext).showPagerFragment(position);
+                        ((OnRvItemClickListener) mContext).showPagerFragment(position,mList);
                     }
                 }
             });
             //绑定图片
-//            Uri url = Uri.parse(Api.picUrlArr[position]);
+            //            Uri url = Uri.parse(Api.picUrlArr[position]);
 
             viewHolder.mGrilImageView.setImageURI(mList.get(position));
         } else if (holder instanceof LoadMoreViewHolder) {

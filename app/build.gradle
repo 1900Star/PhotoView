@@ -4,6 +4,16 @@ android {
     compileSdkVersion 25
     buildToolsVersion "25.0.2"
     defaultConfig {
+
+        //开启jack编译
+        jackOptions {
+            enabled true
+        }
+        //将编译选项设置为Java1.8
+        compileOptions {
+            targetCompatibility 1.8
+            sourceCompatibility 1.8
+        }
         applicationId "photoview.yibao.com.photoview"
         minSdkVersion 16
         targetSdkVersion 25
@@ -66,5 +76,14 @@ dependencies {
     compile 'com.squareup.retrofit2:converter-gson:2.2.0'
     compile 'com.squareup.retrofit2:adapter-rxjava2:2.2.0'
     //rxjava
-    compile 'com.jakewharton.retrofit:retrofit1-okhttp3-client:1.1.0'
+
+//    compile 'io.reactivex:rxandroid:1.2.1'
+//    compile 'io.reactivex:rxjava:1.1.6'
+    compile 'io.reactivex.rxjava2:rxandroid:2.0.1'
+    compile 'io.reactivex.rxjava2:rxjava:2.0.8'
+
+//leakcanary
+    debugCompile 'com.squareup.leakcanary:leakcanary-android:1.5'
+    releaseCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.5'
+    testCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.5'
 }

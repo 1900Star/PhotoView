@@ -7,14 +7,11 @@ import android.net.Uri;
 import android.os.Environment;
 import android.widget.ImageView;
 
-import org.greenrobot.eventbus.EventBus;
-
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 
 import photoview.yibao.com.photoview.adapter.PagerGirlAdapter;
-import photoview.yibao.com.photoview.bean.DownProgress;
 
 
 /**
@@ -34,8 +31,8 @@ public class SaveImageUtil {
     {
 
         String name = url.substring(url.lastIndexOf("/") + 1);
-        LogUtil.d("name ====    "+name);
-//        File   file = FileUtil.getFile(name);
+        LogUtil.d("name ====    " + name);
+        //        File   file = FileUtil.getFile(name);
 
         ImageUitl.downloadPic(url,
 
@@ -68,12 +65,8 @@ public class SaveImageUtil {
 
                                   }
 
-                                  @Override
-                                  public void onDownloading(int progress) {
-
-                                      EventBus.getDefault()
-                                              .post(new DownProgress(progress));
-                                  }
+                                  //                                  @Override
+                                  //                                  public void onDownloading(int progress) {}
 
                                   @Override
                                   public void onDownloadFailed() {

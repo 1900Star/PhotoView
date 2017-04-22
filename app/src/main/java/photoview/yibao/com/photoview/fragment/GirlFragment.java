@@ -24,7 +24,8 @@ import butterknife.Unbinder;
 import photoview.yibao.com.photoview.R;
 import photoview.yibao.com.photoview.adapter.GirlsAdapter;
 import photoview.yibao.com.photoview.bean.GirlData;
-import photoview.yibao.com.photoview.util.ImageUitl;
+import photoview.yibao.com.photoview.util.GirlUitl;
+import photoview.yibao.com.photoview.util.LogUtil;
 
 /**
  * 作者：Stran on 2017/3/29 01:18
@@ -71,24 +72,12 @@ public class GirlFragment
     }
 
     private void initData() {
-        ImageUitl.getGirls();
-
-
+        GirlUitl.getRx();
         mSwipeRefresh.setOnRefreshListener(this);
+        mSwipeRefresh.setOnClickListener(view -> LogUtil.d(""));
 
     }
 
-
-    @OnClick({R.id.fragment_girl_recycler,
-              R.id.swipe_refresh})
-    public void onViewClicked(View view) {
-        switch (view.getId()) {
-            case R.id.fragment_girl_recycler:
-                break;
-            case R.id.swipe_refresh:
-                break;
-        }
-    }
 
     @Subscribe(threadMode = ThreadMode.MAIN,
                priority = 100) //在ui线程执行 优先级100
@@ -126,7 +115,7 @@ public class GirlFragment
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-//                ImageUitl.getGirls();
+                //                ImageUitl.getGirls();
             }
         }, 10);
     }

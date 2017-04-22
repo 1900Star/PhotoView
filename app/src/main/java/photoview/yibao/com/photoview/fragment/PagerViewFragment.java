@@ -16,6 +16,7 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -25,7 +26,6 @@ import butterknife.Unbinder;
 import photoview.yibao.com.photoview.R;
 import photoview.yibao.com.photoview.adapter.PagerGirlAdapter;
 import photoview.yibao.com.photoview.bean.DownProgress;
-import photoview.yibao.com.photoview.bean.GirlData;
 import photoview.yibao.com.photoview.util.ImageUitl;
 import photoview.yibao.com.photoview.util.NetworkUtil;
 import photoview.yibao.com.photoview.util.SnakbarUtil;
@@ -63,7 +63,10 @@ public class PagerViewFragment
     private PagerGirlAdapter mPagerGirlAdapter;
     private View mView = null;
     private List<String> mList;
-    private String mUrl = null;
+    private String  mUrl           = null;
+    private boolean isShowGankGirl = true;
+    private List<String> mLists;
+
 
 
     @Override
@@ -75,6 +78,8 @@ public class PagerViewFragment
 
             Bundle arguments = getArguments();
             mPosition = arguments.getInt("position");
+            mList = arguments.getStringArrayList("list");
+
         }
     }
 
@@ -85,37 +90,49 @@ public class PagerViewFragment
                              Bundle savedInstanceState)
     {
         if (savedInstanceState == null) {
-            if (mView == null) {
 
-            }
-                mView = inflater.inflate(R.layout.fragment_pager_view, container, false);
-                unbinder = ButterKnife.bind(this, mView);
-                initData();
+            mView = inflater.inflate(R.layout.fragment_pager_view, container, false);
+            unbinder = ButterKnife.bind(this, mView);
+            initData();
+
         }
 
         return mView;
     }
 
+
     private void initData() {
         setHasOptionsMenu(true);
-        ImageUitl.getGirls();
+        mPagerGirlAdapter = new PagerGirlAdapter(getActivity(), mList);
+
+        mVp.setAdapter(mPagerGirlAdapter);
+        mVp.setCurrentItem(mPosition);
+        mVp.addOnPageChangeListener(this);
+
     }
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         menu.clear();
         inflater.inflate(R.menu.main, menu);
+
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_setwallpaer: //设置壁纸
-                WallPaperUtil.setWallPaper(getActivity(), mPagerGirlAdapter);
+                                WallPaperUtil.setWallPaper(getActivity(), mPagerGirlAdapter);
                 SnakbarUtil.setWallpaer(mPbDown);
                 break;
             case R.id.action_gallery:  //从相册选择壁纸
                 WallPaperUtil.choiceWallPaper(getActivity());
+                break;
+            case R.id.action_localgirl:  //默认美女
+                getDefultGirl();
+                break;
+            case R.id.action_gank:  //干货集中营
+                initData();
                 break;
 
         }
@@ -124,20 +141,26 @@ public class PagerViewFragment
         return super.onOptionsItemSelected(item);
     }
 
-    @Subscribe(threadMode = ThreadMode.MAIN,
-               priority = 100) //在ui线程执行 优先级100
-    public void onGirlDataEvent(GirlData data) {
-        mList = data.getList();
-        initViewPager(mList);
-    }
-
-    private void initViewPager(List<String> list) {
-        mPagerGirlAdapter = new PagerGirlAdapter(getActivity(), list);
+    private void getDefultGirl() {
+        isShowGankGirl = true;
+        mLists = ImageUitl.getDefultUrl(ImageUitl.getDefultUrl(new ArrayList<String>()));
+        mPagerGirlAdapter = new PagerGirlAdapter(getActivity(), mLists);
 
         mVp.setAdapter(mPagerGirlAdapter);
-        mVp.setCurrentItem(mPosition);
-        mVp.addOnPageChangeListener(this);
+        mPagerGirlAdapter.notifyDataSetChanged();
     }
+
+
+    //获取下载进度，设置ProgressBar
+    @Subscribe(threadMode = ThreadMode.MAIN,
+               priority = 100)
+    public void onSetProgress(DownProgress data) {
+        int progress = data.getProgress();
+        setProgress(progress);
+    }
+
+
+
 
     //图片保存
     @OnClick(R.id.iv_down)
@@ -147,22 +170,26 @@ public class PagerViewFragment
         boolean connected = NetworkUtil.isNetworkConnected(getActivity());
 
         if (connected) {
+
+
+            if (isShowGankGirl) {
+
+                SnakbarUtil.savePic(getActivity().getApplicationContext(),
+                                    mPbDown,
+                                    mUrl,
+                                    mPagerGirlAdapter);
+            }
+
             SnakbarUtil.savePic(getActivity().getApplicationContext(),
                                 mPbDown,
                                 mUrl,
                                 mPagerGirlAdapter);
+
         } else {
             SnakbarUtil.netErrors(mPbDown);
         }
     }
 
-    //获取下载进度，设置ProgressBar
-    @Subscribe(threadMode = ThreadMode.MAIN,
-               priority = 100)
-    public void onSetProgress(DownProgress data) {
-        int progress = data.getProgress();
-        setProgress(progress);
-    }
 
     private void setProgress(int progress) {
         mPbDown.setProgress(progress);
@@ -187,8 +214,10 @@ public class PagerViewFragment
 
     @Override
     public void onPageSelected(int position) {
-        mUrl = mList.get(position);
-
+        if (isShowGankGirl) {
+            mUrl = mList.get(position);
+        }
+        //        mUrl = mLists.get(position);
 
     }
 
@@ -197,6 +226,9 @@ public class PagerViewFragment
 
         if (state < STATUS_MAX_NUM) {
             mPbDown.setProgress(DEFULT_DOWN_PREGRESS);
+
         }
     }
+
+
 }

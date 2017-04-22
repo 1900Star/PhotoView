@@ -16,16 +16,21 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".activity.MainActivity"
-            android:theme="@style/AppTheme.NoActionBar">
-            <meta-data android:name="UMENG_APPKEY" android:value="58e6af4f99f0c718b4001eda"/>
-            <!--Channel ID多渠道统计-->
-            <meta-data android:name="UMENG_CHANNEL" android:value="Channel ID"/>
+            android:name=".activity.SplashActivity"
+            android:theme="@style/AppTheme.NoActionBar"
+        >
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
+        </activity>
+        <activity android:name=".activity.MainActivity"
+                  android:theme="@style/AppTheme.NoActionBar">
+            <meta-data android:name="UMENG_APPKEY" android:value="58e6af4f99f0c718b4001eda"/>
+            <!--Channel ID多渠道统计-->
+            <meta-data android:name="UMENG_CHANNEL" android:value="Channel ID"/>
         </activity>
         <activity android:name=".activity.GirlActivity"/>
 

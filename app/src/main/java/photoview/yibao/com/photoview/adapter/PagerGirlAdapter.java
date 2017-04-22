@@ -5,9 +5,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+
 import java.util.List;
 
-import photoview.yibao.com.photoview.util.ImageUitl;
 import photoview.yibao.com.photoview.view.ZoomImageView;
 
 /**
@@ -59,7 +61,11 @@ public class PagerGirlAdapter
         view.setScaleType(ImageView.ScaleType.MATRIX);
         view.reSetState();
         //加载图片
-        ImageUitl.glideLoadPic(mContext, mList.get(position), view);
+        Glide.with(mContext)
+             .load(mList.get(position))
+             .asBitmap()
+             .diskCacheStrategy(DiskCacheStrategy.ALL)
+             .into(view);
 
         container.addView(view, params);
 

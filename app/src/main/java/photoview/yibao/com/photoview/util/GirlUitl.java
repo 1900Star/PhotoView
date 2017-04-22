@@ -1,19 +1,20 @@
 package photoview.yibao.com.photoview.util;
 
-import com.google.gson.Gson;
+import org.greenrobot.eventbus.EventBus;
 
-import java.io.FileOutputStream;
-import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-import okhttp3.Call;
-import okhttp3.Callback;
+import io.reactivex.Observer;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.schedulers.Schedulers;
 import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.Response;
 import photoview.yibao.com.photoview.bean.GirlBean;
+import photoview.yibao.com.photoview.bean.GirlData;
 import photoview.yibao.com.photoview.bean.ResultsBean;
+import photoview.yibao.com.photoview.http.GirlServiceRx;
 
 /**
  * 作者：Stran on 2017/3/23 03:23
@@ -26,7 +27,7 @@ public class GirlUitl {
     private        OkHttpClient mClient;
     String url = Constans.BASE_URL + "/1000/1";
     private List<ResultsBean> mResults;
-
+    private static final List<String> list = new ArrayList<>();
 
     GirlUitl() {
         if (mClient != null) {}
@@ -44,76 +45,48 @@ public class GirlUitl {
     }
 
 
-    /**
-     * 保存图片
-     */
-    public List<ResultsBean> initGirlData()
-    {
+    public static void getRx() {
 
-        LogUtil.d("进入下载方法", "////////////////////////////////////////////");
-        Request request = new Request.Builder().url(url)
-                                               .build();
-        mClient.newCall(request)
-               .enqueue(new Callback() {
-                   @Override
-                   public void onFailure(Call call, IOException e) {
-                       //下载失败
-                       //                       listener.onDownloadFailed();
-                   }
+        RxjavaUtils.getRxjava()
+                   .create(GirlServiceRx.class)
+                   .getGril("福利", 100, 1)
+                   .subscribeOn(Schedulers.io())
+                   .observeOn(AndroidSchedulers.mainThread())
+                   .subscribe(new Observer<GirlBean>() {
+                       @Override
+                       public void onSubscribe(Disposable d) {
+                           LogUtil.d("======       Disposable  ===    ");
+                       }
 
-                   @Override
-                   public void onResponse(Call call, Response response)
-                           throws IOException
-                   {
+                       @Override
+                       public void onNext(GirlBean girlBean) {
+                           List<ResultsBean> results = girlBean.getResults();
+                           for (int i = 0; i < results.size(); i++) {
 
-                       //                       InputStream      is   = null;
-                       byte[]           buff = new byte[1024 * 4];
-                       int              len  = 0;
-                       FileOutputStream fos  = null;
+                               list.add(results.get(i)
+                                               .getUrl());
 
-                       //保存地址
-                       //                       String savePath = isExistDir(saveDir);
-                       //                       byte[] bytes = response.body()
-                       //                                              .bytes();
-                       String json = response.body()
-                                             .string();
-
-                       //                       LogUtil.d(
-                       //                               "================Girl 哈哈 =="+json);
-
-                       Gson              gson     = new Gson();
-                       GirlBean          girlData = gson.fromJson(json, GirlBean.class);
-                       mResults = girlData.getResults();
+                           }
+                           EventBus.getDefault()
+                                   .post(new GirlData(list));
 
 
-                       ResultsBean resultsBean = mResults.get(460);
+                       }
 
-                       String ganhuo_id = resultsBean.getUrl();
-                       LogUtil.d("__-----++=++++++++++这是图片的 长度=====Url ==" + mResults.size());
-                       LogUtil.d("__-----++=++++++++++这是图片的 =====Url ==" + ganhuo_id);
+                       @Override
+                       public void onError(Throwable e) {
 
+                       }
 
-                       //                       File file = new File(saveDir, getNameFromUrl(url));
-                       long length = response.body()
-                                             .contentLength();
-                       //                       fos = new FileOutputStream(saveDir);
-                       long sum = 0;
-                       //                       while ((len = is.read(buff)) != -1) {
-                       //                           fos.write(buff, 0, len);
-                       //                           sum += len;
-                       //                           int progress = (int) (sum * 1.0f / length * 100);
-                       //                           listener.onDownloading(progress);
+                       @Override
+                       public void onComplete() {
+                           LogUtil.d("======       complete  ===    ");
 
-                       //                       }
-                       //                       fos.flush();
-                       //                       listener.onDownloadSuccess();
+                       }
+                   });
 
-                   }
-               });
-        return mResults;
 
     }
-
 
 }
 

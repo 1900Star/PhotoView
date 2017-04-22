@@ -8,6 +8,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.KeyEvent;
 import android.widget.FrameLayout;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import photoview.yibao.com.photoview.R;
@@ -42,8 +45,8 @@ public class MainActivity
             initData();
         }
 
-    }
 
+    }
 
     private void initData() {
         GirlFragment girlFragment = new GirlFragment();
@@ -54,10 +57,11 @@ public class MainActivity
 
     //接口回调打开ViewPager浏览大图
     @Override
-    public void showPagerFragment(int position) {
+    public void showPagerFragment(int position, List<String> list) {
 
         Intent intent = new Intent(this, GirlActivity.class);
         Bundle bundle = new Bundle();
+        bundle.putStringArrayList("list", (ArrayList<String>) list);
         bundle.putInt("position", position);
         intent.putExtras(bundle);
         startActivity(intent);

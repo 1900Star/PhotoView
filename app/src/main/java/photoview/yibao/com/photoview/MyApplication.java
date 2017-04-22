@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.app.AppCompatDelegate;
 
 import com.facebook.drawee.backends.pipeline.Fresco;
+import com.squareup.leakcanary.LeakCanary;
 
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
@@ -40,6 +41,10 @@ public class MyApplication
     @Override
     public void onCreate() {
         super.onCreate();
+        if (LeakCanary.isInAnalyzerProcess(this)) {
+            return;
+        }
+        LeakCanary.install(this);
         Fresco.initialize(this);
         appContext = this;
 
@@ -53,9 +58,9 @@ public class MyApplication
 
             {
                 Request request = chain.request();
-//                LogUtil.d("request ====     "+request.toString());
+                //                LogUtil.d("request ====     "+request.toString());
                 Response proceed = chain.proceed(request);
-//                LogUtil.d("proced=====      "+proceed);
+                //                LogUtil.d("proced=====      "+proceed);
                 return proceed;
             }
         })

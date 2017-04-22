@@ -1,9 +1,9 @@
 package photoview.yibao.com.photoview.util;
 
-import io.reactivex.Observable;
+
 import photoview.yibao.com.photoview.MyApplication;
-import photoview.yibao.com.photoview.http.GirlService;
 import retrofit2.Retrofit;
+import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
@@ -13,43 +13,23 @@ import retrofit2.converter.gson.GsonConverterFactory;
  */
 public class RxjavaUtils {
 
-    /*    int drawableRes = ...;
-        ImageView imageView = ...;
-    Observable.create(new OnSubscribe<Drawable>() {
-            @Override
-            public void call(Subscriber<? super Drawable> subscriber) {
-                Drawable drawable = getTheme().getDrawable(drawableRes));
-                subscriber.onNext(drawable);
-                subscriber.onCompleted();
-            }
-        })
-                .subscribeOn(Schedulers.io()) // 指定 subscribe() 发生在 IO 线程
-                .observeOn(AndroidSchedulers.mainThread()) // 指定 Subscriber 的回调发生在主线程
-                .subscribe(new Observer<Drawable>() {
-            @Override
-            public void onNext(Drawable drawable) {
-                imageView.setImageDrawable(drawable);
+    private static Retrofit retrofit;
+
+    public static Retrofit getRxjava() {
+        if (retrofit == null) {
+            synchronized (RxjavaUtils.class) {
+                retrofit = new Retrofit.Builder().baseUrl(Constans.GANK_API)
+                                                 .addConverterFactory(GsonConverterFactory.create())
+                                                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+                                                 .client(MyApplication.defaultOkHttpClient())
+                                                 .build();
+
             }
 
-            @Override
-            public void onCompleted() {
-            }
+        }
+        return retrofit;
 
-            @Override
-            public void onError(Throwable e) {
-                Toast.makeText(activity, "Error!", Toast.LENGTH_SHORT).show();
-            }
-        });
-        */
-    public static void getRxjava() {
 
-        Retrofit retrofit = new Retrofit.Builder().baseUrl("http://gank.io/")
-                                                  .addConverterFactory(GsonConverterFactory.create())
-                                                  .client(MyApplication.defaultOkHttpClient())
-                                                  .build();
-        GirlService service = retrofit.create(GirlService.class);
-
-        Observable serviceGril = service.getGril("福利", 100, 1);
     }
 
 }

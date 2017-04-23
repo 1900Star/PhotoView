@@ -1,11 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest package="photoview.yibao.com.photoview"
+<manifest package="com.yibao.biggirl"
           xmlns:android="http://schemas.android.com/apk/res/android">
     <uses-permission android:name="android.permission.SET_WALLPAPER"/>
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGEad"/>
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
+    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
 
     <application
         android:name=".MyApplication"
@@ -27,12 +30,15 @@
             </intent-filter>
         </activity>
         <activity android:name=".activity.MainActivity"
-                  android:theme="@style/AppTheme.NoActionBar">
-            <meta-data android:name="UMENG_APPKEY" android:value="58e6af4f99f0c718b4001eda"/>
-            <!--Channel ID多渠道统计-->
-            <meta-data android:name="UMENG_CHANNEL" android:value="Channel ID"/>
-        </activity>
+                  android:theme="@style/AppTheme.NoActionBar"
+        />
+
+
         <activity android:name=".activity.GirlActivity"/>
+
+        <activity android:name=".activity.WebViewActivity"
+                  android:theme="@style/AppTheme.NoActionBar"
+                  android:windowSoftInputMode="stateHidden|adjustResize"/>
 
     </application>
 </manifest>

@@ -50,8 +50,8 @@
 -dontwarn org.apache.**
 -keep class org.apache.** { *;}
 
--dontwarn com.android.internal.http.multipart.**
--keep class com.android.internal.http.multipart.** { *;}
+-dontwarn com.android.internal.com.yibao.biggirl.http.multipart.**
+-keep class com.android.internal.com.yibao.biggirl.http.multipart.** { *;}
 #fresco
 -keep @com.facebook.common.internal.DoNotStrip class *
 -keepclassmembers class * {
@@ -86,6 +86,6 @@
 }
 -keep enum org.greenrobot.eventbus.ThreadMode {*;}
 # Only required if you use AsyncExecutor
--keepclassmembers class * extends org.greenrobot.eventbus.util.ThrowableFailureEvent {
+-keepclassmembers class * extends org.greenrobot.eventbus.com.yibao.biggirl.util.ThrowableFailureEvent {
     <init>(java.lang.Throwable);
 }

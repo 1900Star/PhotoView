@@ -3,7 +3,8 @@ package com.yibao.biggirl.util;
 import android.support.annotation.NonNull;
 
 import com.yibao.biggirl.MyApplication;
-import com.yibao.biggirl.http.Api;
+import com.yibao.biggirl.model.girl.DownGrilProgressData;
+import com.yibao.biggirl.network.Api;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -60,7 +61,6 @@ public class ImageUitl {
                              is = response.body()
                                           .byteStream();
 
-                             LogUtil.d("HHHHHHHHHHHH=== ===     " + getNameFromUrl(url));
                              File file = new File(FileUtil.IMAGE_PATH, getNameFromUrl(url));
                              long length = response.body()
                                                    .contentLength();
@@ -70,9 +70,11 @@ public class ImageUitl {
                                  fos.write(buff, 0, len);
                                  sum += len;
                                  int progress = (int) (sum * 1.0f / length * 100);
-//                                 listener.onDownloading(progress);
                                  EventBus.getDefault()
-                                         .post(progress);
+                                         .post(new DownGrilProgressData(progress));
+
+                                 //                                 listener.onDownloading(progress);
+
 
                              }
                              fos.flush();
@@ -91,7 +93,7 @@ public class ImageUitl {
         void onDownloadSuccess();
 
 
-//        void onDownloading(int progress);
+        //        void onDownloading(int progress);
 
 
         void onDownloadFailed();

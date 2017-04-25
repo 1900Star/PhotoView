@@ -1,4 +1,4 @@
-package com.yibao.biggirl.bean.base;
+package com.yibao.biggirl.base;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;

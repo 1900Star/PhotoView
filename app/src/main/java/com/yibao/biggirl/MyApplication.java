@@ -6,7 +6,6 @@ import android.content.res.Configuration;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.app.AppCompatDelegate;
 
-import com.facebook.drawee.backends.pipeline.Fresco;
 import com.squareup.leakcanary.LeakCanary;
 import com.tencent.smtt.sdk.WebView;
 import com.yibao.biggirl.util.ConfigUtil;
@@ -26,7 +25,7 @@ public class MyApplication
         extends Application
 {
     private static MyApplication appContext;
-    public static  String currentGirl = "com.yibao.biggirl.http://7xi8d6.com1.z0.glb.clouddn.com/2017-03-23-17265820_645330569008169_4543676027339014144_n.jpg";
+    public static  String currentGirl = "http://7xi8d6.com1.z0.glb.clouddn.com/2017-03-23-17265820_645330569008169_4543676027339014144_n.jpg";
     private static String THEME_KEY   = "theme_mode";
     private boolean isNight;
 
@@ -48,24 +47,23 @@ public class MyApplication
         int width = webView.getView()
                            .getWidth();
         LeakCanary.install(this);
-        Fresco.initialize(this);
+        //        Fresco.initialize(this);
         appContext = this;
 
     }
 
     public static OkHttpClient defaultOkHttpClient() {
-        OkHttpClient client = new OkHttpClient.Builder().addInterceptor(chain -> {
+        return new OkHttpClient.Builder().addInterceptor(chain -> {
             Request request = chain.request();
             //                LogUtil.d("request ====     "+request.toString());
             Response proceed = chain.proceed(request);
             //                LogUtil.d("proced=====      "+proceed);
             return proceed;
         })
-                                                        .connectTimeout(3, TimeUnit.SECONDS)
-                                                        .writeTimeout(3, TimeUnit.SECONDS)
-                                                        .readTimeout(3, TimeUnit.SECONDS)
-                                                        .build();
-        return client;
+                                         .connectTimeout(3, TimeUnit.SECONDS)
+                                         .writeTimeout(3, TimeUnit.SECONDS)
+                                         .readTimeout(3, TimeUnit.SECONDS)
+                                         .build();
     }
 
     private void initThemeMode() {

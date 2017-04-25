@@ -5,7 +5,7 @@ import android.graphics.Color;
 import android.support.design.widget.Snackbar;
 import android.view.View;
 
-import com.yibao.biggirl.adapter.PagerGirlAdapter;
+import com.yibao.biggirl.girl.GirlAdapter;
 
 import static android.support.design.widget.Snackbar.make;
 
@@ -35,7 +35,7 @@ public class SnakbarUtil {
     public static void savePic(final Context context,
                                final View view,
                                final String url,
-                               final PagerGirlAdapter mPagerGirlAdapter)
+                               final GirlAdapter mPagerGirlAdapter)
     {
 
 

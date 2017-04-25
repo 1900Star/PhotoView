@@ -1,10 +1,11 @@
-package com.yibao.biggirl.bean.base;
+package com.yibao.biggirl.base;
 
 import android.app.Fragment;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
 
 /**
  * 作者：Stran on 2017/3/29 15:24

@@ -7,7 +7,7 @@ import android.net.Uri;
 import android.os.Environment;
 import android.widget.ImageView;
 
-import com.yibao.biggirl.adapter.PagerGirlAdapter;
+import com.yibao.biggirl.girl.GirlAdapter;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -27,7 +27,7 @@ public class SaveImageUtil {
     private Bitmap bitmap;
 
 
-    public static void savePic(final Context mContext, String url, final PagerGirlAdapter mAdapter)
+    public static void savePic(final Context mContext, String url, final GirlAdapter mAdapter)
     {
 
         String name = url.substring(url.lastIndexOf("/") + 1);
@@ -65,8 +65,7 @@ public class SaveImageUtil {
 
                                   }
 
-                                  //                                  @Override
-                                  //                                  public void onDownloading(int progress) {}
+//                                  @Override public void onDownloading(int progress) {}
 
                                   @Override
                                   public void onDownloadFailed() {

@@ -1,4 +1,4 @@
-package com.yibao.biggirl.bean.base;
+package com.yibao.biggirl.base;
 
 /**
  * Author：Sid

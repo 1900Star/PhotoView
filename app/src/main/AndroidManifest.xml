@@ -19,7 +19,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".activity.SplashActivity"
+            android:name=".splash.SplashActivity"
             android:theme="@style/AppTheme.NoActionBar"
         >
 
@@ -29,14 +29,14 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".activity.MainActivity"
+        <activity android:name=".home.MainActivity"
                   android:theme="@style/AppTheme.NoActionBar"
         />
 
 
-        <activity android:name=".activity.GirlActivity"/>
+        <activity android:name=".girl.GirlActivity"/>
 
-        <activity android:name=".activity.WebViewActivity"
+        <activity android:name=".android.WebViewActivity"
                   android:theme="@style/AppTheme.NoActionBar"
                   android:windowSoftInputMode="stateHidden|adjustResize"/>
 

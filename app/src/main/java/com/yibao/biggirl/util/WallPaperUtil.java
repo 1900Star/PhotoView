@@ -6,7 +6,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.widget.ImageView;
 
-import com.yibao.biggirl.adapter.PagerGirlAdapter;
+import com.yibao.biggirl.girl.GirlAdapter;
 
 import java.io.IOException;
 
@@ -23,7 +23,7 @@ public class WallPaperUtil {
      * @param adapter
      */
 
-    public static void setWallPaper(Context context, PagerGirlAdapter adapter) {
+    public static void setWallPaper(Context context, GirlAdapter adapter) {
         WallpaperManager mWpManager = WallpaperManager.getInstance(context);
         ImageView        view       = (ImageView) adapter.getPrimaryItem();
         Bitmap           bitmap     = BitmapUtil.drawableToBitmap(view.getDrawable());

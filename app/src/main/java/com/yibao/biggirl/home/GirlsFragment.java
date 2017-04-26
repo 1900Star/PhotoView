@@ -12,9 +12,11 @@ import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
 import com.yibao.biggirl.R;
 import com.yibao.biggirl.model.girls.GirlData;
+import com.yibao.biggirl.model.girls.ResultsBean;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -24,25 +26,28 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 import butterknife.Unbinder;
 
 
 /**
  * 作者：Stran on 2017/3/29 01:18
- * 描述：${TODO}
+ * 描述：${主列表}
  * 邮箱：strangermy@outlook.com
  */
 public class GirlsFragment
         extends Fragment
         implements GirlsContract.View, SwipeRefreshLayout.OnRefreshListener
 {
-    @BindView(R.id.fragment_girl_recycler)
-    RecyclerView       mRecyclerView;
+
+
+    @BindView(R.id.iv_error)
+    ImageView mIvError;
+
     @BindView(R.id.swipe_refresh)
     SwipeRefreshLayout mSwipeRefresh;
     Unbinder unbinder;
-    private View                    mView;
+    @BindView(R.id.fragment_girl_recycler)
+    RecyclerView mRecyclerView;
     private GirlsContract.Presenter mPresenter;
     private FloatingActionButton    mFab;
 
@@ -52,7 +57,7 @@ public class GirlsFragment
         EventBus.getDefault()
                 .register(this);
         new GirlsPresenter(this);
-        mPresenter.loadData();
+        mPresenter.start();
     }
 
     @Override
@@ -60,14 +65,11 @@ public class GirlsFragment
                              ViewGroup container,
                              Bundle savedInstanceState)
     {
-        if (savedInstanceState == null) {
 
-            mView = View.inflate(getActivity(), R.layout.girls_frag, null);
-            unbinder = ButterKnife.bind(this, mView);
-            initData();
-
-        }
-        return mView;
+        View view = View.inflate(getActivity(), R.layout.girls_frag, null);
+        unbinder = ButterKnife.bind(this, view);
+        initData();
+        return view;
     }
 
     private void initData() {
@@ -91,7 +93,7 @@ public class GirlsFragment
     @Subscribe(threadMode = ThreadMode.MAIN,
                priority = 100) //在ui线程执行 优先级100
     public void onGirlsDataEvent(GirlData data) {
-        initRecyclerView(data.getList());
+        //                initRecyclerView(data.getList());
 
     }
 
@@ -105,7 +107,21 @@ public class GirlsFragment
 
     }
 
-    private void initRecyclerView(List<String> mList) {
+
+    @Override
+    public void loadData(List<ResultsBean> list) {
+
+        initRecyclerView(list);
+    }
+
+    @Override
+    public void showError() {
+        //        mRecyclerView.setVisibility(View.INVISIBLE);
+        //        mIvError.setVisibility(View.VISIBLE);
+    }
+
+    private void initRecyclerView(List<ResultsBean> mList) {
+
         GirlsAdapter adapter = new GirlsAdapter(getActivity(), mList);
         StaggeredGridLayoutManager manager = new StaggeredGridLayoutManager(2,
                                                                             StaggeredGridLayoutManager.VERTICAL);
@@ -118,14 +134,12 @@ public class GirlsFragment
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        unbinder.unbind();
+
         EventBus.getDefault()
                 .unregister(this);
+        unbinder.unbind();
     }
 
-
-    @OnClick(R.id.swipe_refresh)
-    public void onViewClicked() {}
 
     @Override
     public void onRefresh() {

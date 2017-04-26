@@ -45,7 +45,7 @@ public class AndroidFragment
         EventBus.getDefault()
                 .register(this);
         new AndroidPresenter(this);
-        mPresenter.loadData();
+        mPresenter.start();
 
     }
 
@@ -55,7 +55,6 @@ public class AndroidFragment
                              @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState)
     {
-        LogUtil.d("==========  onCreateView");
         View view = View.inflate(getActivity(), R.layout.android_frag, null);
         unbinder = ButterKnife.bind(this, view);
 
@@ -68,7 +67,7 @@ public class AndroidFragment
                priority = 1000)
     public void getAndroidDes(List<AndroidAndGirlBean> list) {
 
-        initData(list);
+
     }
 
     private void initData(List<AndroidAndGirlBean> list) {
@@ -89,7 +88,6 @@ public class AndroidFragment
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        LogUtil.d("==========  onDestroyView");
         unbinder.unbind();
         EventBus.getDefault()
                 .unregister(this);
@@ -105,6 +103,12 @@ public class AndroidFragment
     @Override
     public void setPrenter(AndroidContract.Presenter prenter) {
         this.mPresenter = prenter;
+    }
+
+    @Override
+    public void loadData(List<AndroidAndGirlBean> list) {
+        initData(list);
+
     }
 }
 

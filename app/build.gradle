@@ -64,17 +64,11 @@ dependencies {
     compile 'com.google.code.gson:gson:2.7'
     //okhttp
     compile 'com.squareup.okhttp3:okhttp:3.6.0'
-    //三方库
     compile 'com.squareup.okhttp3:okhttp:3.6.0'
     compile 'com.squareup.okhttp3:logging-interceptor:3.6.0'
     //butterknife
     compile 'com.jakewharton:butterknife:8.5.1'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.5.1'
-
-    //Facebook
-//    compile 'com.facebook.fresco:fresco:1.2.0'
-    //友盟
-    //    compile 'com.umeng.analytics:analytics:latest.integration'
     //Eventbus
     compile 'org.greenrobot:eventbus:3.0.0'
     //Rotrofit
@@ -85,7 +79,7 @@ dependencies {
     compile 'io.reactivex.rxjava2:rxandroid:2.0.1'
     compile 'io.reactivex.rxjava2:rxjava:2.0.8'
 
-//leakcanary
+    //leakcanary
     debugCompile 'com.squareup.leakcanary:leakcanary-android:1.5'
     releaseCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.5'
     testCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.5'

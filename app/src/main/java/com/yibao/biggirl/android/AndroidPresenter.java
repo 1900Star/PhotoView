@@ -1,20 +1,9 @@
 package com.yibao.biggirl.android;
 
+import com.yibao.biggirl.model.AndroidDataSource;
 import com.yibao.biggirl.model.android.AndroidAndGirlBean;
-import com.yibao.biggirl.model.android.AndroidDesBean;
-import com.yibao.biggirl.model.girls.GirlBean;
-import com.yibao.biggirl.network.GirlRetrofit;
 
-import org.greenrobot.eventbus.EventBus;
-
-import java.util.ArrayList;
 import java.util.List;
-
-import io.reactivex.Observable;
-import io.reactivex.Observer;
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.disposables.Disposable;
-import io.reactivex.schedulers.Schedulers;
 
 /**
  * Author：Sid
@@ -26,12 +15,19 @@ public class AndroidPresenter
 {
     private AndroidContract.View     mView;
     private List<AndroidAndGirlBean> mList;
+    private RemoteAndroidData        mRemoteAndroidData;
 
     public AndroidPresenter(AndroidContract.View view) {
         this.mView = view;
+        mRemoteAndroidData = new RemoteAndroidData();
         mView.setPrenter(this);
     }
 
+
+    @Override
+    public void start() {
+        loadData(20, 1);
+    }
 
     @Override
     public void subscribe() {
@@ -44,64 +40,18 @@ public class AndroidPresenter
 
 
     @Override
-    public void loadData() {
-        Observable.zip(GirlRetrofit.getGankApi()
-                                   .getAndroid("Android", 20, 1),
-                       GirlRetrofit.getGankApi()
-                                   .getGril("福利", 20, 1),
-                       this::zipHelper)
-                  .subscribeOn(Schedulers.io())
-                  .observeOn(AndroidSchedulers.mainThread())
-                  .subscribe(new AndroidObserver());
-
-    }
-
-
-    private class AndroidObserver
-            implements Observer<AndroidAndGirlBean>
-    {
-
-
-        @Override
-        public void onSubscribe(Disposable d) {
-
-        }
-
-        @Override
-        public void onNext(AndroidAndGirlBean item) {
-            mList = new ArrayList<>();
-            for (int i = 0; i < item.mGrilData.size(); i++) {
-                AndroidAndGirlBean itemData = new AndroidAndGirlBean(item.mAndroidData, item.mGrilData);
-                mList.add(itemData);
+    public void loadData(int page, int size) {
+        mRemoteAndroidData.getGirls(page, size, new AndroidDataSource.LoadADataCallback() {
+            @Override
+            public void onLoadData(List<AndroidAndGirlBean> list) {
+                mView.loadData(list);
             }
-            EventBus.getDefault()
-                    .post(mList);
 
-
-        }
-
-        @Override
-        public void onError(Throwable e) {
-
-        }
-
-        @Override
-        public void onComplete() {
-
-        }
+            @Override
+            public void onDataNotAvailable() {
+            }
+        });
     }
 
-    private AndroidAndGirlBean zipHelper(AndroidDesBean androidDesBean, GirlBean girlBean) {
-        AndroidAndGirlBean item = new AndroidAndGirlBean();
-        for (int i = 0; i < girlBean.getResults()
-                                    .size(); i++) {
 
-            item.mAndroidData = androidDesBean.getResults();
-            item.mGrilData = girlBean.getResults();
-
-        }
-
-
-        return item;
-    }
 }

@@ -13,25 +13,23 @@ import retrofit2.converter.gson.GsonConverterFactory;
  * Des：${TODO}
  * Time:2017/4/10 17:22
  */
-public class GirlRetrofit {
+public class RetrofitHelper {
 
     private static Retrofit    retrofit;
-    private static GirlService gankApi;
 
     public static GirlService getGankApi() {
         if (retrofit == null) {
-            synchronized (GirlRetrofit.class) {
+            synchronized (RetrofitHelper.class) {
                 retrofit = new Retrofit.Builder().baseUrl(Constans.GANK_API)
                                                  .addConverterFactory(GsonConverterFactory.create())
                                                  .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                                                  .client(MyApplication.defaultOkHttpClient())
                                                  .build();
-                gankApi = retrofit.create(GirlService.class);
 
             }
 
         }
-        return gankApi;
+        return retrofit.create(GirlService.class);
 
 
     }

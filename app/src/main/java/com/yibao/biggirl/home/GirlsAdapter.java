@@ -14,8 +14,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.yibao.biggirl.R;
-
-import org.greenrobot.eventbus.EventBus;
+import com.yibao.biggirl.model.girls.ResultsBean;
 
 import java.util.List;
 
@@ -29,7 +28,7 @@ import butterknife.ButterKnife;
  * 邮箱：strangermy@outlook.com
  */
 public class GirlsAdapter
-        extends RecyclerView.Adapter<RecyclerView.ViewHolder>
+        extends RecyclerView.Adapter<GirlsAdapter.ViewHolder>
 
 
 {
@@ -39,7 +38,8 @@ public class GirlsAdapter
     @SuppressLint("StaticFieldLeak")
     private Context mContext;
 
-    private List<String> mList;
+    //    private List<String> mList;
+    private List<ResultsBean> mList;
 
     private static final int TYPE_ITEM   = 0;
     private static final int TYPE_FOOTER = 1;
@@ -57,79 +57,84 @@ public class GirlsAdapter
     private int mNum;
 
 
-    //回调接口
+    //打开大图的回调接口
 
     public interface OnRvItemClickListener {
-        void showPagerFragment(int position, List<String> list);
+        void showPagerFragment(int position, List<ResultsBean> list);
 
     }
 
 
-    public GirlsAdapter(Context context, List<String> list) {
+    public GirlsAdapter(Context context, List<ResultsBean> list) {
         mContext = context;
         mList = list;
+
     }
 
 
     @Override
-    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view;
-        if (viewType == TYPE_ITEM) {
-            view = LayoutInflater.from(parent.getContext())
+    public GirlsAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(parent.getContext())
                                  .inflate(R.layout.item_girls, parent, false);
 
             return new ViewHolder(view);
-
-        } else if (viewType == LOADING_MORE) {
-            view = LayoutInflater.from(parent.getContext())
-                                 .inflate(R.layout.load_more_footview_layout, parent, false);
-            return new LoadMoreViewHolder(view);
-
-        }
-        return null;
+//        if (viewType == TYPE_ITEM) {
+//
+//        } else if (viewType == LOADING_MORE) {
+//            view = LayoutInflater.from(parent.getContext())
+//                                 .inflate(R.layout.load_more_footview_layout, parent, false);
+////            return new LoadMoreViewHolder(view);
+//
+//        }
+//        return null;
     }
 
     //绑定视图
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
-        if (holder instanceof ViewHolder) {
-            EventBus.getDefault()
-                    .post(position);
-            final ViewHolder viewHolder = (ViewHolder) holder;
+    public void onBindViewHolder(GirlsAdapter.ViewHolder holder, final int position) {
+        //绑定图片
             Glide.with(mContext)
-                 .load(mList.get(position))
+                 .load(mList.get(position)
+                            .getUrl())
                  .asBitmap()
                  .placeholder(R.drawable.splash)
                  .diskCacheStrategy(DiskCacheStrategy.SOURCE)
-                 .into(viewHolder.mGrilImageView);
+                 .into(holder.mGrilImageView);
             //设置监听
-            viewHolder.itemView.setOnClickListener(view -> {
+            holder.itemView.setOnClickListener(view -> {
+
                 //打开PagerView的回调
                 if (mContext instanceof OnRvItemClickListener) {
+
                     ((OnRvItemClickListener) mContext).showPagerFragment(position, mList);
                 }
             });
-            //绑定图片
-
-            //            viewHolder.mGrilImageView.setImageURI(mList.get(position));
-        } else if (holder instanceof LoadMoreViewHolder) {
-            LoadMoreViewHolder moreViewHolder = (LoadMoreViewHolder) holder;
-            switch (mLoadMoreStatus) {
-                case PULLUP_LOAD_MORE:
-                    if (mList.size() == 0) {
-                        moreViewHolder.mLoadLayout.setVisibility(View.GONE);
-                    }
-                    moreViewHolder.mTvLoadText.setText("上拉加载更多");
-                    break;
-                case LOADING_MORE:
-                    moreViewHolder.mTvLoadText.setText("正在加载更多");
-                    break;
-                case NO_LOAD_MORE:
-                    moreViewHolder.mLoadLayout.setVisibility(View.GONE);
-                default:
-                    break;
-            }
-        }
+//        if (holder instanceof ViewHolder) {
+//            //根据Item显示列表上的Fab
+//            //            EventBus.getDefault()
+//            //                    .post(position);
+//
+//
+//
+//            //            viewHolder.mGrilImageView.setImageURI(mList.get(position));
+//        } else if (holder instanceof LoadMoreViewHolder) {
+//            LoadMoreViewHolder moreViewHolder = (LoadMoreViewHolder) holder;
+//            switch (mLoadMoreStatus) {
+//                case PULLUP_LOAD_MORE:
+//                    if (mList.size() == 0) {
+//                        moreViewHolder.mLoadLayout.setVisibility(View.GONE);
+//                    }
+//                    moreViewHolder.mTvLoadText.setText("上拉加载更多");
+//                    break;
+//                case LOADING_MORE:
+//                    moreViewHolder.mTvLoadText.setText("正在加载更多");
+//                    break;
+//                case NO_LOAD_MORE:
+//                    moreViewHolder.mLoadLayout.setVisibility(View.GONE);
+//                default:
+//                    break;
+//            }
+//        }
 
 
     }

@@ -15,10 +15,11 @@ import android.view.KeyEvent;
 import android.widget.FrameLayout;
 
 import com.yibao.biggirl.R;
-import com.yibao.biggirl.girl.GirlActivity;
-import com.yibao.biggirl.android.WebViewActivity;
 import com.yibao.biggirl.android.AndroidAdapter;
 import com.yibao.biggirl.android.AndroidFragment;
+import com.yibao.biggirl.android.WebViewActivity;
+import com.yibao.biggirl.girl.GirlActivity;
+import com.yibao.biggirl.model.girls.ResultsBean;
 import com.yibao.biggirl.util.SnakbarUtil;
 
 import java.util.ArrayList;
@@ -50,9 +51,9 @@ public class MainActivity
     @BindView(R.id.collapsingToolbarLayout)
     CollapsingToolbarLayout mCollapsingToolbarLayout;
     @BindView(R.id.view_pager)
-    ViewPager mViewPager;
+    ViewPager               mViewPager;
     @BindView(R.id.toolbar)
-    Toolbar   mToolbar;
+    Toolbar                 mToolbar;
     private long   exitTime   = 0;
     public  String arrTitle[] = {"Girl",
                                  "Android",
@@ -99,13 +100,12 @@ public class MainActivity
 
     //接口回调打开ViewPager浏览大图
     @Override
-    public void showPagerFragment(int position, List<String> list) {
-
+    public void showPagerFragment(int position, List<ResultsBean> list) {
         Intent intent = new Intent(this, GirlActivity.class);
-        Bundle bundle = new Bundle();
-        bundle.putStringArrayList("list", (ArrayList<String>) list);
-        bundle.putInt("position", position);
-        intent.putExtras(bundle);
+//        intent.putExtra("position", position);
+
+
+//        intent.putParcelableArrayListExtra("girlList", (ArrayList<? extends Parcelable>) list);
         startActivity(intent);
     }
 

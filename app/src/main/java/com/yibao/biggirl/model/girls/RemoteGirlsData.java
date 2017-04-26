@@ -1,11 +1,7 @@
 package com.yibao.biggirl.model.girls;
 
-import com.yibao.biggirl.network.GirlRetrofit;
-
-import org.greenrobot.eventbus.EventBus;
-
-import java.util.ArrayList;
-import java.util.List;
+import com.yibao.biggirl.model.GrilsDataSource;
+import com.yibao.biggirl.network.RetrofitHelper;
 
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -18,26 +14,27 @@ import io.reactivex.schedulers.Schedulers;
  * Time:2017/4/26 00:52
  */
 public class RemoteGirlsData
-        implements GirlsDataSource
+        implements GrilsDataSource
 {
-    private static final List<String> list = new ArrayList<>();
-    @Override
-    public void getGirls(int page, int size, LoadGirlsCallback callback) {
 
-        GirlRetrofit.getGankApi()
-                    .getGril("福利", 20, 1)
-                    .subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(new GirlObserver(callback));
+    @Override
+    public void getGirls(int page, int size, LoadGDataCallback callback) {
+
+        RetrofitHelper.getGankApi()
+                      .getGril("福利", page, size)
+                      .subscribeOn(Schedulers.io())
+                      .observeOn(AndroidSchedulers.mainThread())
+                      .subscribe(new GirlObserver(callback));
     }
 
 
     private class GirlObserver
             implements Observer<GirlBean>
     {
-        private LoadGirlsCallback mCallback;
-        public GirlObserver(LoadGirlsCallback callback) {
-            mCallback=callback;
+        private LoadGDataCallback mCallback;
+
+        private GirlObserver(LoadGDataCallback callback) {
+            mCallback = callback;
         }
 
         @Override
@@ -47,24 +44,14 @@ public class RemoteGirlsData
 
         @Override
         public void onNext(GirlBean girlBean) {
-            mCallback.onLoadGirls(girlBean);
+            mCallback.onLoadDatas(girlBean);
 
-
-            List<ResultsBean> results = girlBean.getResults();
-            for (int i = 0; i < results.size(); i++) {
-
-                list.add(results.get(i)
-                                .getUrl());
-
-            }
-            EventBus.getDefault()
-                    .post(new GirlData(list));
 
         }
 
         @Override
         public void onError(Throwable e) {
-
+            mCallback.onDataNotAvailable();
         }
 
         @Override
@@ -72,7 +59,6 @@ public class RemoteGirlsData
 
         }
     }
-
 
 
 }

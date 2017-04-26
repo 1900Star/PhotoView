@@ -9,6 +9,8 @@ import android.widget.FrameLayout;
 import com.yibao.biggirl.R;
 import com.yibao.biggirl.util.ActivityUtils;
 
+import org.greenrobot.eventbus.EventBus;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -29,12 +31,13 @@ public class GirlActivity
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activty_gril);
+        EventBus.getDefault().register(this);
         ButterKnife.bind(this);
-        if (savedInstanceState == null) {
-            mBundle = getIntent().getExtras();
+//        if (savedInstanceState == null) {
+//            mBundle = getIntent().getExtras();
+//
+//        }
             initData();
-
-        }
 
     }
 
@@ -45,8 +48,19 @@ public class GirlActivity
                 if (girlFragment == null) {
 
                     girlFragment = new GirlFragment().newInstance();
-                    girlFragment.setArguments(mBundle);
+//                    girlFragment.setArguments(mBundle);
                     ActivityUtils.addFragmentToActivity(getSupportFragmentManager(), girlFragment, R.id.content_girl_activity);
         }
+    }
+
+
+
+
+
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
     }
 }

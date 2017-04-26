@@ -2,6 +2,9 @@ package com.yibao.biggirl.home;
 
 import com.yibao.biggirl.base.BasePresenter;
 import com.yibao.biggirl.base.BaseView;
+import com.yibao.biggirl.model.girls.ResultsBean;
+
+import java.util.List;
 
 /**
  * Author：Sid
@@ -12,6 +15,8 @@ public interface GirlsContract {
     interface View
             extends BaseView<Presenter>
     {
+        void loadData(List<ResultsBean> list);
+        void showError();
 
 
     }
@@ -19,6 +24,7 @@ public interface GirlsContract {
     interface Presenter
             extends BasePresenter
     {
-        void loadData();
+        void loadData(int page, int size);
+
     }
 }

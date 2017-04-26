@@ -1,39 +1,26 @@
 package com.yibao.biggirl.home;
 
+import com.yibao.biggirl.model.GrilsDataSource;
 import com.yibao.biggirl.model.girls.GirlBean;
-import com.yibao.biggirl.model.girls.GirlData;
 import com.yibao.biggirl.model.girls.RemoteGirlsData;
-import com.yibao.biggirl.model.girls.ResultsBean;
-import com.yibao.biggirl.network.GirlRetrofit;
-
-import org.greenrobot.eventbus.EventBus;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import io.reactivex.Observer;
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.disposables.Disposable;
-import io.reactivex.schedulers.Schedulers;
 
 /**
  * Author：Sid
  * Des：${TODO}
  * Time:2017/4/22 10:03
  */
-public class GirlsPresenter
+class GirlsPresenter
         implements GirlsContract.Presenter
 {
     private GirlsContract.View mView;
-    private RemoteGirlsData mRemoteGirlsData;
+    private RemoteGirlsData    mRemoteGirlsData;
 
     public GirlsPresenter(GirlsContract.View view) {
         this.mView = view;
-
         mView.setPrenter(this);
-    }
+        mRemoteGirlsData = new RemoteGirlsData();
 
-    private static final List<String> list = new ArrayList<>();
+    }
 
     @Override
     public void subscribe() {
@@ -46,50 +33,28 @@ public class GirlsPresenter
 
 
     @Override
-    public void loadData() {
+    public void start() {
+        loadData(20, 1);
 
 
-        GirlRetrofit.getGankApi()
-                    .getGril("福利", 20, 1)
-                    .subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(new GirlObserver());
     }
 
+    @Override
+    public void loadData(int page, int size) {
 
-    private class GirlObserver
-            implements Observer<GirlBean>
-    {
-
-        @Override
-        public void onSubscribe(Disposable d) {
-
-        }
-
-        @Override
-        public void onNext(GirlBean girlBean) {
-
-
-            List<ResultsBean> results = girlBean.getResults();
-            for (int i = 0; i < results.size(); i++) {
-
-                list.add(results.get(i)
-                                .getUrl());
-
+        mRemoteGirlsData.getGirls(page, size, new GrilsDataSource.LoadGDataCallback() {
+            @Override
+            public void onLoadDatas(GirlBean girlBean) {
+                mView.loadData(girlBean.getResults());
             }
-            EventBus.getDefault()
-                    .post(new GirlData(list));
 
-        }
+            @Override
+            public void onDataNotAvailable() {
+//              mView.showError();
+            }
+        });
 
-        @Override
-        public void onError(Throwable e) {
-
-        }
-
-        @Override
-        public void onComplete() {
-
-        }
     }
+
+
 }

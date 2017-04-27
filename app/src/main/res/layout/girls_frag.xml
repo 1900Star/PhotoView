@@ -4,19 +4,13 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorWhite"
+    android:background="@color/colorAccent"
 >
 
-    <ImageView
-        android:id="@+id/iv_error"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:contentDescription="@null"
-        android:src="@drawable/splash"
-        android:visibility="gone"/>
     <android.support.v7.widget.RecyclerView
         android:id="@+id/fragment_girl_recycler"
         android:layout_width="match_parent"
+        android:background="@color/colorPrimaryDark"
         android:layout_height="match_parent"
     />
 

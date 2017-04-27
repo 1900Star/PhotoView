@@ -44,11 +44,15 @@ public class AndroidPresenter
         mRemoteAndroidData.getGirls(page, size, new AndroidDataSource.LoadADataCallback() {
             @Override
             public void onLoadData(List<AndroidAndGirlBean> list) {
-                mView.loadData(list);
+
+                    mView.loadData(list);
+//                mView.showNormal();
             }
 
             @Override
             public void onDataNotAvailable() {
+                mView.showError();
+
             }
         });
     }

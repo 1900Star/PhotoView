@@ -6,7 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.widget.ImageView;
 
 import com.yibao.biggirl.R;
-import com.yibao.biggirl.home.MainActivity;
+import com.yibao.biggirl.MainActivity;
 import com.yibao.biggirl.util.SystemUiVisibilityUtil;
 
 import java.util.concurrent.TimeUnit;

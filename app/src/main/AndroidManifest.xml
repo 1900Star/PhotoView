@@ -29,14 +29,14 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".home.MainActivity"
+        <activity android:name=".MainActivity"
                   android:theme="@style/AppTheme.NoActionBar"
         />
 
 
         <activity android:name=".girl.GirlActivity"/>
 
-        <activity android:name=".android.WebViewActivity"
+        <activity android:name=".webview.WebViewActivity"
                   android:theme="@style/AppTheme.NoActionBar"
                   android:windowSoftInputMode="stateHidden|adjustResize"/>
 

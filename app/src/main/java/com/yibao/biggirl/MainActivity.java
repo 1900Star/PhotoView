@@ -1,4 +1,4 @@
-package com.yibao.biggirl.home;
+package com.yibao.biggirl;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,15 +12,15 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.KeyEvent;
-import android.widget.FrameLayout;
 
-import com.yibao.biggirl.R;
 import com.yibao.biggirl.android.AndroidAdapter;
 import com.yibao.biggirl.android.AndroidFragment;
-import com.yibao.biggirl.android.WebViewActivity;
 import com.yibao.biggirl.girl.GirlActivity;
+import com.yibao.biggirl.home.GirlsAdapter;
+import com.yibao.biggirl.home.TabPagerAdapter;
 import com.yibao.biggirl.model.girls.ResultsBean;
 import com.yibao.biggirl.util.SnakbarUtil;
+import com.yibao.biggirl.webview.WebViewActivity;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -39,8 +39,6 @@ public class MainActivity
         extends AppCompatActivity
         implements GirlsAdapter.OnRvItemClickListener, AndroidAdapter.OnDesClickListener
 {
-    @BindView(R.id.content_girls_frag)
-    FrameLayout    mContentActivity;
     @BindView(R.id.nav_view)
     NavigationView mNavView;
     @BindView(R.id.drawer_layout)
@@ -77,9 +75,11 @@ public class MainActivity
 
         mTablayout.setupWithViewPager(mViewPager);
         ArrayList<Fragment> fragments = new ArrayList<>();
-        fragments.add(new GirlsFragment().newInstance());
+//        fragments.add(new GirlsFragment().newInstance());
         fragments.add(new AndroidFragment().newInstance());
-        fragments.add(new GirlsFragment().newInstance());
+        fragments.add(new AndroidFragment().newInstance());
+        fragments.add(new AndroidFragment().newInstance());
+//        fragments.add(new GirlsFragment().newInstance());
         mViewPager.setOffscreenPageLimit(3);
         TabPagerAdapter pagerAdapter = new TabPagerAdapter(getSupportFragmentManager(),
                                                            fragments,
@@ -106,7 +106,7 @@ public class MainActivity
 
 
 //        intent.putParcelableArrayListExtra("girlList", (ArrayList<? extends Parcelable>) list);
-        startActivity(intent);
+//        startActivity(intent);
     }
 
 

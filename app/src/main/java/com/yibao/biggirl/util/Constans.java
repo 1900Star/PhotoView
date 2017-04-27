@@ -13,4 +13,7 @@ public class Constans {
     public static String PIC_NAME = UUID.randomUUID()
                                         .toString()
                                         .replace("-", "");
+
+
+
 }

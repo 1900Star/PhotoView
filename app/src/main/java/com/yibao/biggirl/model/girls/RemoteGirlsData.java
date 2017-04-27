@@ -18,10 +18,10 @@ public class RemoteGirlsData
 {
 
     @Override
-    public void getGirls(int page, int size, LoadGDataCallback callback) {
+    public void getGirls(int size, int page, LoadGDataCallback callback) {
 
         RetrofitHelper.getGankApi()
-                      .getGril("福利", page, size)
+                      .getGril("福利", size, page)
                       .subscribeOn(Schedulers.io())
                       .observeOn(AndroidSchedulers.mainThread())
                       .subscribe(new GirlObserver(callback));

@@ -1,4 +1,4 @@
-package com.yibao.biggirl.android;
+package com.yibao.biggirl.webview;
 
 import android.content.Intent;
 import android.graphics.Bitmap;

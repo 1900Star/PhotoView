@@ -16,7 +16,9 @@ public interface GirlsContract {
             extends BaseView<Presenter>
     {
         void loadData(List<ResultsBean> list);
+        void refresh(List<ResultsBean> list);
         void showError();
+        void showNormal();
 
 
     }
@@ -24,7 +26,7 @@ public interface GirlsContract {
     interface Presenter
             extends BasePresenter
     {
-        void loadData(int page, int size);
+        void loadData(int size, int page);
 
     }
 }

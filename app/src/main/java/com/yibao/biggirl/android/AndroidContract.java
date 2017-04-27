@@ -16,6 +16,9 @@ public interface AndroidContract {
             extends BaseView<Presenter>
     {
         void loadData(List<AndroidAndGirlBean> list);
+        void refresh(List<AndroidAndGirlBean> list);
+        void showError();
+        void showNormal();
 
     }
 

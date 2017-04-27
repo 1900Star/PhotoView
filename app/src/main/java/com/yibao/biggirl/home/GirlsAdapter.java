@@ -15,6 +15,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.yibao.biggirl.R;
 import com.yibao.biggirl.model.girls.ResultsBean;
+import com.yibao.biggirl.util.LogUtil;
 
 import java.util.List;
 
@@ -57,7 +58,7 @@ public class GirlsAdapter
     private int mNum;
 
 
-    //打开大图的回调接口
+    //回调接口
 
     public interface OnRvItemClickListener {
         void showPagerFragment(int position, List<ResultsBean> list);
@@ -68,36 +69,40 @@ public class GirlsAdapter
     public GirlsAdapter(Context context, List<ResultsBean> list) {
         mContext = context;
         mList = list;
-
     }
 
 
     @Override
     public GirlsAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
-                                 .inflate(R.layout.item_girls, parent, false);
+                                  .inflate(R.layout.item_girls, parent, false);
 
-            return new ViewHolder(view);
-//        if (viewType == TYPE_ITEM) {
-//
-//        } else if (viewType == LOADING_MORE) {
-//            view = LayoutInflater.from(parent.getContext())
-//                                 .inflate(R.layout.load_more_footview_layout, parent, false);
-////            return new LoadMoreViewHolder(view);
-//
-//        }
-//        return null;
+        return new ViewHolder(view);
+        //        if (viewType == TYPE_ITEM) {
+        //
+        //        } else if (viewType == LOADING_MORE) {
+        //            view = LayoutInflater.from(parent.getContext())
+        //                                 .inflate(R.layout.load_more_footview_layout, parent, false);
+        //            return new LoadMoreViewHolder(view);
+        //
+        //        }
     }
 
     //绑定视图
     @Override
     public void onBindViewHolder(GirlsAdapter.ViewHolder holder, final int position) {
-        //绑定图片
+//        if (holder instanceof ViewHolder) {
+            //            EventBus.getDefault()
+            //                    .post(position);
+
+
+//            final ViewHolder viewHolder = (ViewHolder) holder;
+            String url = mList.get(position)
+                              .getUrl();
+            //绑定图片
             Glide.with(mContext)
-                 .load(mList.get(position)
-                            .getUrl())
+                 .load(url)
                  .asBitmap()
-                 .placeholder(R.drawable.splash)
                  .diskCacheStrategy(DiskCacheStrategy.SOURCE)
                  .into(holder.mGrilImageView);
             //设置监听
@@ -106,17 +111,11 @@ public class GirlsAdapter
                 //打开PagerView的回调
                 if (mContext instanceof OnRvItemClickListener) {
 
-                    ((OnRvItemClickListener) mContext).showPagerFragment(position, mList);
+                    LogUtil.d("nanannananna  === " + position);
+                    //                    ((OnRvItemClickListener) mContext).showPagerFragment(position, mList);
                 }
             });
-//        if (holder instanceof ViewHolder) {
-//            //根据Item显示列表上的Fab
-//            //            EventBus.getDefault()
-//            //                    .post(position);
-//
-//
-//
-//            //            viewHolder.mGrilImageView.setImageURI(mList.get(position));
+
 //        } else if (holder instanceof LoadMoreViewHolder) {
 //            LoadMoreViewHolder moreViewHolder = (LoadMoreViewHolder) holder;
 //            switch (mLoadMoreStatus) {

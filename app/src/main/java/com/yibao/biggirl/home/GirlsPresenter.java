@@ -17,8 +17,8 @@ class GirlsPresenter
 
     public GirlsPresenter(GirlsContract.View view) {
         this.mView = view;
-        mView.setPrenter(this);
         mRemoteGirlsData = new RemoteGirlsData();
+        mView.setPrenter(this);
 
     }
 
@@ -40,17 +40,25 @@ class GirlsPresenter
     }
 
     @Override
-    public void loadData(int page, int size) {
+    public void loadData(int size, int page) {
 
-        mRemoteGirlsData.getGirls(page, size, new GrilsDataSource.LoadGDataCallback() {
+
+        mRemoteGirlsData.getGirls(size, page, new GrilsDataSource.LoadGDataCallback() {
             @Override
             public void onLoadDatas(GirlBean girlBean) {
+
+                //                if (isReferesh) {
+                //                    mView.refresh(girlBean.getResults());
+                //                } else {
+                //
+                //                }
                 mView.loadData(girlBean.getResults());
+                //                mView.showNormal();
             }
 
             @Override
             public void onDataNotAvailable() {
-//              mView.showError();
+                mView.showError();
             }
         });
 

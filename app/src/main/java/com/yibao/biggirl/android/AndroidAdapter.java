@@ -12,7 +12,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.yibao.biggirl.R;
-import com.yibao.biggirl.model.android.AndroidAndGirlBean;
+import com.yibao.biggirl.model.android.AndroidAndGirl;
 import com.yibao.biggirl.model.android.ResultsBeanX;
 import com.yibao.biggirl.model.girls.ResultsBean;
 
@@ -31,12 +31,12 @@ public class AndroidAdapter
 {
 
 
-    private Context                  mContext;
-    private List<AndroidAndGirlBean> mList;
+    private Context              mContext;
+    private List<AndroidAndGirl> mList;
     private String mWho = "Smartisan";
 
 
-    public AndroidAdapter(Context context, List<AndroidAndGirlBean> list) {
+    public AndroidAdapter(Context context, List<AndroidAndGirl> list) {
         mContext = context;
         mList = list;
     }
@@ -50,14 +50,13 @@ public class AndroidAdapter
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        AndroidAndGirlBean item = mList.get(position);
+        AndroidAndGirl item = mList.get(position);
 
 
         ResultsBean girlData = item.mGrilData.get(position);
         ResultsBeanX androidData = item.getAndroidData()
                                        .get(position);
 
-        //        holder.mIcon.setImageURI(girlData.getUrl());
         Glide.with(mContext)
              .load(girlData.getUrl())
              .asBitmap()

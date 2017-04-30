@@ -1,6 +1,5 @@
 package com.yibao.biggirl.model.girls;
 
-import com.yibao.biggirl.model.GrilsDataSource;
 import com.yibao.biggirl.network.RetrofitHelper;
 
 import io.reactivex.Observer;
@@ -29,7 +28,7 @@ public class RemoteGirlsData
 
 
     private class GirlObserver
-            implements Observer<GirlBean>
+            implements Observer<GirlsBean>
     {
         private LoadGDataCallback mCallback;
 
@@ -43,7 +42,7 @@ public class RemoteGirlsData
         }
 
         @Override
-        public void onNext(GirlBean girlBean) {
+        public void onNext(GirlsBean girlBean) {
             mCallback.onLoadDatas(girlBean);
 
 

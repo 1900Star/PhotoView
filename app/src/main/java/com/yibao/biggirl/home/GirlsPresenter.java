@@ -1,8 +1,10 @@
 package com.yibao.biggirl.home;
 
-import com.yibao.biggirl.model.GrilsDataSource;
-import com.yibao.biggirl.model.girls.GirlBean;
+import com.yibao.biggirl.model.girls.GirlsBean;
+import com.yibao.biggirl.model.girls.GrilsDataSource;
 import com.yibao.biggirl.model.girls.RemoteGirlsData;
+import com.yibao.biggirl.util.Constans;
+import com.yibao.biggirl.util.LogUtil;
 
 /**
  * Author：Sid
@@ -19,41 +21,37 @@ class GirlsPresenter
         this.mView = view;
         mRemoteGirlsData = new RemoteGirlsData();
         mView.setPrenter(this);
-
     }
 
     @Override
-    public void subscribe() {
-    }
+    public void subscribe() {}
 
     @Override
-    public void unsubscribe() {
-
-    }
-
+    public void unsubscribe() {}
 
     @Override
     public void start() {
-        loadData(20, 1);
+        loadData(20, 1, Constans.LOAD_DATA);
 
 
     }
 
     @Override
-    public void loadData(int size, int page) {
-
+    public void loadData(int size, int page, int type) {
+        LogUtil.d("====== Type =====" + type);
 
         mRemoteGirlsData.getGirls(size, page, new GrilsDataSource.LoadGDataCallback() {
             @Override
-            public void onLoadDatas(GirlBean girlBean) {
+            public void onLoadDatas(GirlsBean girlBean) {
 
-                //                if (isReferesh) {
-                //                    mView.refresh(girlBean.getResults());
-                //                } else {
-                //
-                //                }
-                mView.loadData(girlBean.getResults());
-                //                mView.showNormal();
+                if (type == Constans.REFRESH_DATA) {
+                    mView.refresh(girlBean.getResults());
+                } else if (type == Constans.LOAD_DATA) {
+                    mView.loadData(girlBean.getResults());
+                } else if (type == Constans.PULLUP_LOAD_MORE_DATA) {
+                    mView.loadMore(girlBean.getResults());
+                }
+                mView.showNormal();
             }
 
             @Override

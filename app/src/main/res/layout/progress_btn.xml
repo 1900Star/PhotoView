@@ -11,6 +11,6 @@
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/fab_margin"
         android:src="@drawable/share_evernote"
-    />
+        android:contentDescription="@null"/>
 
 </RelativeLayout>

@@ -17,6 +17,7 @@ import com.yibao.biggirl.android.AndroidAdapter;
 import com.yibao.biggirl.android.AndroidFragment;
 import com.yibao.biggirl.girl.GirlActivity;
 import com.yibao.biggirl.home.GirlsAdapter;
+import com.yibao.biggirl.home.GirlsFragment;
 import com.yibao.biggirl.home.TabPagerAdapter;
 import com.yibao.biggirl.model.girls.ResultsBean;
 import com.yibao.biggirl.util.SnakbarUtil;
@@ -24,7 +25,6 @@ import com.yibao.biggirl.webview.WebViewActivity;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -65,8 +65,8 @@ public class MainActivity
         if (savedInstanceState == null) {
             initData();
             initView();
-        }
 
+        }
 
     }
 
@@ -75,11 +75,9 @@ public class MainActivity
 
         mTablayout.setupWithViewPager(mViewPager);
         ArrayList<Fragment> fragments = new ArrayList<>();
-//        fragments.add(new GirlsFragment().newInstance());
+        fragments.add(new GirlsFragment().newInstance());
         fragments.add(new AndroidFragment().newInstance());
         fragments.add(new AndroidFragment().newInstance());
-        fragments.add(new AndroidFragment().newInstance());
-//        fragments.add(new GirlsFragment().newInstance());
         mViewPager.setOffscreenPageLimit(3);
         TabPagerAdapter pagerAdapter = new TabPagerAdapter(getSupportFragmentManager(),
                                                            fragments,
@@ -100,13 +98,12 @@ public class MainActivity
 
     //接口回调打开ViewPager浏览大图
     @Override
-    public void showPagerFragment(int position, List<ResultsBean> list) {
+    public void showPagerFragment(int position, ArrayList<ResultsBean> list) {
+
         Intent intent = new Intent(this, GirlActivity.class);
-//        intent.putExtra("position", position);
-
-
-//        intent.putParcelableArrayListExtra("girlList", (ArrayList<? extends Parcelable>) list);
-//        startActivity(intent);
+        intent.putParcelableArrayListExtra("girlList", list);
+        intent.putExtra("position", position);
+        startActivity(intent);
     }
 
 

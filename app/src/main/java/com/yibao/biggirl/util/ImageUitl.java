@@ -78,6 +78,7 @@ public class ImageUitl {
 
                              }
                              fos.flush();
+                             fos.close();
                              listener.onDownloadSuccess();
 
                          }

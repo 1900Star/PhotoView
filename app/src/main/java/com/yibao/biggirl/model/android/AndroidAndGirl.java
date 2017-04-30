@@ -9,14 +9,14 @@ import java.util.List;
  * Des：${用于将 "福利" 和 "Android" 的数据组合在一起}
  * Time:2017/4/24 06:45
  */
-public class AndroidAndGirlBean {
+public class AndroidAndGirl {
 
     public List<ResultsBeanX> mAndroidData;
     public List<ResultsBean>  mGrilData;
 
-    public AndroidAndGirlBean() {}
+    public AndroidAndGirl() {}
 
-    public AndroidAndGirlBean(List<ResultsBeanX> resultsBeanXes, List<ResultsBean> resultsBeen) {
+    public AndroidAndGirl(List<ResultsBeanX> resultsBeanXes, List<ResultsBean> resultsBeen) {
         mAndroidData = resultsBeanXes;
         mGrilData = resultsBeen;
     }

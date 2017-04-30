@@ -21,10 +21,8 @@ import java.io.FileOutputStream;
  */
 public class SaveImageUtil {
 
-    private static String TAG = "SaveImageUtil";
 
 
-    private Bitmap bitmap;
 
 
     public static void savePic(final Context mContext, String url, final GirlAdapter mAdapter)

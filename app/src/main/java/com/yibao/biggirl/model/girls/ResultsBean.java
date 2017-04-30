@@ -1,5 +1,8 @@
 package com.yibao.biggirl.model.girls;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.google.gson.Gson;
 
 /**
@@ -7,7 +10,7 @@ import com.google.gson.Gson;
  * 描述：${TODO}
  * 邮箱：strangermy@outlook.com
  */
-public class ResultsBean {
+public class ResultsBean implements Parcelable {
     /**
      * _id : 58d49bad421aa93abf5d3b76
      * createdAt : 2017-03-24T12:08:13.590Z
@@ -18,6 +21,7 @@ public class ResultsBean {
      * url : http://7xi8d6.com1.z0.glb.clouddn.com/2017-03-24-17438359_1470934682925012_1066984844010979328_n.jpg
      * used : true
      * who : dmj
+     * 数据来源于 干货集中营  www.gank.io
      */
 
     private String _id;
@@ -29,6 +33,30 @@ public class ResultsBean {
     private String  url;
     private boolean used;
     private String  who;
+
+    protected ResultsBean(Parcel in) {
+        _id = in.readString();
+        createdAt = in.readString();
+        desc = in.readString();
+        publishedAt = in.readString();
+        source = in.readString();
+        type = in.readString();
+        url = in.readString();
+        used = in.readByte() != 0;
+        who = in.readString();
+    }
+
+    public static final Creator<ResultsBean> CREATOR = new Creator<ResultsBean>() {
+        @Override
+        public ResultsBean createFromParcel(Parcel in) {
+            return new ResultsBean(in);
+        }
+
+        @Override
+        public ResultsBean[] newArray(int size) {
+            return new ResultsBean[size];
+        }
+    };
 
     public static ResultsBean objectFromData(String str) {
 
@@ -70,4 +98,24 @@ public class ResultsBean {
     public String getWho() { return who;}
 
     public void setWho(String who) { this.who = who;}
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeString(_id);
+        parcel.writeString(createdAt);
+        parcel.writeString(desc);
+        parcel.writeString(publishedAt);
+        parcel.writeString(source);
+        parcel.writeString(type);
+        parcel.writeString(url);
+        parcel.writeByte((byte) (used
+                                 ? 1
+                                 : 0));
+        parcel.writeString(who);
+    }
 }

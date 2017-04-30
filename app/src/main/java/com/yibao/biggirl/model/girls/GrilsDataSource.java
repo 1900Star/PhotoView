@@ -1,6 +1,4 @@
-package com.yibao.biggirl.model;
-
-import com.yibao.biggirl.model.girls.GirlBean;
+package com.yibao.biggirl.model.girls;
 
 /**
  * Author：Sid
@@ -10,7 +8,7 @@ import com.yibao.biggirl.model.girls.GirlBean;
 public interface GrilsDataSource {
     //这个接口用于将数据回调给对应Presenter层
     interface LoadGDataCallback {
-        void onLoadDatas(GirlBean girlBean);
+        void onLoadDatas(GirlsBean girlBean);
 
         void onDataNotAvailable();
 

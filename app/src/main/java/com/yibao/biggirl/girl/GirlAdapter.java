@@ -7,6 +7,7 @@ import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.yibao.biggirl.model.girls.ResultsBean;
 import com.yibao.biggirl.view.ZoomImageView;
 
 import java.util.List;
@@ -19,12 +20,12 @@ import java.util.List;
 public class GirlAdapter
         extends android.support.v4.view.PagerAdapter
 {
-    private Context      mContext;
-    private View         mCurrentView;
-    private List<String> mList;
+    private Context mContext;
+    private View    mCurrentView;
+    private List<ResultsBean> mList;
 
 
-    public GirlAdapter(Context context, List<String> list) {
+    public GirlAdapter(Context context, List<ResultsBean> list) {
 
         this.mContext = context;
         this.mList = list;
@@ -33,14 +34,15 @@ public class GirlAdapter
 
     @Override
     public int getCount() {
+
         return mList == null
                ? 0
                : mList.size();
+
     }
 
     @Override
     public boolean isViewFromObject(View view, Object object) {
-
         return view == object;
     }
 
@@ -59,9 +61,11 @@ public class GirlAdapter
 
         view.setScaleType(ImageView.ScaleType.MATRIX);
         view.reSetState();
+        String url = mList.get(position)
+                          .getUrl();
         //加载图片
         Glide.with(mContext)
-             .load(mList.get(position))
+             .load(url)
              .asBitmap()
              .diskCacheStrategy(DiskCacheStrategy.SOURCE)
              .into(view);

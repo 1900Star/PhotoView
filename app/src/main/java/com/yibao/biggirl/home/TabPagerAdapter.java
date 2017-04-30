@@ -3,7 +3,6 @@ package com.yibao.biggirl.home;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.app.FragmentTransaction;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -17,17 +16,14 @@ import java.util.List;
 public class TabPagerAdapter
         extends FragmentPagerAdapter
 {
-    List<Fragment> mFragmentList;
-    List<String>   mTitleList;
-    private final FragmentManager     mFragmentManager;
-    private       FragmentTransaction mTransaction;
+    private       List<Fragment>      mFragmentList;
+    private       List<String>        mTitleList;
 
     public TabPagerAdapter(FragmentManager fm,
                            List<Fragment> fragmentList,
                            List<String> titleList)
     {
         super(fm);
-        mFragmentManager = fm;
         mFragmentList = fragmentList;
         mTitleList = titleList;
 

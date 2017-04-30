@@ -12,7 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.yibao.biggirl.R;
-import com.yibao.biggirl.model.android.AndroidAndGirlBean;
+import com.yibao.biggirl.model.android.AndroidAndGirl;
 
 import java.util.List;
 
@@ -63,11 +63,10 @@ public class AndroidFragment
     }
 
 
-    private void initData(List<AndroidAndGirlBean> list) {
+    private void initData(List<AndroidAndGirl> list) {
         mAdapter = new AndroidAdapter(getContext(), list);
         LinearLayoutManager manager = new LinearLayoutManager(getActivity());
         manager.setOrientation(LinearLayoutManager.VERTICAL);
-        mRecyclerView.setNestedScrollingEnabled(false);
         mRecyclerView.setLayoutManager(manager);
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.setAdapter(mAdapter);
@@ -85,13 +84,13 @@ public class AndroidFragment
     }
 
     @Override
-    public void loadData(List<AndroidAndGirlBean> list) {
+    public void loadData(List<AndroidAndGirl> list) {
         initData(list);
 
     }
 
     @Override
-    public void refresh(List<AndroidAndGirlBean> list) {
+    public void refresh(List<AndroidAndGirl> list) {
         mAdapter = new AndroidAdapter(getContext(), list);
         mRecyclerView.setAdapter(mAdapter);
         mAdapter.notifyDataSetChanged();

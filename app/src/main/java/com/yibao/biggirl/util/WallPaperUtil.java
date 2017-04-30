@@ -46,4 +46,31 @@ public class WallPaperUtil {
     }
 
 
+//    static class RxBus {
+//
+//
+//        private final Subject<Object, Object>
+//                        rxBus = new SerializedSubject<>(PublishSubject.create());
+//
+//        private RxBus() {
+//
+//        }
+//
+//        public static RxBus getInstance() {
+//            return RxbusHolder.instance;
+//        }
+//
+//        public static class RxbusHolder {
+//            private static final RxBus instance = new RxBus();
+//        }
+//
+//        public void send(Bundle o) {
+//            rxBus.onNext(o);
+//        }
+//
+//        public Observable<Object> toObserverable() {
+//            return rxBus;
+//        }
+//    }
+
 }

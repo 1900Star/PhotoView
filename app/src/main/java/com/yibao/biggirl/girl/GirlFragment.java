@@ -14,9 +14,10 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.yibao.biggirl.R;
-import com.yibao.biggirl.home.GirlsContract;
 import com.yibao.biggirl.model.girl.DownGrilProgressData;
-import com.yibao.biggirl.util.ImageUitl;
+import com.yibao.biggirl.model.girl.GirlData;
+import com.yibao.biggirl.model.girls.ResultsBean;
+import com.yibao.biggirl.util.LogUtil;
 import com.yibao.biggirl.util.NetworkUtil;
 import com.yibao.biggirl.util.SnakbarUtil;
 import com.yibao.biggirl.util.WallPaperUtil;
@@ -27,7 +28,6 @@ import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -63,12 +63,10 @@ public class GirlFragment
     //PerView滑动的状态的最值
     public static final int STATUS_MAX_NUM = 3;
     private GirlAdapter mPagerGirlAdapter;
-    private View mView = null;
-    private List<String> mList;
+    private View    mView          = null;
     private String  mUrl           = null;
     private boolean isShowGankGirl = true;
-    private List<String>            mLists;
-    private GirlsContract.Presenter mPresenter;
+    private ArrayList<ResultsBean> mList;
 
 
     @Override
@@ -76,13 +74,10 @@ public class GirlFragment
         super.onCreate(savedInstanceState);
         EventBus.getDefault()
                 .register(this);
-        if (savedInstanceState == null) {
-            //            mPresenter.loadData();
-            Bundle arguments = getArguments();
-            mPosition = arguments.getInt("position");
-            mList = arguments.getStringArrayList("list");
-
-        }
+        Bundle bundle = getArguments();
+        mList = bundle.getParcelableArrayList("girlList");
+        mPosition = bundle.getInt("position");
+        LogUtil.d("Position  Size    ==   " + mPosition + "===" + mList.size());
     }
 
     @Nullable
@@ -102,58 +97,6 @@ public class GirlFragment
         return mView;
     }
 
-
-    private void initData() {
-        setHasOptionsMenu(true);
-
-        mPagerGirlAdapter = new GirlAdapter(getActivity(), mList);
-
-        mVp.setAdapter(mPagerGirlAdapter);
-        mVp.setCurrentItem(mPosition);
-        mVp.addOnPageChangeListener(this);
-
-    }
-
-    @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        menu.clear();
-        inflater.inflate(R.menu.main, menu);
-
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.action_setwallpaer: //设置壁纸
-                WallPaperUtil.setWallPaper(getActivity(), mPagerGirlAdapter);
-                SnakbarUtil.setWallpaer(mPbDown);
-                break;
-            case R.id.action_gallery:  //从相册选择壁纸
-                WallPaperUtil.choiceWallPaper(getActivity());
-                break;
-            case R.id.action_localgirl:  //默认美女
-                getDefultGirl();
-                break;
-            case R.id.action_gank:  //干货集中营
-                initData();
-                break;
-
-        }
-
-
-        return super.onOptionsItemSelected(item);
-    }
-
-    private void getDefultGirl() {
-        isShowGankGirl = true;
-        mLists = ImageUitl.getDefultUrl(ImageUitl.getDefultUrl(new ArrayList<>()));
-        mPagerGirlAdapter = new GirlAdapter(getActivity(), mLists);
-
-        mVp.setAdapter(mPagerGirlAdapter);
-        mPagerGirlAdapter.notifyDataSetChanged();
-    }
-
-
     //获取下载进度，设置ProgressBar
     @Subscribe(threadMode = ThreadMode.MAIN,
                priority = 100)
@@ -161,6 +104,31 @@ public class GirlFragment
         setProgress(data.getProgress());
     }
 
+    //获取下载进度，设置ProgressBar
+    @Subscribe(threadMode = ThreadMode.MAIN,
+               priority = 100)
+    public void onGetDataEvent(GirlData data) {
+
+
+    }
+
+    private void initData() {
+        setHasOptionsMenu(true);
+        mPagerGirlAdapter = new GirlAdapter(getActivity(), mList);
+        mVp.setAdapter(mPagerGirlAdapter);
+        mVp.setCurrentItem(mPosition);
+        mVp.addOnPageChangeListener(this);
+
+    }
+
+  /*  private void getDefultGirl() {
+        isShowGankGirl = true;
+         mList=ImageUitl.getDefultUrl(ImageUitl.getDefultUrl(new ArrayList<>()));
+        mPagerGirlAdapter = new GirlAdapter(getActivity(), null);
+
+        mVp.setAdapter(mPagerGirlAdapter);
+        mPagerGirlAdapter.notifyDataSetChanged();
+    }*/
 
     //图片保存
     @OnClick(R.id.iv_down)
@@ -179,7 +147,6 @@ public class GirlFragment
             SnakbarUtil.netErrors(mPbDown);
         }
     }
-
 
     private void setProgress(int progress) {
         mPbDown.setProgress(progress);
@@ -207,7 +174,8 @@ public class GirlFragment
     public void onPageSelected(int position) {
         if (isShowGankGirl) {
         }
-            mUrl = mList.get(position);
+        mUrl = mList.get(position)
+                    .getUrl();
 
     }
 
@@ -220,9 +188,41 @@ public class GirlFragment
         }
     }
 
-    public GirlFragment newInstance() {
-        return new GirlFragment();
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        menu.clear();
+        inflater.inflate(R.menu.main, menu);
+
     }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_setwallpaer: //设置壁纸
+                WallPaperUtil.setWallPaper(getActivity(), mPagerGirlAdapter);
+                SnakbarUtil.setWallpaer(mPbDown);
+                break;
+            case R.id.action_gallery:  //从相册选择壁纸
+                WallPaperUtil.choiceWallPaper(getActivity());
+                break;
+            case R.id.action_localgirl:  //默认美女
+                //                getDefultGirl();
+                break;
+            case R.id.action_gank:  //干货集中营
+                initData();
+                break;
+
+        }
+
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    public GirlFragment newInstance() {
+
+
+        return new GirlFragment();
+    }
 
 }

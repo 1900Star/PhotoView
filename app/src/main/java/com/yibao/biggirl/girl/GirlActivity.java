@@ -30,12 +30,8 @@ public class GirlActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activty_gril);
         ButterKnife.bind(this);
-        //        if (savedInstanceState == null) {
-        //            mBundle = getIntent().getExtras();
-        //
-        //        }
-        initData();
-
+        mBundle = getIntent().getExtras();
+                initData();
     }
 
     private void initData() {
@@ -45,7 +41,7 @@ public class GirlActivity
         if (girlFragment == null) {
 
             girlFragment = new GirlFragment().newInstance();
-            //                    girlFragment.setArguments(mBundle);
+            girlFragment.setArguments(mBundle);
             ActivityUtils.addFragmentToActivity(getSupportFragmentManager(),
                                                 girlFragment,
                                                 R.id.content_girl_activity);
@@ -56,5 +52,7 @@ public class GirlActivity
     @Override
     protected void onDestroy() {
         super.onDestroy();
+
+
     }
 }

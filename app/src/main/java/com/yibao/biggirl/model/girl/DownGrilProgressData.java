@@ -2,7 +2,7 @@ package com.yibao.biggirl.model.girl;
 
 /**
  * Author：Sid
- * Des：${TODO}
+ * Des：${封装图片下载进度}
  * Time:2017/4/24 13:11
  */
 public class DownGrilProgressData {

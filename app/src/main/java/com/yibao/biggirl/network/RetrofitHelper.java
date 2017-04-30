@@ -10,7 +10,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
  * Author：Sid
- * Des：${TODO}
+ * Des：${Retrofit 帮助类}
  * Time:2017/4/10 17:22
  */
 public class RetrofitHelper {

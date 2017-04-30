@@ -1,6 +1,4 @@
-package com.yibao.biggirl.model;
-
-import com.yibao.biggirl.model.android.AndroidAndGirlBean;
+package com.yibao.biggirl.model.android;
 
 import java.util.List;
 
@@ -12,7 +10,7 @@ import java.util.List;
 public interface AndroidDataSource {
     //这个接口用于将数据回调给对应Presenter层
     interface LoadADataCallback {
-        void onLoadData(List<AndroidAndGirlBean> list);
+        void onLoadData(List<AndroidAndGirl> list);
 
         void onDataNotAvailable();
 

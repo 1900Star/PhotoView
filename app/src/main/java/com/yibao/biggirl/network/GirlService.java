@@ -1,7 +1,7 @@
 package com.yibao.biggirl.network;
 
 import com.yibao.biggirl.model.android.AndroidDesBean;
-import com.yibao.biggirl.model.girls.GirlBean;
+import com.yibao.biggirl.model.girls.GirlsBean;
 
 import io.reactivex.Observable;
 import retrofit2.http.GET;
@@ -16,9 +16,9 @@ public interface GirlService {
 
     //代码集中营Api 《 www.Gank.io》 福利
     @GET("api/data/{type}/{count}/{page}")
-    Observable<GirlBean> getGril(@Path("type") String type,
-                                 @Path("count") int count,
-                                 @Path("page") int page);
+    Observable<GirlsBean> getGril(@Path("type") String type,
+                                  @Path("count") int count,
+                                  @Path("page") int page);
     //Android
     @GET("api/data/{type}/{count}/{page}")
     Observable<AndroidDesBean> getAndroid(@Path("type") String type,

@@ -10,10 +10,14 @@ import java.util.UUID;
 public class Constans {
     public static String GANK_API = "http://gank.io/";
 
-    public static String PIC_NAME = UUID.randomUUID()
-                                        .toString()
-                                        .replace("-", "");
-
+    public static String PIC_NAME              = UUID.randomUUID()
+                                              .toString()
+                                              .replace("-", "");
+    public static int    LOAD_DATA             = 0;
+    public static int    REFRESH_DATA          = 1;
+    public static int    PULLUP_LOAD_MORE_DATA = 2;
+    public static int    NO_MORE_DATA          = 3;
+    public static int    LOADING_DATA          = 4;
 
 
 }

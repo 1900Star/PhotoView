@@ -52,7 +52,6 @@ public class WebViewActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_web_view);
         mBind = ButterKnife.bind(this);
-
         Intent intent = getIntent();
         mUrl = intent.getStringExtra("url");
         initData();

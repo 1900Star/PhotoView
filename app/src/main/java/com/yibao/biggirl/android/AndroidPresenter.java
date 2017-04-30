@@ -1,7 +1,8 @@
 package com.yibao.biggirl.android;
 
-import com.yibao.biggirl.model.AndroidDataSource;
-import com.yibao.biggirl.model.android.AndroidAndGirlBean;
+import com.yibao.biggirl.model.android.AndroidDataSource;
+import com.yibao.biggirl.model.android.AndroidAndGirl;
+import com.yibao.biggirl.model.android.RemoteAndroidData;
 
 import java.util.List;
 
@@ -13,9 +14,8 @@ import java.util.List;
 public class AndroidPresenter
         implements AndroidContract.Presenter
 {
-    private AndroidContract.View     mView;
-    private List<AndroidAndGirlBean> mList;
-    private RemoteAndroidData        mRemoteAndroidData;
+    private AndroidContract.View mView;
+    private RemoteAndroidData    mRemoteAndroidData;
 
     public AndroidPresenter(AndroidContract.View view) {
         this.mView = view;
@@ -26,7 +26,7 @@ public class AndroidPresenter
 
     @Override
     public void start() {
-        loadData(20, 1);
+        loadData(200, 1);
     }
 
     @Override
@@ -43,7 +43,7 @@ public class AndroidPresenter
     public void loadData(int page, int size) {
         mRemoteAndroidData.getGirls(page, size, new AndroidDataSource.LoadADataCallback() {
             @Override
-            public void onLoadData(List<AndroidAndGirlBean> list) {
+            public void onLoadData(List<AndroidAndGirl> list) {
 
                     mView.loadData(list);
 //                mView.showNormal();

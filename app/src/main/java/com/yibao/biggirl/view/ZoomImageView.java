@@ -16,9 +16,6 @@ import android.view.ViewConfiguration;
 import android.view.ViewTreeObserver;
 import android.widget.ImageView;
 
-import java.util.ArrayList;
-import java.util.List;
-
 
 /**
  * 可根据点击/多指触控 放大,放小的ImageVIew
@@ -74,7 +71,6 @@ public class ZoomImageView
     //----双击放大与缩小
     private GestureDetector   mGestureDetector;
     private boolean           isScaleing;
-    private List<MotionEvent> events;
     private OnClickListener   onClickListener;
 
 
@@ -121,7 +117,6 @@ public class ZoomImageView
         });
         setOnTouchListener(this);
         mTouchSlop = ViewConfiguration.get(context).getScaledTouchSlop();
-        events = new ArrayList<>();
     }
 
 

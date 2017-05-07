@@ -17,6 +17,8 @@ public interface AndroidContract {
     {
         void loadData(List<AndroidAndGirl> list);
         void refresh(List<AndroidAndGirl> list);
+        void loadMore(List<AndroidAndGirl> list);
+
         void showError();
         void showNormal();
 
@@ -25,6 +27,6 @@ public interface AndroidContract {
     interface Presenter
             extends BasePresenter
     {
-        void loadData(int page, int size);
+        void loadData(int size, int page,int type);
     }
 }

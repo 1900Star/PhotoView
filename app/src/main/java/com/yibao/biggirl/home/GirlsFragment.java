@@ -15,7 +15,7 @@ import android.widget.Toast;
 
 import com.yibao.biggirl.R;
 import com.yibao.biggirl.model.girls.ResultsBean;
-import com.yibao.biggirl.util.Constans;
+import com.yibao.biggirl.util.Constants;
 import com.yibao.biggirl.util.LogUtil;
 
 import java.util.ArrayList;
@@ -52,6 +52,7 @@ public class GirlsFragment
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         new GirlsPresenter(this);
         mPresenter.start();
 
@@ -73,6 +74,7 @@ public class GirlsFragment
 
 
     private void initRecyclerView(List<ResultsBean> mList) {
+
         mSwipeRefresh.setOnRefreshListener(this);
         mSwipeRefresh.setRefreshing(true);
         mSwipeRefresh.setColorSchemeColors(Color.RED, Color.GREEN, Color.YELLOW);
@@ -101,7 +103,7 @@ public class GirlsFragment
         Observable.timer(1, TimeUnit.SECONDS)
                   .observeOn(AndroidSchedulers.mainThread())
                   .subscribe(aLong -> {
-                      mPresenter.loadData(size, page, Constans.REFRESH_DATA);
+                      mPresenter.loadData(500, page, Constants.REFRESH_DATA);
                       LogUtil.d("page   ====== " + page);
                       mSwipeRefresh.setRefreshing(false);
                       page = 1;
@@ -120,11 +122,11 @@ public class GirlsFragment
         LogUtil.d("============ Loade More ===========  ");
         if (list.size() % 20 == 0) {
             page++;
-            //            mPresenter.loadData(size, page, Constans.LOAD_DATA);
+            //            mPresenter.loadData(size, page, Constants.LOAD_DATA);
         }
         mAdapter.AddFooter(list);
 
-        mAdapter.changeMoreStatus(Constans.PULLUP_LOAD_MORE_DATA);
+        mAdapter.changeMoreStatus(Constants.PULLUP_LOAD_MORE_DATA);
         mSwipeRefresh.setRefreshing(false);
         Toast.makeText(getActivity(), "更新了 " + list.size() + "个妹子", Toast.LENGTH_SHORT);
 
@@ -132,7 +134,7 @@ public class GirlsFragment
 
     @Override
     public void showError() {
-        mAdapter.changeMoreStatus(Constans.NO_MORE_DATA);
+        mAdapter.changeMoreStatus(Constants.NO_MORE_DATA);
     }
 
     @Override
@@ -141,7 +143,7 @@ public class GirlsFragment
     }
 
     private void initData() {
-        //        mFab = (FloatingActionButton) getActivity().findViewById(R.id.fab);
+
         mSwipeRefresh.setColorSchemeColors(Color.RED, Color.GREEN, Color.YELLOW);
         mSwipeRefresh.setOnRefreshListener(this);
         mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
@@ -157,8 +159,8 @@ public class GirlsFragment
                     if (isRefresh) {
                         mAdapter.notifyItemRemoved(mAdapter.getItemCount());
                     } else {
-                        mAdapter.changeMoreStatus(Constans.LOADING_DATA);
-                        mPresenter.loadData(size, page, Constans.PULLUP_LOAD_MORE_DATA);
+                        mAdapter.changeMoreStatus(Constants.LOADING_DATA);
+                        mPresenter.loadData(size, page, Constants.PULLUP_LOAD_MORE_DATA);
 
                     }
 
@@ -169,7 +171,7 @@ public class GirlsFragment
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
-                LogUtil.d("====  RecyclerView   ==" + recyclerView.getChildCount());
+//                LogUtil.d("====  RecyclerView   ==" + recyclerView.getChildCount());
                 StaggeredGridLayoutManager manager = (StaggeredGridLayoutManager) recyclerView.getLayoutManager();
                 mItemPositions = manager.findLastVisibleItemPositions(new int[recyclerView.getChildCount()]);
             }

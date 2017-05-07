@@ -1,28 +1,29 @@
 package com.yibao.biggirl.util;
 
+import android.content.Intent;
+import android.net.Uri;
+import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 
 import com.yibao.biggirl.MyApplication;
 import com.yibao.biggirl.model.girl.DownGrilProgressData;
 import com.yibao.biggirl.network.Api;
 
-import org.greenrobot.eventbus.EventBus;
-
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Collections;
 import java.util.List;
 
-import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Request;
 import okhttp3.Response;
 
 /**
  * 作者：Stran on 2017/3/23 03:23
- * 描述：${TODO}
+ * 描述：${保存妹子}
  * 邮箱：strangermy@outlook.com
  */
 public class ImageUitl {
@@ -30,74 +31,97 @@ public class ImageUitl {
     /**
      * 保存图片
      */
-    public static void downloadPic(final String url,
-
-                                   final OnDownloadListener listener)
+    public static void downloadPic(String url, boolean isShowPhotos)
     {
+        String name = getNameFromUrl(url);
+        File   path = new File(Constants.dir);
+        if (!path.exists()) {
+            path.mkdir();
+        }
+        File file = new File(path + "/", name);
+        if (!file.exists()) {
+            try {
+                file.createNewFile();
+            } catch (IOException e) {
+                e.printStackTrace();
 
+            }
+        }
         Request request = new Request.Builder().url(url)
                                                .build();
         MyApplication.defaultOkHttpClient()
                      .newCall(request)
                      .enqueue(new Callback() {
                          @Override
-                         public void onFailure(Call call, IOException e) {
-                             //下载失败
-                             listener.onDownloadFailed();
+                         public void onFailure(okhttp3.Call call, IOException e) {
+
                          }
+
 
                          @Override
-                         public void onResponse(Call call, Response response)
-                                 throws IOException
+                         public void onResponse(okhttp3.Call call, Response response)
+
                          {
-
-                             InputStream      is   = null;
-                             byte[]           buff = new byte[1024 * 4];
-                             int              len  = 0;
-                             FileOutputStream fos  = null;
-
-                             //保存地址
-                             //                                                    String savePath = isExistDir(saveDir);
+                             InputStream      is;
+                             byte[]           buf = new byte[1024 * 4];
+                             int              len;
+                             FileOutputStream fos = null;
+                             //                      String SDPath = Environment.getExternalStorageDirectory()
+                             //                                                 .getAbsolutePath();
                              is = response.body()
                                           .byteStream();
+                             long total = response.body()
+                                                  .contentLength();
+                             try {
+                                 fos = new FileOutputStream(file);
 
-                             File file = new File(FileUtil.IMAGE_PATH, getNameFromUrl(url));
-                             long length = response.body()
-                                                   .contentLength();
-                             fos = new FileOutputStream(file);
-                             long sum = 0;
-                             while ((len = is.read(buff)) != -1) {
-                                 fos.write(buff, 0, len);
-                                 sum += len;
-                                 int progress = (int) (sum * 1.0f / length * 100);
-                                 EventBus.getDefault()
-                                         .post(new DownGrilProgressData(progress));
+                                 long sum = 0;
+                                 while ((len = is.read(buf)) != -1) {
 
-                                 //                                 listener.onDownloading(progress);
+                                     fos.write(buf, 0, len);
+                                     sum += len;
+                                     int progress = (int) (sum * 1.0f / total * 100);
+                                     LogUtil.d("progress=" + progress);
+                                     MyApplication.getIntstance()
+                                                  .bus()
+                                                  .post(new DownGrilProgressData(progress));
 
+                                 }
+                                 fos.flush();
+                                 fos.close();
+                                 LogUtil.d("文件下载成功");
 
+                             } catch (IOException e) {
+                                 e.printStackTrace();
+                             } finally {
+                                 try {
+                                     fos.close();
+                                 } catch (IOException e) {
+                                     e.printStackTrace();
+                                 }
                              }
-                             fos.flush();
-                             fos.close();
-                             listener.onDownloadSuccess();
+
 
                          }
+
+
                      });
+        if (isShowPhotos) {
+            try {
+                MediaStore.Images.Media.insertImage(MyApplication.getIntstance()
+                                                                 .getContentResolver(),
+                                                    file.getAbsolutePath(),
+                                                    name,
+                                                    null);
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
+            MyApplication.getIntstance()
+                         .sendBroadcast(new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE,
+                                                   Uri.parse("file://" + file)));
+        }
 
 
-    }
-
-
-    //下载图片回调接口
-    public interface OnDownloadListener {
-
-        void onDownloadSuccess();
-
-
-        //        void onDownloading(int progress);
-
-
-        void onDownloadFailed();
     }
 
 
@@ -114,7 +138,7 @@ public class ImageUitl {
      */
     @NonNull
     private static String getNameFromUrl(String url) {
-        return url.substring(url.lastIndexOf("/") + 1);
+        return url.substring(url.lastIndexOf("/") + 1, url.length());
     }
 
 }

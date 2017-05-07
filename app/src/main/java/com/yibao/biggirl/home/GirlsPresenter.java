@@ -3,7 +3,7 @@ package com.yibao.biggirl.home;
 import com.yibao.biggirl.model.girls.GirlsBean;
 import com.yibao.biggirl.model.girls.GrilsDataSource;
 import com.yibao.biggirl.model.girls.RemoteGirlsData;
-import com.yibao.biggirl.util.Constans;
+import com.yibao.biggirl.util.Constants;
 import com.yibao.biggirl.util.LogUtil;
 
 /**
@@ -31,7 +31,7 @@ class GirlsPresenter
 
     @Override
     public void start() {
-        loadData(20, 1, Constans.LOAD_DATA);
+        loadData(20, 1, Constants.LOAD_DATA);
 
 
     }
@@ -44,11 +44,11 @@ class GirlsPresenter
             @Override
             public void onLoadDatas(GirlsBean girlBean) {
 
-                if (type == Constans.REFRESH_DATA) {
+                if (type == Constants.REFRESH_DATA) {
                     mView.refresh(girlBean.getResults());
-                } else if (type == Constans.LOAD_DATA) {
+                } else if (type == Constants.LOAD_DATA) {
                     mView.loadData(girlBean.getResults());
-                } else if (type == Constans.PULLUP_LOAD_MORE_DATA) {
+                } else if (type == Constants.PULLUP_LOAD_MORE_DATA) {
                     mView.loadMore(girlBean.getResults());
                 }
                 mView.showNormal();

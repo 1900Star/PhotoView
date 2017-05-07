@@ -28,7 +28,7 @@ public class SplashActivity
 
     @BindView(R.id.iv_splash)
     ImageView mIvSplash;
-//    private String url = "http://imgsrc.baidu.com/baike/pic/item/a044ad345982b2b78714197432adcbef77099bf2.jpg";
+    //    private String url = "http://imgsrc.baidu.com/baike/pic/item/a044ad345982b2b78714197432adcbef77099bf2.jpg";
     private Unbinder mBind;
 
     @Override
@@ -42,8 +42,9 @@ public class SplashActivity
 
     private void setSplash() {
         Observable.timer(2, TimeUnit.SECONDS)
-                  .subscribe(aLong -> startActivity(new Intent(getApplicationContext(),
-                                                               MainActivity.class)));
+                  .subscribe(aLong -> SplashActivity.this.startActivity(new Intent(SplashActivity.this.getApplicationContext(),
+                                                                                   MainActivity.class)));
+        finish();
     }
 
     @Override
@@ -51,4 +52,6 @@ public class SplashActivity
         super.onDestroy();
         mBind.unbind();
     }
+
+
 }

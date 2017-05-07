@@ -201,10 +201,10 @@ public class FileUtil {
         String cachePath;
         //isExternalStorageEmulated()设备的外存是否是用内存模拟的，是则返回true
         if (Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState()) || !Environment.isExternalStorageEmulated()) {
-            //            cachePath = context.getExternalCacheDir().getAbsolutePath();
+            cachePath = context.getExternalCacheDir().getAbsolutePath();
         } else {
+            cachePath = context.getCacheDir().getAbsolutePath();
         }
-        //            cachePath = context.getCacheDir().getAbsolutePath();
-        return null;
+        return cachePath;
     }
 }

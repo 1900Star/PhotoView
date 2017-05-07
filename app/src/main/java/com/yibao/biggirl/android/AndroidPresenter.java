@@ -1,8 +1,9 @@
 package com.yibao.biggirl.android;
 
-import com.yibao.biggirl.model.android.AndroidDataSource;
 import com.yibao.biggirl.model.android.AndroidAndGirl;
+import com.yibao.biggirl.model.android.AndroidDataSource;
 import com.yibao.biggirl.model.android.RemoteAndroidData;
+import com.yibao.biggirl.util.Constants;
 
 import java.util.List;
 
@@ -26,7 +27,7 @@ public class AndroidPresenter
 
     @Override
     public void start() {
-        loadData(200, 1);
+        loadData(20, 1, Constants.LOAD_DATA);
     }
 
     @Override
@@ -40,12 +41,19 @@ public class AndroidPresenter
 
 
     @Override
-    public void loadData(int page, int size) {
+    public void loadData(int page, int size,int type) {
+//        LogUtil.d("======Android Type =====" + type);
         mRemoteAndroidData.getGirls(page, size, new AndroidDataSource.LoadADataCallback() {
             @Override
             public void onLoadData(List<AndroidAndGirl> list) {
-
+                if (type == Constants.LOAD_DATA) {
                     mView.loadData(list);
+                } else if (type == Constants.REFRESH_DATA) {
+                    mView.refresh(list);
+                } else if (type == Constants.PULLUP_LOAD_MORE_DATA) {
+                    mView.loadMore(list);
+                }
+
 //                mView.showNormal();
             }
 

@@ -2,7 +2,7 @@ package com.yibao.biggirl.network;
 
 
 import com.yibao.biggirl.MyApplication;
-import com.yibao.biggirl.util.Constans;
+import com.yibao.biggirl.util.Constants;
 
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
@@ -20,7 +20,7 @@ public class RetrofitHelper {
     public static GirlService getGankApi() {
         if (retrofit == null) {
             synchronized (RetrofitHelper.class) {
-                retrofit = new Retrofit.Builder().baseUrl(Constans.GANK_API)
+                retrofit = new Retrofit.Builder().baseUrl(Constants.GANK_API)
                                                  .addConverterFactory(GsonConverterFactory.create())
                                                  .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                                                  .client(MyApplication.defaultOkHttpClient())

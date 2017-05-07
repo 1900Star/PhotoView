@@ -2,6 +2,7 @@ package com.yibao.biggirl.girl;
 
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
@@ -13,9 +14,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.yibao.biggirl.MyApplication;
 import com.yibao.biggirl.R;
 import com.yibao.biggirl.model.girl.DownGrilProgressData;
-import com.yibao.biggirl.model.girl.GirlData;
 import com.yibao.biggirl.model.girls.ResultsBean;
 import com.yibao.biggirl.util.LogUtil;
 import com.yibao.biggirl.util.NetworkUtil;
@@ -23,16 +24,13 @@ import com.yibao.biggirl.util.SnakbarUtil;
 import com.yibao.biggirl.util.WallPaperUtil;
 import com.yibao.biggirl.view.ProgressView;
 
-import org.greenrobot.eventbus.EventBus;
-import org.greenrobot.eventbus.Subscribe;
-import org.greenrobot.eventbus.ThreadMode;
-
 import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
+import io.reactivex.disposables.CompositeDisposable;
 
 /**
  * Author：Sid
@@ -54,7 +52,6 @@ public class GirlFragment
 
     //传递过来的position
     private int mPosition;
-    //ViewPger当前显示的图片
     //默认下载进度
     public static final int DEFULT_DOWN_PREGRESS = 0;
     //下载进度最大值
@@ -67,17 +64,18 @@ public class GirlFragment
     private String  mUrl           = null;
     private boolean isShowGankGirl = true;
     private ArrayList<ResultsBean> mList;
-
+    private CompositeDisposable    disposables;
+    private MyApplication          mApplication;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        EventBus.getDefault()
-                .register(this);
         Bundle bundle = getArguments();
         mList = bundle.getParcelableArrayList("girlList");
         mPosition = bundle.getInt("position");
         LogUtil.d("Position  Size    ==   " + mPosition + "===" + mList.size());
+        mApplication = (MyApplication) getActivity().getApplication();
+        disposables = new CompositeDisposable();
     }
 
     @Nullable
@@ -92,27 +90,19 @@ public class GirlFragment
             unbinder = ButterKnife.bind(this, mView);
             initData();
 
+
         }
 
         return mView;
     }
 
-    //获取下载进度，设置ProgressBar
-    @Subscribe(threadMode = ThreadMode.MAIN,
-               priority = 100)
-    public void onProgressEvent(DownGrilProgressData data) {
-        setProgress(data.getProgress());
-    }
-
-    //获取下载进度，设置ProgressBar
-    @Subscribe(threadMode = ThreadMode.MAIN,
-               priority = 100)
-    public void onGetDataEvent(GirlData data) {
-
-
-    }
 
     private void initData() {
+        //设置progress进度
+        disposables.add(mApplication.bus()
+                                    .toObserverable(DownGrilProgressData.class)
+                                    .subscribe(data -> setProgress(data.getProgress())));
+
         setHasOptionsMenu(true);
         mPagerGirlAdapter = new GirlAdapter(getActivity(), mList);
         mVp.setAdapter(mPagerGirlAdapter);
@@ -134,14 +124,12 @@ public class GirlFragment
     @OnClick(R.id.iv_down)
     public void onViewClicked() {
 
+
         //网络检查
         boolean connected = NetworkUtil.isNetworkConnected(getActivity());
 
         if (connected) {
-            SnakbarUtil.savePic(getActivity().getApplicationContext(),
-                                mPbDown,
-                                mUrl,
-                                mPagerGirlAdapter);
+            SnakbarUtil.savePic(mPbDown, mUrl);
 
         } else {
             SnakbarUtil.netErrors(mPbDown);
@@ -158,14 +146,6 @@ public class GirlFragment
 
 
     @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        unbinder.unbind();
-        EventBus.getDefault()
-                .unregister(this);
-    }
-
-    @Override
     public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
 
     }
@@ -173,6 +153,7 @@ public class GirlFragment
     @Override
     public void onPageSelected(int position) {
         if (isShowGankGirl) {
+
         }
         mUrl = mList.get(position)
                     .getUrl();
@@ -207,7 +188,6 @@ public class GirlFragment
                 WallPaperUtil.choiceWallPaper(getActivity());
                 break;
             case R.id.action_localgirl:  //默认美女
-                //                getDefultGirl();
                 break;
             case R.id.action_gank:  //干货集中营
                 initData();
@@ -223,6 +203,18 @@ public class GirlFragment
 
 
         return new GirlFragment();
+    }
+
+    @NonNull
+    private static String getNameFromUrl(String url) {
+        return url.substring(url.lastIndexOf("/") + 1, url.length());
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        unbinder.unbind();
+        disposables.clear();
     }
 
 }

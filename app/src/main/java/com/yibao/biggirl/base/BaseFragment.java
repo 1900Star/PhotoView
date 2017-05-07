@@ -2,6 +2,7 @@ package com.yibao.biggirl.base;
 
 import android.app.Fragment;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,9 +18,7 @@ public abstract class BaseFragment
 {
 
     protected BaseActivity mActivity;
-
-    protected abstract void initView(View view, Bundle savedInstanceState);
-    protected  void initListener(){};
+    public LoadingPager mLoadingPager;
 
     //获取fragment布局文件ID
     protected abstract int getLayoutId();
@@ -37,19 +36,35 @@ public abstract class BaseFragment
         }
     }
 
-    //移除fragment
-    protected void removeFragment() {
-        getHoldingActivity().removeFragment();
-    }
 
+
+    protected abstract void init();
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater,
+                             ViewGroup container,
+                             Bundle savedInstanceState)
+    {
+
+
         View view = inflater.inflate(getLayoutId(), container, false);
         initView(view, savedInstanceState);
-        initListener();
+
         return view;
     }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        initListener();
+        initData();
+        super.onActivityCreated(savedInstanceState);
+    }
+
+    protected abstract void initView(View view, Bundle savedInstanceState);
+
+    protected abstract void initData();
+
+    protected abstract void initListener();
 
     @Override
     public void onDestroyView() {

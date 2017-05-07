@@ -1,11 +1,8 @@
 package com.yibao.biggirl.util;
 
-import android.content.Context;
 import android.graphics.Color;
 import android.support.design.widget.Snackbar;
 import android.view.View;
-
-import com.yibao.biggirl.girl.GirlAdapter;
 
 import static android.support.design.widget.Snackbar.make;
 
@@ -16,14 +13,30 @@ import static android.support.design.widget.Snackbar.make;
  * 邮箱：strangermy@outlook.com
  */
 public class SnakbarUtil {
+    private static int errorColor   = Color.rgb(255, 64, 129);
+    private static int successColor = Color.rgb(90, 181, 63);
+    private static int saveColor    = Color.argb(255, 245, 115, 160);
+    private static int ExitColor    = Color.argb(255, 230, 195, 65);
+
     /**
      * 下载成功提示
      */
     public static void showSuccessStatus(View view) {
-        int      color    = Color.rgb(90, 181, 63);
         Snackbar snackbar = make(view, "图片保存成功 -_-", Snackbar.LENGTH_LONG);
         snackbar.getView()
-                .setBackgroundColor(color);
+                .setBackgroundColor(successColor);
+        snackbar.show();
+
+    }
+
+    /**
+     * 下载失败提示
+     */
+    public static void showErrorStatus(View view) {
+
+        Snackbar snackbar = make(view, "图片保存失败 -_-", Snackbar.LENGTH_LONG);
+        snackbar.getView()
+                .setBackgroundColor(errorColor);
         snackbar.show();
 
     }
@@ -32,25 +45,16 @@ public class SnakbarUtil {
     /**
      * 保存图片提示
      */
-    public static void savePic(final Context context,
-                               final View view,
-                               final String url,
-                               final GirlAdapter mPagerGirlAdapter)
+    public static void savePic(final View view, final String url)
     {
 
 
-        int color = Color.argb(255, 245, 115, 160);
-
-        Snackbar snackbar = make(view, "可以将图片保存起来-_-", Snackbar.LENGTH_LONG)
-                                    .setAction("保存图片", new View.OnClickListener() {
-                                        @Override
-                                        public void onClick(View view) {
-
-                                            SaveImageUtil.savePic(context, url, mPagerGirlAdapter);
-                                        }
-                                    });
+        Snackbar snackbar = make(view, "可以将图片保存起来-_-", Snackbar.LENGTH_LONG).setAction("保存图片",
+                                                                                       view1 -> ImageUitl.downloadPic(
+                                                                                               url,
+                                                                                               true));
         snackbar.getView()
-                .setBackgroundColor(color);
+                .setBackgroundColor(saveColor);
         snackbar.show();
     }
 
@@ -59,10 +63,10 @@ public class SnakbarUtil {
      */
     public static void netErrors(View view)
     {
-        int      color    = Color.rgb(255, 64, 129);
+
         Snackbar snackbar = make(view, "网络异常，请检查您的网络连接 -_-", Snackbar.LENGTH_SHORT);
         snackbar.getView()
-                .setBackgroundColor(color);
+                .setBackgroundColor(errorColor);
 
         snackbar.show();
     }
@@ -72,10 +76,10 @@ public class SnakbarUtil {
      */
     public static void finishActivity(View view)
     {
-        int      color    = Color.argb(255, 230, 195, 65);
+
         Snackbar snackbar = make(view, "再按一次我就离开了 -_-", Snackbar.LENGTH_SHORT);
         snackbar.getView()
-                .setBackgroundColor(color);
+                .setBackgroundColor(ExitColor);
         snackbar.show();
 
     }

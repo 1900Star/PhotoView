@@ -12,9 +12,12 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.KeyEvent;
+import android.view.ViewTreeObserver;
 
 import com.yibao.biggirl.android.AndroidAdapter;
 import com.yibao.biggirl.android.AndroidFragment;
+import com.yibao.biggirl.base.BaseFragment;
+import com.yibao.biggirl.factory.FragmentFactory;
 import com.yibao.biggirl.girl.GirlActivity;
 import com.yibao.biggirl.home.GirlsAdapter;
 import com.yibao.biggirl.home.GirlsFragment;
@@ -25,6 +28,7 @@ import com.yibao.biggirl.webview.WebViewActivity;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -53,7 +57,7 @@ public class MainActivity
     @BindView(R.id.toolbar)
     Toolbar                 mToolbar;
     private long   exitTime   = 0;
-    public  String arrTitle[] = {"Girl",
+    private String arrTitle[] = {"Girl",
                                  "Android",
                                  "Video"};
 
@@ -65,8 +69,23 @@ public class MainActivity
         if (savedInstanceState == null) {
             initData();
             initView();
+//            initListener();
 
         }
+
+    }
+
+    private void initListener() {
+        MyOnpageChangeListener onpageChangeListener = new MyOnpageChangeListener();
+        mViewPager.addOnPageChangeListener(onpageChangeListener);
+        mViewPager.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            @Override
+            public void onGlobalLayout() {
+                onpageChangeListener.onPageSelected(0);
+                mViewPager.getViewTreeObserver()
+                          .removeOnGlobalLayoutListener(this);
+            }
+        });
 
     }
 
@@ -74,16 +93,16 @@ public class MainActivity
         setSupportActionBar(mToolbar);
 
         mTablayout.setupWithViewPager(mViewPager);
-        ArrayList<Fragment> fragments = new ArrayList<>();
+        List<Fragment> fragments = new ArrayList<>();
+        fragments.add(new AndroidFragment().newInstance());
         fragments.add(new GirlsFragment().newInstance());
-        fragments.add(new AndroidFragment().newInstance());
-        fragments.add(new AndroidFragment().newInstance());
+        fragments.add(new GirlsFragment().newInstance());
         mViewPager.setOffscreenPageLimit(3);
+
         TabPagerAdapter pagerAdapter = new TabPagerAdapter(getSupportFragmentManager(),
                                                            fragments,
                                                            Arrays.asList(arrTitle));
         mViewPager.setAdapter(pagerAdapter);
-
     }
 
     private void initData() {
@@ -96,6 +115,36 @@ public class MainActivity
         toggle.syncState();
     }
 
+
+    class MyOnpageChangeListener implements ViewPager.OnPageChangeListener {
+        @Override
+        public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+        }
+
+        @Override
+        public void onPageSelected(int position) {
+            //触发加载数据
+            //FragmentFactory.mCacheFragmentMap.get(position)-->BaseFragment-->loadingPager
+            BaseFragment baseFragment = FragmentFactory.mCacheFragmentMap.get(position);
+            baseFragment.mLoadingPager.triggerLoadData();
+        }
+
+        @Override
+        public void onPageScrollStateChanged(int state) {
+
+        }
+    }
+
+    @Override
+    public void showDesDetall(String url) {
+        Intent intent = new Intent(this, WebViewActivity.class);
+        intent.putExtra("url", url);
+        startActivity(intent);
+
+
+    }
+
     //接口回调打开ViewPager浏览大图
     @Override
     public void showPagerFragment(int position, ArrayList<ResultsBean> list) {
@@ -105,7 +154,6 @@ public class MainActivity
         intent.putExtra("position", position);
         startActivity(intent);
     }
-
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
@@ -125,12 +173,4 @@ public class MainActivity
     }
 
 
-    @Override
-    public void showDesDetall(String url) {
-        Intent intent = new Intent(this, WebViewActivity.class);
-        intent.putExtra("url", url);
-        startActivity(intent);
-
-
-    }
 }

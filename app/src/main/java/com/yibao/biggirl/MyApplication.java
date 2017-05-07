@@ -20,7 +20,8 @@ public class MyApplication
         extends Application
 {
     private static MyApplication appContext;
-    public static String currentGirl = "http://7xi8d6.com1.z0.glb.clouddn.com/2017-03-23-17265820_645330569008169_4543676027339014144_n.jpg";
+//    public static String currentGirl = "http://7xi8d6.com1.z0.glb.clouddn.com/2017-03-23-17265820_645330569008169_4543676027339014144_n.jpg";
+    private RxBus mRxBus;
 
     public static MyApplication getIntstance() {
         if (appContext == null) {
@@ -29,7 +30,6 @@ public class MyApplication
         return appContext;
     }
 
-    private RxBus mRxBus;
 
     @Override
     public void onCreate() {

@@ -1,4 +1,4 @@
-package com.yibao.biggirl.com.photoview;
+package com.yibao.biggirl.test.photoview;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;

@@ -23,41 +23,22 @@ public class RemoteGirlsData
                       .getGril("福利", size, page)
                       .subscribeOn(Schedulers.io())
                       .observeOn(AndroidSchedulers.mainThread())
-                      .subscribe(new GirlObserver(callback));
+                      .subscribe(new Observer<GirlsBean>() {
+                          @Override
+                          public void onSubscribe(Disposable d) {}
+
+                          @Override
+                          public void onNext(GirlsBean girlsBean) {
+                              callback.onLoadDatas(girlsBean);
+                          }
+
+                          @Override
+                          public void onError(Throwable e) {
+                              callback.onDataNotAvailable();
+                          }
+
+                          @Override
+                          public void onComplete() {}
+                      });
     }
-
-
-    private class GirlObserver
-            implements Observer<GirlsBean>
-    {
-        private LoadGDataCallback mCallback;
-
-        private GirlObserver(LoadGDataCallback callback) {
-            mCallback = callback;
-        }
-
-        @Override
-        public void onSubscribe(Disposable d) {
-
-        }
-
-        @Override
-        public void onNext(GirlsBean girlBean) {
-            mCallback.onLoadDatas(girlBean);
-
-
-        }
-
-        @Override
-        public void onError(Throwable e) {
-            mCallback.onDataNotAvailable();
-        }
-
-        @Override
-        public void onComplete() {
-
-        }
-    }
-
-
 }

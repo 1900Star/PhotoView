@@ -3,6 +3,8 @@
 
 
 ![image](https://github.com/1900Star/PhotoView/blob/master/Screenshot_png/c.gif)
-![image](https://github.com/1900Star/PhotoView/blob/master/Screenshot_png/a.png)
+![image](https://github.com/1900Star/BigGril/blob/dev/Screenshot_png/girls.png)
 ![image](https://github.com/1900Star/PhotoView/blob/master/Screenshot_png/b.png)
-![image](https://github.com/1900Star/PhotoView/blob/master/Screenshot_png/d.png)
+![image](https://github.com/1900Star/BigGril/blob/dev/Screenshot_png/android.png)
+![image](https://github.com/1900Star/BigGril/blob/dev/Screenshot_png/webview.png)
+![image](https://github.com/1900Star/BigGril/blob/dev/Screenshot_png/BigGirl.png)
